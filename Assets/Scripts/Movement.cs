@@ -17,22 +17,6 @@ public class Movement : MonoBehaviour
         return obstacle;
     }
 
-    private int GetLadderLength(GameObject ladderBase, int currentLength)
-    {
-        RaycastHit hit;
-        GameObject nextStep = null;
-
-        if (Physics.Raycast(ladderBase.transform.position, Vector3.up, out hit, 1))
-        {
-            nextStep = hit.transform.gameObject;
-        }
-
-        if(nextStep == null)
-            return currentLength;
-        else
-            return GetLadderLength(nextStep, currentLength + 1);
-    }
-
 	public void Move(Vector3 direction)
 	{
         GameObject obstacle = GetObstacle(direction);
@@ -42,7 +26,7 @@ public class Movement : MonoBehaviour
 		}
         else if(obstacle.tag == "Ladder")
         {
-            transform.Translate(direction + Vector3.up * GetLadderLength(obstacle, 1));
+            transform.Translate(direction + Vector3.up * obstacle.GetComponent<Renderer>().bounds.size.y);
         }
 	}
 }
