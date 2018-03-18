@@ -24,7 +24,8 @@ public class MenuScript
 
         foreach (GameObject t in tiles)
         {
-            t.AddComponent<Tile>();
+            t.AddComponent<Block>();
+            t.GetComponent<Block>();
         }
     }
 }

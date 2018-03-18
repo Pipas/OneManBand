@@ -5,9 +5,11 @@ using UnityEngine;
 public class PlayerMovement : Movement 
 {	
 	private Rigidbody playerRB;
+	private Vector3 startPosition;
 	void Start ()
 	{
 		playerRB = GetComponent<Rigidbody>();
+		startPosition = transform.position;
 	}
 
 	void Update ()
@@ -33,6 +35,6 @@ public class PlayerMovement : Movement
 	void ResetPlayer()
 	{
 		playerRB.velocity = Vector3.zero;
-		transform.position = new Vector3(0f, 0.9f, -1f);
+		transform.position = startPosition;
 	}
 }
