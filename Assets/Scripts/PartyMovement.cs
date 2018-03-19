@@ -6,7 +6,7 @@ public class PartyMovement : Movement
 {
 	void Start ()
 	{
-		init();
+		
 	}
 	
 	void Update ()

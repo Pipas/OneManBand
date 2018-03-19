@@ -4,16 +4,49 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour 
 {
-    public Vector3 lastPosition = Vector3.zero;
-    private Vector3 startPosition;
+    private Vector3 hVector;
+    private float hElapsed;
+    public float speed = 15f;
+    private bool isMoving = false;
+    private List<Vector3> bufferMovements = new List<Vector3>();
 
-    public Rigidbody selfRB;
-
-    public void init()
+    public void handleMovement()
     {
-        startPosition = transform.position;
-        selfRB = GetComponent<Rigidbody>();
+        if(hElapsed < 1)
+        {
+            float move = hVector.magnitude * Time.deltaTime * speed;
+            if(hElapsed + move > 1)
+                move = 1 - hElapsed;
+            transform.Translate(hVector * move);
+            hElapsed += move;
+        }
+        if(hElapsed >= 1)
+        {
+            if(bufferMovements.Count != 0)
+            {
+                hVector = bufferMovements[0];
+                bufferMovements.RemoveAt(0);
+                hElapsed = 0;
+            }
+            else
+                isMoving = false;
+        }
     }
+
+    public void Move(Vector3 direction)
+    {
+        if(!isMoving)
+        {
+            hVector = direction;
+            hElapsed = 0;
+            isMoving = true;
+        }
+        else
+        {
+            bufferMovements.Add(direction);
+        }
+    }
+
 	public GameObject GetObstacle(Vector3 direction)
     {
         RaycastHit hit;
@@ -39,25 +72,4 @@ public class Movement : MonoBehaviour
 
         return obstacle;
     }
-
-	public void Move(Vector3 direction)
-	{
-        lastPosition = transform.position;
-
-        GameObject obstacle = GetObstacle(direction);
-		if(obstacle == null)
-		{
-			transform.Translate(direction);
-		}
-        else if(obstacle.tag == "Ladder")
-        {
-            transform.Translate(direction + Vector3.up * obstacle.GetComponent<Renderer>().bounds.size.y);
-        }
-	}
-
-    public void ResetSelf()
-	{
-		selfRB.velocity = Vector3.zero;
-		transform.position = startPosition;
-	}
 }
