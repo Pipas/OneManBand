@@ -6,17 +6,19 @@ public class PlayerMovement : Movement
 {	
 	private List<GameObject> party = new List<GameObject>();
 	void Update ()
-	{
-		handleMovement();
-		
-			if(Input.GetKeyDown(KeyCode.UpArrow))
+	{	
+		if(!isMoving)
+		{
+			if(Input.GetKey(KeyCode.UpArrow))
 				Move(Vector3.forward);
-			if(Input.GetKeyDown(KeyCode.DownArrow))
+			if(Input.GetKey(KeyCode.DownArrow))
 				Move(Vector3.back);
-			if(Input.GetKeyDown(KeyCode.LeftArrow))
+			if(Input.GetKey(KeyCode.LeftArrow))
 				Move(Vector3.left);
-			if(Input.GetKeyDown(KeyCode.RightArrow))
+			if(Input.GetKey(KeyCode.RightArrow))
 				Move(Vector3.right);
-		
+		}
+
+		handleMovement();	
 	}
 }
