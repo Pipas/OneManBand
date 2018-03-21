@@ -5,8 +5,6 @@ using System;
 
 public class PlayerMovement : Movement 
 {	
-	private List<GameObject> party = new List<GameObject>();
-
 	void Start ()
 	{
 		savedPosition = transform.position;
@@ -17,7 +15,7 @@ public class PlayerMovement : Movement
 
 		HandleMovement(); // Updates movement everyframe
 
-		HandlePartyMovement();
+		HandlePartyMovement(); // Updates the rest of the party movement, this way it's sequential after the player
 	}
 
 	private void HandleInput()
@@ -25,24 +23,24 @@ public class PlayerMovement : Movement
 		if(!isMoving) // So you can hold down the button and it works
 		{
 			if(Input.GetButton("Up"))
-				Move(new MovementItem(Vector3.forward));
+				QueueInput(Vector3.forward);
 			if(Input.GetButton("Down"))
-				Move(new MovementItem(Vector3.back));
+				QueueInput(Vector3.back);
 			if(Input.GetButton("Left"))
-				Move(new MovementItem(Vector3.left));
+				QueueInput(Vector3.left);
 			if(Input.GetButton("Right"))
-				Move(new MovementItem(Vector3.right));
+				QueueInput(Vector3.right);
 		}
 		else // So if you click during an animation it still works
 		{
 			if(Input.GetButtonDown("Up"))
-				Move(new MovementItem(Vector3.forward));
+				QueueInput(Vector3.forward);
 			if(Input.GetButtonDown("Down"))
-				Move(new MovementItem(Vector3.back));
+				QueueInput(Vector3.back);
 			if(Input.GetButtonDown("Left"))
-				Move(new MovementItem(Vector3.left));
+				QueueInput(Vector3.left);
 			if(Input.GetButtonDown("Right"))
-				Move(new MovementItem(Vector3.right));
+				QueueInput(Vector3.right);
 		}
 
 		if(Input.GetButtonDown("Interact"))
@@ -66,7 +64,15 @@ public class PlayerMovement : Movement
 				if(obstacle.tag == "Party")
 				{
 					if(!party.Contains(obstacle))
+					{
 						party.Add(obstacle);
+						if(party.Count == 1)
+						{
+							nextInParty = obstacle;
+						}
+						else
+							party[party.IndexOf(obstacle) - 1].GetComponent<PartyMovement>().nextInParty = obstacle;	
+					}
 				}
 			}
 		}
@@ -80,39 +86,15 @@ public class PlayerMovement : Movement
 
 	private void DitchPartyMember()
 	{
-		if(party.Count > 0)
-			party.RemoveAt(party.Count - 1);
-	}
-
-	override protected void AddMovementToParty()
-	{
-		Vector3 previousPosition = savedPosition;
-		foreach(GameObject member in party)
+		if(party.Count > 1)
 		{
-			PartyMovement memberMovement = member.GetComponent<PartyMovement>();
-			Vector3 diffHPositions = new Vector3(previousPosition.x - memberMovement.savedPosition.x, 0, previousPosition.z - memberMovement.savedPosition.z); // Horizontal Vector Difference
-			Vector3 diffVPositions = new Vector3(0, previousPosition.y - memberMovement.savedPosition.y, 0); // Vertical Vector Difference
-
-			if(diffHPositions.magnitude < 1.1) // Only move if adjacent (prevents oblique movement), sometimes is 1.000001
-			{
-				if(diffVPositions.y > 0) // If there was a vertical change
-				{
-					memberMovement.Move(new MovementItem(diffVPositions, true, true, false));
-					memberMovement.Move(new MovementItem(diffHPositions, true, true, false));
-				}	
-				else if(diffVPositions.y < 0) // If there was a vertical change
-				{
-					memberMovement.Move(new MovementItem(diffHPositions, true, true, false));
-					memberMovement.Move(new MovementItem(diffVPositions, true, true, false));
-				}
-				else
-					memberMovement.Move(new MovementItem(diffHPositions, true, true, false));
-
-				previousPosition = memberMovement.savedPosition; // EUREKA save the position vefore the animation so you can spaaaam
-				memberMovement.savedPosition = memberMovement.savedPosition + diffHPositions + diffVPositions;
-
-				/* HAS A BUG IF GOING DOWN FAST */
-			}
+			party[party.Count - 2].GetComponent<PartyMovement>().nextInParty = null;
+			party.RemoveAt(party.Count - 1);
+		}
+		else if(party.Count == 1)
+		{
+			nextInParty = null;
+			party.RemoveAt(party.Count - 1);
 		}
 	}
 }

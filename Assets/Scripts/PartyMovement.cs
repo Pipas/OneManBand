@@ -13,9 +13,4 @@ public class PartyMovement : Movement
 	{
 
 	}
-
-	protected override bool HandleObstacle(Vector3 direction)
-	{
-		return true;
-	}
 }

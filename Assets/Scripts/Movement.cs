@@ -4,42 +4,41 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour 
 {
-    private MovementItem movement;
+    protected static List<GameObject> party = new List<GameObject>();
+    public GameObject nextInParty;
+    private AnimationItem currentAnimation;
     public Vector3 savedPosition;
     private float movementPercentageElapsed = 1;
     private float baseSpeed = 10;
     private float speed;
     public bool isMoving = false;
-    private List<MovementItem> movementList = new List<MovementItem>();
+    private Queue<AnimationItem> animationQueue = new Queue<AnimationItem>();
+    private Queue<Vector3> userInputQueue = new Queue<Vector3>();
 
     public void HandleMovement()
     {
         if(movementPercentageElapsed >= 1) // If no animation is playing
         {
-            if(movementList.Count != 0) // If there is an animation already queued
+            if(nextInParty != null && nextInParty.GetComponent<PartyMovement>().isMoving) // Waits for all animations to end
+                return;
+            
+            if(animationQueue.Count == 0 && userInputQueue.Count != 0) // If there is no animation and an input Validates the input, it's up here so it starts in the same frame it validates
+                ValidateInput(userInputQueue.Dequeue());
+            
+            if(animationQueue.Count != 0) // If there is an animation queued
             {
-                movement = movementList[0];
-                movementList.RemoveAt(0);
+                currentAnimation = animationQueue.Dequeue();
 
-                if(movement.SavePosition())
-                    savedPosition = transform.position;
+                if(currentAnimation.SavePosition()) // if it's supposed to save its position, used for the next in party
+                    SavePosition();
 
-                if(!movement.CheckForward())
-                {
-                    movementPercentageElapsed = 0; // Restarts animation
-                    isMoving = true;
-                    if(movement.TriggerParty())
-                        AddMovementToParty();
-                }  
-                else if(HandleObstacle(movement.GetVector()))
-                {
-                    movementPercentageElapsed = 0;
-                    isMoving = true;
-                    if(movement.TriggerParty())
-                        AddMovementToParty();
-                }
+                if(currentAnimation.TriggerParty()) // Triggers next in party to start animation with new saved animations
+                        TriggerNextInParty();
+
+                movementPercentageElapsed = 0;
+                isMoving = true;
                 
-                if(movement.GetVector().y < 0) // Faster when falling to imitate gravity
+                if(currentAnimation.GetVector().y < 0) // Faster when falling to imitate gravity
                     speed = baseSpeed * 3;
                 else
                     speed = baseSpeed;
@@ -47,24 +46,32 @@ public class Movement : MonoBehaviour
             else
                 isMoving = false; // Reset state if no more movements
         }
-        if(movementPercentageElapsed < 1)
+        if(movementPercentageElapsed < 1) // Handles the actual animation frame by frame
         {
             float delta = Time.deltaTime * speed;
-            float deltaPercentage = delta / movement.GetVector().magnitude;
+            float deltaPercentage = delta / currentAnimation.GetVector().magnitude;
             if(movementPercentageElapsed + deltaPercentage > 1)
-                deltaPercentage = (1 - movementPercentageElapsed);
-            transform.Translate(movement.GetVector() * deltaPercentage);
+                deltaPercentage = (1 - movementPercentageElapsed);   
+            transform.Translate(currentAnimation.GetVector() * deltaPercentage);
             movementPercentageElapsed += deltaPercentage;
         }
     }
 
-    public void Move(MovementItem movement)
+    /* Enqueues an animation */
+    public void QueueAnimation(AnimationItem anim)
     {
-        if(movementList.Count < 3)  // To prevent people from spamming the button and adding new movements
-            movementList.Add(movement);
+        animationQueue.Enqueue(anim);
     }
 
-	protected virtual bool HandleObstacle(Vector3 direction)
+    /* Enqueues palyer input */
+    public void QueueInput(Vector3 direction)
+    {
+        if(userInputQueue.Count < 3)  // To prevent people from spamming the button and adding new inputs
+            userInputQueue.Enqueue(direction);
+    }
+
+    /* Validates the input and adds animation accordingly */
+	protected void ValidateInput(Vector3 direction)
     {
         RaycastHit hit;
         GameObject obstacle = null;
@@ -73,15 +80,13 @@ public class Movement : MonoBehaviour
         {
             obstacle = hit.transform.gameObject;
             if(obstacle.tag == "Ladder")
-                return HandleLadder(obstacle, direction);
-            else
-                return false;
+                HandleLadder(obstacle, direction); // If there is a ladder
         }
         else
-            return HandleNoObstacle(direction); // If there is no obstacle checks if there is a floor
+            HandleNoObstacle(direction); // If there is no obstacle checks if there is a floor
     }
 
-    private bool HandleNoObstacle(Vector3 direction)
+    private void HandleNoObstacle(Vector3 direction)
     {
         RaycastHit hit;
         GameObject obstacle = null;
@@ -91,35 +96,66 @@ public class Movement : MonoBehaviour
             obstacle = hit.transform.gameObject;
             if(obstacle.tag != "Party")
             {
-                if((int) hit.distance > 0)
-                    movementList.Insert(0, new MovementItem(Vector3.down * (int) hit.distance, false, true, false));
-                return true;
+                if((int) hit.distance > 0) // If there is a fall enqueues 2 animations move and fall
+                {
+                    QueueAnimation(new AnimationItem(direction, true, false));
+                    QueueAnimation(new AnimationItem(Vector3.down * (int) hit.distance, false, true));
+                }
+                else // If not just moves
+                    QueueAnimation(new AnimationItem(direction, true, true));
+                return;
             }
         }
 
-        movementPercentageElapsed = 0; // Small animation starts imidiatly
-        isMoving = true;
-        movement = new MovementItem(direction/2f, false, false, false);
-        movementList.Insert(0, new MovementItem(-direction/2f, false, false, false));  // Adds reverse to animation queue 
-        return false;
+        QueueAnimation(new AnimationItem(direction/2f, false, false)); // If can't move enqueues small animation to display that you can't move
+        QueueAnimation(new AnimationItem(-direction/2f, false, false)); // Enqueues reverse animation
     }
 
-    public bool HandleLadder(GameObject ladder, Vector3 direction)
+    public void HandleLadder(GameObject ladder, Vector3 direction)
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position + Vector3.up * ladder.GetComponent<Renderer>().bounds.size.y, direction, out hit, 1))
-            return false;
-        else
+        if (Physics.Raycast(transform.position + Vector3.up * ladder.GetComponent<Renderer>().bounds.size.y, direction, out hit, 1)) // If a block is above the ladder
+            return;
+        else // Enqueues the ladder climbing animations
         {
-            movement = new MovementItem(Vector3.up * ladder.GetComponent<Renderer>().bounds.size.y, false, false, true);
-            movementList.Insert(0, new MovementItem(direction, false, true, false));
-            return true;
+            QueueAnimation(new AnimationItem(Vector3.up * ladder.GetComponent<Renderer>().bounds.size.y, true, false));
+            QueueAnimation(new AnimationItem(direction, false, true));
         }
     }
 
-    protected virtual void AddMovementToParty()
+    private void SavePosition() // Saves self and next in party position to calculate the movement
     {
-
+        if(nextInParty != null)
+        {
+            savedPosition = transform.position;
+            nextInParty.GetComponent<PartyMovement>().savedPosition = nextInParty.transform.position;
+        }
     }
+
+    private void TriggerNextInParty() // Triggers the next in party to move
+	{
+        if(nextInParty != null)
+        {
+            PartyMovement nextMovement = nextInParty.GetComponent<PartyMovement>();
+            Vector3 diffHPositions = new Vector3(savedPosition.x - nextMovement.savedPosition.x, 0, savedPosition.z - nextMovement.savedPosition.z); // Horizontal Vector Difference
+            Vector3 diffVPositions = new Vector3(0, savedPosition.y - nextMovement.savedPosition.y, 0); // Vertical Vector Difference
+
+            if(diffHPositions.magnitude < 1.1) // Only move if adjacent (prevents oblique movement), sometimes is 1.000001 so can't do == 0
+            {
+                if(diffVPositions.y > 0) // If there was a vertical change
+                {
+                    nextMovement.QueueAnimation(new AnimationItem(diffVPositions, true, false));
+                    nextMovement.QueueAnimation(new AnimationItem(diffHPositions, false, true));
+                }	
+                else if(diffVPositions.y < 0) // If there was a vertical change
+                {
+                    nextMovement.QueueAnimation(new AnimationItem(diffHPositions, true, false));
+                    nextMovement.QueueAnimation(new AnimationItem(diffVPositions, false, true));
+                }
+                else
+                    nextMovement.QueueAnimation(new AnimationItem(diffHPositions, true, true));
+            }
+        }	
+	}
 }
