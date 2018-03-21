@@ -9,7 +9,7 @@ public class Movement : MonoBehaviour
     private AnimationItem currentAnimation;
     public Vector3 savedPosition;
     private float movementPercentageElapsed = 1;
-    private float baseSpeed = 10;
+    private float baseSpeed = 6;
     private float speed;
     public bool isMoving = false;
     private Queue<AnimationItem> animationQueue = new Queue<AnimationItem>();
@@ -19,9 +19,13 @@ public class Movement : MonoBehaviour
     {
         if(movementPercentageElapsed >= 1) // If no animation is playing
         {
-            if(nextInParty != null && nextInParty.GetComponent<PartyMovement>().isMoving) // Waits for all animations to end
-                return;
-            
+            foreach(GameObject member in party)
+                if(transform.tag == "Player" && member.GetComponent<PartyMovement>().isMoving) // Waits for all animations to end
+                    return;
+
+            if(animationQueue.Count == 0 && userInputQueue.Count == 0)
+                CheckHoldInput();
+
             if(animationQueue.Count == 0 && userInputQueue.Count != 0) // If there is no animation and an input Validates the input, it's up here so it starts in the same frame it validates
                 ValidateInput(userInputQueue.Dequeue());
             
@@ -43,8 +47,6 @@ public class Movement : MonoBehaviour
                 else
                     speed = baseSpeed;
             }
-            else
-                isMoving = false; // Reset state if no more movements
         }
         if(movementPercentageElapsed < 1) // Handles the actual animation frame by frame
         {
@@ -54,6 +56,10 @@ public class Movement : MonoBehaviour
                 deltaPercentage = (1 - movementPercentageElapsed);   
             transform.Translate(currentAnimation.GetVector() * deltaPercentage);
             movementPercentageElapsed += deltaPercentage;
+
+            if(movementPercentageElapsed == 1 && animationQueue.Count == 0 && userInputQueue.Count == 0) // if there is no more animations and it's the end toggles isMoving, saves a frame
+                isMoving = false;
+             
         }
     }
 
@@ -66,8 +72,8 @@ public class Movement : MonoBehaviour
     /* Enqueues palyer input */
     public void QueueInput(Vector3 direction)
     {
-        if(userInputQueue.Count < 3)  // To prevent people from spamming the button and adding new inputs
-            userInputQueue.Enqueue(direction);
+        if(userInputQueue.Count < 3) // To prevent people from spamming the button and adding new inputs
+            userInputQueue.Enqueue(direction);  
     }
 
     /* Validates the input and adds animation accordingly */
@@ -158,4 +164,6 @@ public class Movement : MonoBehaviour
             }
         }	
 	}
+
+    protected virtual void CheckHoldInput() {}
 }

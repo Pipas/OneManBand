@@ -20,28 +20,14 @@ public class PlayerMovement : Movement
 
 	private void HandleInput()
 	{
-		if(!isMoving) // So you can hold down the button and it works
-		{
-			if(Input.GetButton("Up"))
-				QueueInput(Vector3.forward);
-			if(Input.GetButton("Down"))
-				QueueInput(Vector3.back);
-			if(Input.GetButton("Left"))
-				QueueInput(Vector3.left);
-			if(Input.GetButton("Right"))
-				QueueInput(Vector3.right);
-		}
-		else // So if you click during an animation it still works
-		{
-			if(Input.GetButtonDown("Up"))
-				QueueInput(Vector3.forward);
-			if(Input.GetButtonDown("Down"))
-				QueueInput(Vector3.back);
-			if(Input.GetButtonDown("Left"))
-				QueueInput(Vector3.left);
-			if(Input.GetButtonDown("Right"))
-				QueueInput(Vector3.right);
-		}
+		if(Input.GetButtonDown("Up"))
+			QueueInput(Vector3.forward);
+		if(Input.GetButtonDown("Down"))
+			QueueInput(Vector3.back);
+		if(Input.GetButtonDown("Left"))
+			QueueInput(Vector3.left);
+		if(Input.GetButtonDown("Right"))
+			QueueInput(Vector3.right);
 
 		if(Input.GetButtonDown("Interact"))
 			checkSurroundings();
@@ -96,5 +82,17 @@ public class PlayerMovement : Movement
 			nextInParty = null;
 			party.RemoveAt(party.Count - 1);
 		}
+	}
+
+	protected override void CheckHoldInput()
+	{
+		if(Input.GetButton("Up"))
+			QueueInput(Vector3.forward);
+		if(Input.GetButton("Down"))
+			QueueInput(Vector3.back);
+		if(Input.GetButton("Left"))
+			QueueInput(Vector3.left);
+		if(Input.GetButton("Right"))
+			QueueInput(Vector3.right);
 	}
 }
