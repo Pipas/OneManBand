@@ -10,11 +10,10 @@ public class Movement : MonoBehaviour
     public Vector3 savedPosition;
     private float movementPercentageElapsed = 1;
     private float baseSpeed = 6;
-    private float speed;
     public bool isMoving = false;
     private Queue<AnimationItem> animationQueue = new Queue<AnimationItem>();
     private Queue<Vector3> userInputQueue = new Queue<Vector3>();
-
+    
     public void HandleMovement()
     {
         if(movementPercentageElapsed >= 1) // If no animation is playing
@@ -41,16 +40,11 @@ public class Movement : MonoBehaviour
 
                 movementPercentageElapsed = 0;
                 isMoving = true;
-                
-                if(currentAnimation.GetVector().y < 0) // Faster when falling to imitate gravity
-                    speed = baseSpeed * 3;
-                else
-                    speed = baseSpeed;
             }
         }
         if(movementPercentageElapsed < 1) // Handles the actual animation frame by frame
         {
-            float delta = Time.deltaTime * speed;
+            float delta = Time.deltaTime * currentAnimation.GetSpeed();
             float deltaPercentage = delta / currentAnimation.GetVector().magnitude;
             if(movementPercentageElapsed + deltaPercentage > 1)
                 deltaPercentage = (1 - movementPercentageElapsed);   
@@ -58,8 +52,10 @@ public class Movement : MonoBehaviour
             movementPercentageElapsed += deltaPercentage;
 
             if(movementPercentageElapsed == 1 && animationQueue.Count == 0 && userInputQueue.Count == 0) // if there is no more animations and it's the end toggles isMoving, saves a frame
+            {
                 isMoving = false;
-             
+                CheckIfDitched(); // At the end of an animation checks to see if party members were ditched
+            } 
         }
     }
 
@@ -87,6 +83,16 @@ public class Movement : MonoBehaviour
             obstacle = hit.transform.gameObject;
             if(obstacle.tag == "Ladder")
                 HandleLadder(obstacle, direction); // If there is a ladder
+            else if(obstacle.tag == "Party")
+            {
+                QueueAnimation(new AnimationItem(direction/5f, baseSpeed/2, false, false)); // If can't move enqueues small animation to display that you can't move
+                QueueAnimation(new AnimationItem(-direction/5f, baseSpeed/2, false, false)); // Enqueues reverse animation
+            }
+            else
+            {
+                QueueAnimation(new AnimationItem(direction/10f, baseSpeed/2, false, false)); // If can't move enqueues small animation to display that you can't move
+                QueueAnimation(new AnimationItem(-direction/10f, baseSpeed/2, false, false)); // Enqueues reverse animation
+            }
         }
         else
             HandleNoObstacle(direction); // If there is no obstacle checks if there is a floor
@@ -104,17 +110,17 @@ public class Movement : MonoBehaviour
             {
                 if((int) hit.distance > 0) // If there is a fall enqueues 2 animations move and fall
                 {
-                    QueueAnimation(new AnimationItem(direction, true, false));
-                    QueueAnimation(new AnimationItem(Vector3.down * (int) hit.distance, false, true));
+                    QueueAnimation(new AnimationItem(direction, baseSpeed, true, false));
+                    QueueAnimation(new AnimationItem(Vector3.down * (int) hit.distance, baseSpeed * 3, false, true));
                 }
                 else // If not just moves
-                    QueueAnimation(new AnimationItem(direction, true, true));
+                    QueueAnimation(new AnimationItem(direction, baseSpeed, true, true));
                 return;
             }
         }
 
-        QueueAnimation(new AnimationItem(direction/2f, false, false)); // If can't move enqueues small animation to display that you can't move
-        QueueAnimation(new AnimationItem(-direction/2f, false, false)); // Enqueues reverse animation
+        QueueAnimation(new AnimationItem(direction/3f, baseSpeed/1.5f, false, false)); // If can't move enqueues small animation to display that you can't move
+        QueueAnimation(new AnimationItem(-direction/3f, baseSpeed/1.5f, false, false)); // Enqueues reverse animation
     }
 
     public void HandleLadder(GameObject ladder, Vector3 direction)
@@ -125,8 +131,8 @@ public class Movement : MonoBehaviour
             return;
         else // Enqueues the ladder climbing animations
         {
-            QueueAnimation(new AnimationItem(Vector3.up * ladder.GetComponent<Renderer>().bounds.size.y, true, false));
-            QueueAnimation(new AnimationItem(direction, false, true));
+            QueueAnimation(new AnimationItem(Vector3.up * ladder.GetComponent<Renderer>().bounds.size.y, baseSpeed, true, false));
+            QueueAnimation(new AnimationItem(direction, baseSpeed, false, true));
         }
     }
 
@@ -151,19 +157,21 @@ public class Movement : MonoBehaviour
             {
                 if(diffVPositions.y > 0) // If there was a vertical change
                 {
-                    nextMovement.QueueAnimation(new AnimationItem(diffVPositions, true, false));
-                    nextMovement.QueueAnimation(new AnimationItem(diffHPositions, false, true));
+                    nextMovement.QueueAnimation(new AnimationItem(diffVPositions, baseSpeed, true, false));
+                    nextMovement.QueueAnimation(new AnimationItem(diffHPositions, baseSpeed, false, true));
                 }	
                 else if(diffVPositions.y < 0) // If there was a vertical change
                 {
-                    nextMovement.QueueAnimation(new AnimationItem(diffHPositions, true, false));
-                    nextMovement.QueueAnimation(new AnimationItem(diffVPositions, false, true));
+                    nextMovement.QueueAnimation(new AnimationItem(diffHPositions, baseSpeed, true, false));
+                    nextMovement.QueueAnimation(new AnimationItem(diffVPositions, baseSpeed * 3, false, true));
                 }
                 else
-                    nextMovement.QueueAnimation(new AnimationItem(diffHPositions, true, true));
+                    nextMovement.QueueAnimation(new AnimationItem(diffHPositions, baseSpeed, true, true));
             }
         }	
 	}
 
     protected virtual void CheckHoldInput() {}
+
+    public virtual void CheckIfDitched() {}
 }

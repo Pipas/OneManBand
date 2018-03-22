@@ -38,7 +38,7 @@ public class PlayerMovement : Movement
 
 	private void checkSurroundings() // Checks all surrounding blocks and adds party members to party
 	{
-		Vector3[] directions = {Vector3.forward, Vector3.back, Vector3.left, Vector3.right};
+		Vector3[] directions = {Vector3.forward, Vector3.left, Vector3.back, Vector3.right};
 		RaycastHit hit;
         GameObject obstacle = null;
 
@@ -72,15 +72,16 @@ public class PlayerMovement : Movement
 
 	private void DitchPartyMember()
 	{
-		if(party.Count > 1)
+		for (int i = party.Count - 1; i >= 0; i--)
 		{
-			party[party.Count - 2].GetComponent<PartyMovement>().nextInParty = null;
-			party.RemoveAt(party.Count - 1);
-		}
-		else if(party.Count == 1)
-		{
-			nextInParty = null;
-			party.RemoveAt(party.Count - 1);
+			if(party[i].GetComponent<PartyMovement>().toBeDitched == false)
+			{
+				party[i].GetComponent<PartyMovement>().toBeDitched = true;
+				if(!party[i].GetComponent<PartyMovement>().isMoving)
+					party[i].GetComponent<PartyMovement>().CheckIfDitched();
+					
+				break;
+			}	
 		}
 	}
 

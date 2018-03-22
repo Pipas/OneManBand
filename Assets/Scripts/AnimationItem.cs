@@ -5,13 +5,14 @@ using UnityEngine;
 public class AnimationItem
 {
 	private Vector3 vector;
-	private bool checkForward;
-	private bool triggerParty;
+	private float speed;
 	private bool savePosition;
-
-	public AnimationItem(Vector3 v, bool sP, bool tP)
+	private bool triggerParty;
+	
+	public AnimationItem(Vector3 v, float s, bool sP, bool tP)
 	{
 		vector = v;
+		speed = s;
 		savePosition = sP;
 		triggerParty = tP;
 	}
@@ -21,13 +22,18 @@ public class AnimationItem
 		return vector;
 	}
 
-	public bool TriggerParty()
+	public float GetSpeed()
 	{
-		return triggerParty;
+		return speed;
 	}
 
 	public bool SavePosition()
 	{
 		return savePosition;
+	}
+
+	public bool TriggerParty()
+	{
+		return triggerParty;
 	}
 }
