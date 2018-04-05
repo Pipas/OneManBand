@@ -66,7 +66,7 @@ public class PlayerMovement : Movement
 
 	private void HandlePartyMovement()
 	{
-		foreach(GameObject member in party)
+		foreach(GameObject member in party.ToArray())
 			member.GetComponent<PartyMovement>().HandleMovement();
 	}
 
