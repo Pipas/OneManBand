@@ -83,6 +83,10 @@ public class Movement : MonoBehaviour
             obstacle = hit.transform.gameObject;
             if(obstacle.tag == "Ladder")
                 HandleLadder(obstacle, direction); // If there is a ladder
+            else if(obstacle.tag == "Sheet")
+            {
+                HandleSheet(obstacle, direction); // If there is a Sheet
+            }
             else if(obstacle.tag == "Party")
             {
                 QueueAnimation(new AnimationItem(direction/5f, baseSpeed/2, false, false)); // If can't move enqueues small animation to display that you can't move
@@ -134,6 +138,14 @@ public class Movement : MonoBehaviour
             QueueAnimation(new AnimationItem(Vector3.up * ladder.GetComponent<Renderer>().bounds.size.y, baseSpeed, true, false));
             QueueAnimation(new AnimationItem(direction, baseSpeed, false, true));
         }
+    }
+
+    public void HandleSheet(GameObject sheet, Vector3 direction)
+    {
+        sheet.GetComponent<Sheet>().RemovePage();
+        int Level1Pages = PlayerPrefs.GetInt("Level1Pages");
+        PlayerPrefs.SetInt("Level1Pages", Level1Pages + 1);
+        HandleNoObstacle(direction);
     }
 
     private void SavePosition() // Saves self and next in party position to calculate the movement

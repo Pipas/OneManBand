@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ladder
   - Party
+  - Sheet
   layers:
   - Default
   - TransparentFX
