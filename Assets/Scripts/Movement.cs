@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour 
 {
-    protected static List<GameObject> party = new List<GameObject>();
+    public enum State { falling, moving, still, climbing }
+    public State state;
+    public static List<GameObject> party = new List<GameObject>();
     public GameObject nextInParty;
     private AnimationItem currentAnimation;
     public Vector3 savedPosition;
@@ -32,11 +34,13 @@ public class Movement : MonoBehaviour
             {
                 currentAnimation = animationQueue.Dequeue();
 
+                changeState(currentAnimation);
+
                 if(currentAnimation.SavePosition()) // if it's supposed to save its position, used for the next in party
                     SavePosition();
 
                 if(currentAnimation.TriggerParty()) // Triggers next in party to start animation with new saved animations
-                        TriggerNextInParty();
+                    TriggerNextInParty();
 
                 movementPercentageElapsed = 0;
                 isMoving = true;
@@ -54,8 +58,22 @@ public class Movement : MonoBehaviour
             if(movementPercentageElapsed == 1 && animationQueue.Count == 0 && userInputQueue.Count == 0) // if there is no more animations and it's the end toggles isMoving, saves a frame
             {
                 isMoving = false;
+                state = State.still;
                 CheckIfDitched(); // At the end of an animation checks to see if party members were ditched
             } 
+        }
+    }
+
+    private void changeState(AnimationItem currentAnimation)
+    {
+        if(currentAnimation.GetVector().y > 0)
+            state = State.climbing;
+        else if(currentAnimation.GetVector().y == 0)
+        {
+            if(animationQueue.Count != 0 && animationQueue.Peek().GetVector().y != 0)
+                state = State.falling;
+            else
+                state = State.moving;
         }
     }
 
@@ -112,10 +130,10 @@ public class Movement : MonoBehaviour
             obstacle = hit.transform.gameObject;
             if(obstacle.tag != "Party")
             {
-                if((int) hit.distance > 0) // If there is a fall enqueues 2 animations move and fall
+                if(hit.distance > 0.4f) // If there is a fall enqueues 2 animations move and fall
                 {
                     QueueAnimation(new AnimationItem(direction, baseSpeed, true, false));
-                    QueueAnimation(new AnimationItem(Vector3.down * (int) hit.distance, baseSpeed * 3, false, true));
+                    QueueAnimation(new AnimationItem(Vector3.down * (hit.distance - 0.4f), baseSpeed * 3, false, true));
                 }
                 else // If not just moves
                     QueueAnimation(new AnimationItem(direction, baseSpeed, true, true));
@@ -184,6 +202,5 @@ public class Movement : MonoBehaviour
 	}
 
     protected virtual void CheckHoldInput() {}
-
     public virtual void CheckIfDitched() {}
 }
