@@ -11,7 +11,7 @@ public class Movement : MonoBehaviour
     private AnimationItem currentAnimation;
     public Vector3 savedPosition;
     private float movementPercentageElapsed = 1;
-    private float baseSpeed = 6;
+    public float baseSpeed = 6;
     public bool isMoving = false;
     private Queue<AnimationItem> animationQueue = new Queue<AnimationItem>();
     private Queue<Vector3> userInputQueue = new Queue<Vector3>();
