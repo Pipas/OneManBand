@@ -6,15 +6,18 @@ public class AscendingObject : MonoBehaviour, Triggerable
 {
     public enum State { retracted, extending, retracting, extended }
     public State state;
-    private Vector3 initPosition;
+    private Vector3 initPosition, endPosition;
+    private float travelLength, startTime;
     private GameObject aboveCollider;
     private List<Collider> colliders;
     private bool hasPlayer = false;
-    public int deltaMove;
+    public Vector3 deltaMove;
     public float speed;
     void Start () 
     {
         initPosition = transform.position;
+        endPosition = initPosition + deltaMove;
+        travelLength = Vector3.Distance(initPosition, endPosition);
         colliders = new List<Collider>();
         aboveCollider = transform.GetChild(0).gameObject;
     }
@@ -24,41 +27,42 @@ public class AscendingObject : MonoBehaviour, Triggerable
     {
         if(state == State.extending)
         {
-            float translation = Time.deltaTime * speed;
-            if(transform.position.y + translation > initPosition.y + deltaMove)
+            float distCovered = (Time.time - startTime) * speed;
+            float fracJourney = distCovered / travelLength;
+            Vector3 deltaTransform = Vector3.Lerp(initPosition, endPosition, fracJourney) - transform.position;
+            transform.Translate(deltaTransform);
+            TranslateObjectsAbove(deltaTransform);
+            if(fracJourney >= 1)
             {
-                translation = initPosition.y + deltaMove - transform.position.y;
-                state = State.extended;
                 aboveCollider.layer = 2;
+                state = State.extended;
             }
-                 
-            transform.Translate(Vector3.up * translation);
-            foreach (Collider collider in colliders)
-            {
-                if(collider.GetComponent<Movement>().state != Movement.State.falling)
-                    collider.transform.Translate(Vector3.up * translation);
-            }
+            
         }
         else if (state == State.retracting)
         {
-            float translation = - Time.deltaTime * speed;
-            if(transform.position.y + translation < initPosition.y)
+            float distCovered = (Time.time - startTime) * speed;
+            float fracJourney = distCovered / travelLength; 
+            Vector3 deltaTransform = Vector3.Lerp(endPosition, initPosition, fracJourney) - transform.position;
+            transform.Translate(deltaTransform);
+            TranslateObjectsAbove(deltaTransform);
+            if(fracJourney >= 1)
             {
-                translation = initPosition.y - transform.position.y;
-                state = State.retracted;
                 aboveCollider.layer = 2;
-            }
-                 
-            transform.Translate(Vector3.up * translation);
-            foreach (Collider collider in colliders)
-            {
-                if(collider.GetComponent<Movement>().state != Movement.State.falling)
-                    collider.transform.Translate(Vector3.up * translation);
+                state = State.retracted;
             }
         }
 
         if (Input.GetKeyDown("k"))
             Trigger();
+    }
+    private void TranslateObjectsAbove(Vector3 deltaTransform)
+    {
+        foreach (Collider collider in colliders)
+        {
+            if(collider.GetComponent<Movement>().state != Movement.State.falling)
+                collider.transform.Translate(deltaTransform);
+        }
     }
 
     public void AddObject(Collider obj)
@@ -80,9 +84,15 @@ public class AscendingObject : MonoBehaviour, Triggerable
     public void Trigger()
     {
         if(state == State.retracted)
+        {
             state = State.extending;
+            startTime = Time.time;
+        }
         else if(state == State.extended)
+        {
             state = State.retracting;
+            startTime = Time.time;
+        }
 
         aboveCollider.layer = 0;
 

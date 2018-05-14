@@ -10,6 +10,8 @@ public class Spotlight : MonoBehaviour
     public float delta_intensity;
     private float currentDelta;
 
+    public bool hasPlayer;
+
 	// Use this for initialization
 	void Start () 
     {
@@ -40,5 +42,17 @@ public class Spotlight : MonoBehaviour
             else
                 currentDelta = -currentDelta; 
         }
+    }
+
+    private void OnTriggerEnter(Collider other) 
+    {
+        if(other.tag == "Player")
+            hasPlayer = true;
+    }
+
+    private void OnTriggerExit(Collider other) 
+    {
+        if(other.tag == "Player")
+            hasPlayer = false;
     }
 }
