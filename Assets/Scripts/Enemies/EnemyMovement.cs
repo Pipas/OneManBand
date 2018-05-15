@@ -6,10 +6,11 @@ public class EnemyMovement : MonoBehaviour {
     public Transform[] points;
     private float speed = 1.5f;
     private int currentPoint = 0;
+    private bool running;
 
 	// Use this for initialization
 	void Start () {
-        GetComponent<Animator>().SetBool("RunToggle", true);
+        running = true;
 	}
 	
 	// Update is called once per frame
@@ -20,11 +21,30 @@ public class EnemyMovement : MonoBehaviour {
 
             if (dist < 0.1f)
             {
-                currentPoint++;
+                int tmpIndex = currentPoint + 1;
+
+                if (tmpIndex >= points.Length)
+                {
+                    tmpIndex = 0;
+                }
+
+                Vector3 targetDir = points[tmpIndex].position - transform.position;
+                float step = speed * Time.deltaTime;
+                Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
+                Debug.DrawRay(transform.position, newDir, Color.red);
+
+                transform.rotation = Quaternion.LookRotation(newDir);
+
+                Vector3 dist_vec = (points[tmpIndex].position - transform.position).normalized;
+                float dotProd = Vector3.Dot(dist_vec, transform.forward);
+
+                if (dotProd >= 1.00)
+                {
+                    currentPoint++;
+                }
             }
             else
             {
-                transform.LookAt(points[currentPoint].position);
                 transform.position = Vector3.Lerp(this.transform.position, points[currentPoint].position, Time.deltaTime * speed);
             }
         }
