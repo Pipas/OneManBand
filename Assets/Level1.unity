@@ -3437,6 +3437,7 @@ MonoBehaviour:
   points:
   - {fileID: 691475096}
   - {fileID: 896470548}
+  hitbox: {fileID: 1226430771}
 --- !u!1 &1271718112
 GameObject:
   m_ObjectHideFlags: 0

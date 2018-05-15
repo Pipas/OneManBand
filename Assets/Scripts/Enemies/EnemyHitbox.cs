@@ -14,14 +14,18 @@ public class EnemyHitbox : MonoBehaviour {
     {
         int layerMask = 1 << 8;
         layerMask = ~layerMask;
-
+        
+        Vector3 origin = transform.position;
+        Vector3 direction = transform.TransformDirection(Vector3.forward);
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 2, layerMask))
+        
+        if (Physics.Raycast(origin, direction, out hit, 2, layerMask))
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
 
             if (hit.collider.name == "Player")
             {
+                Debug.Log("gotcha!");
                 playerWithinRange = true;
             }
             else
