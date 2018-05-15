@@ -8,54 +8,67 @@ public class EnemyHitbox : MonoBehaviour {
     private float attackCooldown = 3.0f;
 
     public HealthSystem playerHealth;
+    public EnemyMovement enemyMovement;
 	
 	// Update is called once per frame
     void Update()
     {
-        int layerMask = 1 << 8;
-        layerMask = ~layerMask;
+        if (!playerHealth.gameOver) {
+            int layerMask = 1 << 8;
+            layerMask = ~layerMask;
+            Vector3 origin = transform.position;
+            Vector3 direction = transform.TransformDirection(Vector3.forward);
+            RaycastHit hit;
         
-        Vector3 origin = transform.position;
-        Vector3 direction = transform.TransformDirection(Vector3.forward);
-        RaycastHit hit;
-        
-        if (Physics.Raycast(origin, direction, out hit, 2, layerMask))
-        {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-
-            if (hit.collider.name == "Player")
+            if (Physics.Raycast(origin, direction, out hit, 3, layerMask))
             {
-                Debug.Log("gotcha!");
-                playerWithinRange = true;
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.red);
+
+                if (hit.collider.name == "Player")
+                {
+                    playerWithinRange = true;
+                    enemyMovement.stopEnemyAnimation();
+                }
+                else
+                {
+                    playerWithinRange = false;
+                }
             }
             else
             {
                 playerWithinRange = false;
             }
-        }
-        else
-        {
-            playerWithinRange = false;
-        }
 
-        if (onCooldown)
-        {
-            if (attackCooldown <= 0)
+            if (onCooldown)
             {
-                attackCooldown = 3.0f;
-                onCooldown = false;
+                decreaseCooldown();
             }
             else
             {
-                attackCooldown -= Time.deltaTime;
+                attackPlayer();
             }
+        }
+    }
+
+    public void decreaseCooldown()
+    {
+        if (attackCooldown <= 0)
+        {
+            attackCooldown = 3.0f;
+            onCooldown = false;
         }
         else
         {
-            if (playerWithinRange) {
-                playerHealth.TakeDamage(-1);
-                onCooldown = true;
-            }
+            attackCooldown -= Time.deltaTime;
+        }
+    }
+
+    public void attackPlayer()
+    {
+        if (playerWithinRange)
+        {
+            playerHealth.TakeDamage(-1);
+            onCooldown = true;
         }
     }
 

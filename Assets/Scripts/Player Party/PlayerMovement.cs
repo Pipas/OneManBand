@@ -4,7 +4,8 @@ using UnityEngine;
 using System;
 
 public class PlayerMovement : Movement 
-{	
+{
+    public HealthSystem playerHealth;
     void Start ()
     {
         savedPosition = transform.position;
@@ -12,11 +13,14 @@ public class PlayerMovement : Movement
     }
     void Update ()
     {	
-        HandleInput(); // Handles the user input, duh
+        if(!playerHealth.gameOver)
+        {
+            HandleInput(); // Handles the user input, duh
 
-        HandleMovement(); // Updates movement everyframe
+            HandleMovement(); // Updates movement everyframe
 
-        HandlePartyMovement(); // Updates the rest of the party movement, this way it's sequential after the player
+            HandlePartyMovement(); // Updates the rest of the party movement, this way it's sequential after the player
+        }
     }
 
     private void HandleInput()

@@ -25,6 +25,19 @@ public class HealthSystem : MonoBehaviour {
         UpdateHearts();
 	}
 
+    public void Update()
+    {
+        if (gameOver)
+        {
+            gameOverScreenTime -= Time.deltaTime;
+
+            if (gameOverScreenTime < 0)
+            {
+                RestartGame();
+            }
+        }
+    }
+
     void UpdateHearts()
     {
         if (!gameOver)
@@ -57,11 +70,7 @@ public class HealthSystem : MonoBehaviour {
                 }
             }
 
-            if (currHealth == 0)
-            {
-                gameOver = true;
-                gameOverScreen.SetActive(true);
-            }
+            checkIfGameOver();
         }
     }
     
@@ -72,24 +81,20 @@ public class HealthSystem : MonoBehaviour {
         UpdateHearts();
     }
 
-    public void Restart()
+    public void checkIfGameOver()
+    {
+        if (currHealth == 0)
+        {
+            gameOver = true;
+            gameOverScreen.SetActive(true);
+        }
+    }
+
+    public void RestartGame()
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    public void Update()
-    {
-        if (gameOver)
-        {
-            gameOverScreenTime -= Time.deltaTime;
 
-            if (gameOverScreenTime < 0)
-            {
-                Restart();
-                gameOver = false;
-                currHealth = maxHealth;
-            }
-        }
-    }
 }
