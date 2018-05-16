@@ -92,6 +92,7 @@ public class HealthSystem : MonoBehaviour {
     {
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Movement.party = new List<GameObject>();
     }
 
 

@@ -19,6 +19,7 @@ public class EnemyMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
         if ((!hitbox.isPlayerWithinRange() && !playerHealth.gameOver) || playerHealth.gameOver)
         {
             autoMovement();
@@ -29,8 +30,8 @@ public class EnemyMovement : MonoBehaviour {
     {
         moveEnemyAnimation();
 
-        if (isRunningAnimationPlaying())
-        {
+        //if (isRunningAnimationPlaying())
+        //{
             if (currentPoint < points.Length) // this is to check if it's less than the length of the points
             {
                 float dist = Vector3.Distance(transform.position, points[currentPoint].position);
@@ -67,7 +68,7 @@ public class EnemyMovement : MonoBehaviour {
             {
                 currentPoint = 0; // this is to loop it back to zero again
             }
-        }
+        //}
     }
 
     public void moveEnemyAnimation()

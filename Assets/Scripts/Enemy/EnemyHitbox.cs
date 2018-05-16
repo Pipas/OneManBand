@@ -31,8 +31,7 @@ public class EnemyHitbox : MonoBehaviour {
     void LateUpdate()
     {
         if (!playerHealth.gameOver) {
-            int layerMask = 1 << 2;
-            layerMask = ~layerMask;
+            int layerMask = 1 << 8;
             Vector3 origin = transform.position;
             Vector3 direction = transform.TransformDirection(Vector3.forward);
             RaycastHit hit;
