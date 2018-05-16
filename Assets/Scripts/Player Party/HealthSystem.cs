@@ -6,11 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class HealthSystem : MonoBehaviour {
     public bool gameOver = false;
-    private float gameOverScreenTime = 3.0f;
     public GameObject gameOverScreen;
 
     public int startHearts = 5;
     public int currHealth;
+
+    private float gameOverScreenTime = 3.0f;
     private int healthPerHeart = 2;
 
     public Image[] healthImages;
