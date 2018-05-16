@@ -9,10 +9,8 @@ public class HealthSystem : MonoBehaviour {
     private float gameOverScreenTime = 3.0f;
     public GameObject gameOverScreen;
 
-    private int maxHeartAmount = 5;
     public int startHearts = 5;
     public int currHealth;
-    private int maxHealth;
     private int healthPerHeart = 2;
 
     public Image[] healthImages;
@@ -21,7 +19,6 @@ public class HealthSystem : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         currHealth = startHearts * healthPerHeart;
-        maxHealth = maxHeartAmount * healthPerHeart;
         UpdateHearts();
 	}
 

@@ -4,17 +4,34 @@ using UnityEngine;
 
 public class EnemyHitbox : MonoBehaviour {
     private bool playerWithinRange = false;
+    private float playerDistance;
     private bool onCooldown = false;
     private float attackCooldown = 3.0f;
 
     public HealthSystem playerHealth;
     public EnemyMovement enemyMovement;
+
+    public Transform projectileSpawn;
+    Projectile projectile;
+
+    void Start()
+    {
+        projectile = Resources.Load<Projectile>("Projectile");
+    }
+
+    public void performAttack(float range)
+    {
+        Projectile projectileInstance = (Projectile)Instantiate(projectile, projectileSpawn.position, projectileSpawn.rotation);
+        projectileInstance.direction = projectileSpawn.forward;
+        projectileInstance.range = range;
+        projectileInstance.sendProjectile();
+    }
 	
 	// Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         if (!playerHealth.gameOver) {
-            int layerMask = 1 << 8;
+            int layerMask = 1 << 2;
             layerMask = ~layerMask;
             Vector3 origin = transform.position;
             Vector3 direction = transform.TransformDirection(Vector3.forward);
@@ -26,8 +43,9 @@ public class EnemyHitbox : MonoBehaviour {
 
                 if (hit.collider.name == "Player")
                 {
-                    playerWithinRange = true;
                     enemyMovement.stopEnemyAnimation();
+                    playerDistance = hit.distance;
+                    playerWithinRange = true;
                 }
                 else
                 {
@@ -39,14 +57,16 @@ public class EnemyHitbox : MonoBehaviour {
                 playerWithinRange = false;
             }
 
-            if (onCooldown)
-            {
-                decreaseCooldown();
-            }
-            else
-            {
-                attackPlayer();
-            }
+            //if (enemyMovement.isIdleAnimationPlaying()) {
+                if (onCooldown)
+                {
+                    decreaseCooldown();
+                }
+                else
+                {
+                    attackPlayer();
+                }
+            //}
         }
     }
 
@@ -67,7 +87,7 @@ public class EnemyHitbox : MonoBehaviour {
     {
         if (playerWithinRange)
         {
-            playerHealth.TakeDamage(-1);
+            performAttack(playerDistance);
             onCooldown = true;
         }
     }

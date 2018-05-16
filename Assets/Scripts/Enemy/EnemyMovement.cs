@@ -15,7 +15,6 @@ public class EnemyMovement : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         running = true;
-        //Physics.IgnoreCollision(GetComponent<Collider>(), player.GetComponent<Collider>());
     }
 	
 	// Update is called once per frame
@@ -24,14 +23,13 @@ public class EnemyMovement : MonoBehaviour {
         {
             autoMovement();
         }
-
 	}
 
     public void autoMovement()
     {
         moveEnemyAnimation();
 
-        if (GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Run"))
+        if (isRunningAnimationPlaying())
         {
             if (currentPoint < points.Length) // this is to check if it's less than the length of the points
             {
@@ -88,5 +86,16 @@ public class EnemyMovement : MonoBehaviour {
             running = false;
         }
     }
+
+    public bool isRunningAnimationPlaying()
+    {
+        return GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Run");
+    }
+
+    public bool isIdleAnimationPlaying()
+    {
+        return GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Idle");
+    }
+
 
 }
