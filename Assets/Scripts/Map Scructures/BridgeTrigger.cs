@@ -22,8 +22,9 @@ public class BridgeTrigger : MonoBehaviour
                 direction = 1;
             else
                 direction = -1;
-            Player.QueueAnimation(new AnimationItem(Vector3.right * direction * GetComponent<Renderer>().bounds.size.x, Player.baseSpeed, true, true));
-        
+            for (int i = 0; i < GetComponent<Renderer>().bounds.size.x; i++)
+                Player.QueueAnimation(new AnimationItem(Vector3.right * direction, Player.baseSpeed, true, true));
+
             GameObject.Find("Main Camera").GetComponent<CameraAnimation>().MoveCamera(Vector3.right * direction * island.cameraShift);
         }
     }

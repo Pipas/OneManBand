@@ -5,12 +5,13 @@ using UnityEngine;
 public class Spotlight : MonoBehaviour 
 {
     private Light spotlight;
-    public float max_intensity;
-    public float min_intensity;
-    public float delta_intensity;
+    private float max_intensity = 0.6f;
+    private float min_intensity = 0.3f;
+    private float delta_intensity = 0.15f;
+    private float widen_speed = 25f;
     private float currentDelta;
-
-    public bool hasPlayer;
+    private Light directionalLight;
+    public bool hasPlayer, retracting = false;
 
 	// Use this for initialization
 	void Start () 
@@ -18,6 +19,7 @@ public class Spotlight : MonoBehaviour
 		spotlight = GetComponent<Light>();
         spotlight.intensity = min_intensity;
         currentDelta = delta_intensity;
+        directionalLight = GameObject.Find("Directional Light").GetComponent<Light>();
 	}
 	
 	// Update is called once per frame
@@ -42,17 +44,45 @@ public class Spotlight : MonoBehaviour
             else
                 currentDelta = -currentDelta; 
         }
+
+        if(hasPlayer)
+        {
+            if(spotlight.spotAngle < 40f)
+                spotlight.spotAngle += Time.deltaTime * widen_speed;
+
+            if(directionalLight.intensity > 0.1f)
+                directionalLight.intensity -= Time.deltaTime * 15;
+        }
+        else if(retracting)
+        {
+            if(spotlight.spotAngle > 29f)
+                spotlight.spotAngle -= Time.deltaTime * widen_speed;
+            else
+                retracting = false;
+
+            if(directionalLight.intensity < 1f)
+                directionalLight.intensity += Time.deltaTime * 15;
+        }
     }
 
     private void OnTriggerEnter(Collider other) 
     {
         if(other.tag == "Player")
+        {
+            min_intensity = 0.6f;
+            max_intensity = 2f;
             hasPlayer = true;
+        }
     }
 
     private void OnTriggerExit(Collider other) 
     {
         if(other.tag == "Player")
+        {
+            min_intensity = 0.3f;
+            max_intensity = 0.6f;
             hasPlayer = false;
+            retracting = true;
+        }
     }
 }
