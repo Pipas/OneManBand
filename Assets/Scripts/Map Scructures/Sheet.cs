@@ -5,6 +5,7 @@ using UnityEngine;
 public class Sheet : MonoBehaviour 
 {
     public float rotationSpeed;
+    public SheetBar sheetBar;
 
 	// Use this for initialization
 	void Start () 
@@ -25,6 +26,7 @@ public class Sheet : MonoBehaviour
 
     public void RemovePage ()
     {
+        sheetBar.catchSheet();
         Destroy(transform.parent.gameObject);
     }
 }

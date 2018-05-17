@@ -8,8 +8,8 @@ public class EnemyMovement : MonoBehaviour {
     public HealthSystem playerHealth;
     public GameObject player;
 
-    private float speed = 1.5f;
-    private float rotationSpeed = 3f;
+    private float speed = 1f;
+    private float rotationSpeed = 2f;
     private int currentPoint = 0;
     private bool running;
 
