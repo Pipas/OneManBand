@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour {
-    public Transform[] points;
+    public Vector3[] points;
     public EnemyHitbox hitbox;
     public HealthSystem playerHealth;
     public GameObject player;
@@ -34,7 +34,7 @@ public class EnemyMovement : MonoBehaviour {
         //{
             if (currentPoint < points.Length) // this is to check if it's less than the length of the points
             {
-                float dist = Vector3.Distance(transform.position, points[currentPoint].position);
+                float dist = Vector3.Distance(transform.position, points[currentPoint]);
 
                 if (dist < 0.1f)
                 {
@@ -45,13 +45,13 @@ public class EnemyMovement : MonoBehaviour {
                         tmpIndex = 0;
                     }
 
-                    Vector3 targetDir = points[tmpIndex].position - transform.position;
+                    Vector3 targetDir = points[tmpIndex] - transform.position;
                     float step = speed * Time.deltaTime;
                     Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
 
                     transform.rotation = Quaternion.LookRotation(newDir);
 
-                    Vector3 dist_vec = (points[tmpIndex].position - transform.position).normalized;
+                    Vector3 dist_vec = (points[tmpIndex] - transform.position).normalized;
                     float dotProd = Vector3.Dot(dist_vec, transform.forward);
 
                     if (dotProd >= 1.00)
@@ -61,7 +61,7 @@ public class EnemyMovement : MonoBehaviour {
                 }
                 else
                 {
-                    transform.position = Vector3.Lerp(this.transform.position, points[currentPoint].position, Time.deltaTime * speed);
+                    transform.position = Vector3.Lerp(this.transform.position, points[currentPoint], Time.deltaTime * speed);
                 }
             }
             else
