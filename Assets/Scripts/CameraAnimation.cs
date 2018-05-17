@@ -106,6 +106,9 @@ public class CameraAnimation : MonoBehaviour
 
     private bool RemoveTransparency(Renderer rend)
     {
+        if(rend.material.color == null)
+            return false;
+
         Color tempColor = rend.material.color;
         float newTempColor = tempColor.a + Time.deltaTime * fadeSpeed;
 
