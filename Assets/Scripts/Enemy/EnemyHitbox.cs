@@ -6,7 +6,8 @@ public class EnemyHitbox : MonoBehaviour {
     private bool playerWithinRange = false;
     private float playerDistance;
     private bool onCooldown = false;
-    private float attackCooldown = 3.0f;
+    private const float ATTACK_COOL = 1f;
+    private float attackCooldown = ATTACK_COOL;
 
     public HealthSystem playerHealth;
     public EnemyMovement enemyMovement;
@@ -73,7 +74,7 @@ public class EnemyHitbox : MonoBehaviour {
     {
         if (attackCooldown <= 0)
         {
-            attackCooldown = 3.0f;
+            attackCooldown = ATTACK_COOL;
             onCooldown = false;
         }
         else

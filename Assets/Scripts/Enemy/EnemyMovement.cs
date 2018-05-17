@@ -8,7 +8,7 @@ public class EnemyMovement : MonoBehaviour {
     public HealthSystem playerHealth;
     public GameObject player;
 
-    private float speed = 1.5f;
+    private float speed = 2f;
     private int currentPoint = 0;
     private bool running;
 
@@ -36,7 +36,7 @@ public class EnemyMovement : MonoBehaviour {
             {
                 float dist = Vector3.Distance(transform.position, points[currentPoint].position);
 
-                if (dist < 0.1f)
+                if (dist < 0.5f)
                 {
                     int tmpIndex = currentPoint + 1;
 
@@ -54,13 +54,20 @@ public class EnemyMovement : MonoBehaviour {
                     Vector3 dist_vec = (points[tmpIndex].position - transform.position).normalized;
                     float dotProd = Vector3.Dot(dist_vec, transform.forward);
 
-                    if (dotProd >= 1.00)
+                    if (dotProd >= 0.9)
                     {
                         currentPoint++;
                     }
                 }
                 else
                 {
+
+                    Vector3 targetDir = points[currentPoint].position - transform.position;
+                    float step = speed * Time.deltaTime;
+                    Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
+
+                    transform.rotation = Quaternion.LookRotation(newDir);
+                    
                     transform.position = Vector3.Lerp(this.transform.position, points[currentPoint].position, Time.deltaTime * speed);
                 }
             }
