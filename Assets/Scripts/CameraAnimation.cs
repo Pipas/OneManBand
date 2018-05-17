@@ -41,7 +41,7 @@ public class CameraAnimation : MonoBehaviour
             for(int i = 0; i < hits.Length; i++)
             {
                 RaycastHit hit = hits[i];
-                if(hit.collider.tag == "Player")
+                if(hit.collider.tag == "Player" || hit.collider.tag == "Party")
                     break;
                 
                 Renderer rend = hit.transform.GetComponent<Renderer>();
@@ -91,6 +91,9 @@ public class CameraAnimation : MonoBehaviour
 
     private void MakeTransparent(Renderer rend, bool set)
     {
+        if(!rend.material.HasProperty("_Color"))
+            return;
+
         Color tempColor = rend.material.color;
         
         if(tempColor.a <= 0.5F)
@@ -106,7 +109,7 @@ public class CameraAnimation : MonoBehaviour
 
     private bool RemoveTransparency(Renderer rend)
     {
-        if(rend.material.color == null)
+        if(!rend.material.HasProperty("_Color"))
             return false;
 
         Color tempColor = rend.material.color;
