@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 public class Skillbar : MonoBehaviour {
@@ -37,6 +38,12 @@ public class Skillbar : MonoBehaviour {
 
     // radius in which the player can attack
     public double Radius;
+
+    // margin (ms) skill press needs to match melody
+    public int SkillPressMargin;
+
+    // the max duration a pause can have in the melody
+    public int MaxPauseDuration;
     
 
     /* --- Attrs --- */
@@ -123,7 +130,15 @@ public class Skillbar : MonoBehaviour {
             return;
         }
 
-        pressedSkills.Add(new SkillPress(pressedSkill, getElapsedTime()));
+        long elapsedTime = getElapsedTime();
+        
+        if (elapsedTime > MaxPauseDuration)
+        {
+            Debug.Log("Memory cleared!");
+            pressedSkills.Clear();
+        }
+
+        pressedSkills.Add(new SkillPress(pressedSkill, elapsedTime));
 
         GameObject[] triggerables = GameObject.FindGameObjectsWithTag("Triggerable");
 
@@ -132,23 +147,59 @@ public class Skillbar : MonoBehaviour {
             double dist = Vector3.Distance(Player.transform.position, obj.transform.position);
 
             if (dist <= Radius) {
-                Debug.Log("Attack!");
-                checkMelody(obj.GetComponent<Melody>().melody);
+                if (checkMelody(obj.GetComponent<Melody>().melody))
+                {
+                    Debug.Log("Attack!");
+                }
             }
         }
     }
 
 
     // checks if the given melody matches the pressed skills
-    private bool checkMelody(string melody) {
+    private bool checkMelody(string strMelody) {
 
-        string[] substrings = Regex.Split(melody, "(f|s|t)(\\d+(f|s|t))*");
-        Debug.Log(substrings.Length);
-        foreach(string s in substrings) {
-            Debug.Log(s);
+        var m = Regex.Match(strMelody, @"^([fst])(\d+[fst])*$");
+        if (m.Success)
+        {
+            // parse melody
+            List<SkillPress> melody = new List<SkillPress>();
+            melody.Add(new SkillPress(m.Groups[1].Value, 0));
+            foreach (string g in m.Groups[2].Captures.Cast<Capture>().Select(t => t.Value))
+            {
+                melody.Add(new SkillPress("" + g[g.Length - 1], Convert.ToInt64(g.Substring(0, g.Length - 1))));
+            }
+
+            // no need to check if there are not enough presses
+            if (pressedSkills.Count < melody.Count)
+            {
+                return false;
+            }
+
+            // check if input matches melody (backwards)
+            for (int i = 1; i <= melody.Count; i++)
+            {
+                SkillPress melodySP = melody[melody.Count - i];
+                SkillPress inputSP = pressedSkills[pressedSkills.Count - i];
+
+                if (inputSP.skill == melodySP.skill)
+                {
+                    if ((i != melody.Count && i != pressedSkills.Count) &&
+                        !(inputSP.time >= melodySP.time - SkillPressMargin && inputSP.time <= melodySP.time + SkillPressMargin))
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return true;         
         }
 
-        return true;
+        return false;
     }
 
 
@@ -156,7 +207,11 @@ public class Skillbar : MonoBehaviour {
     private long getElapsedTime()
     {
         long currentTime = currentTimeMillis();
-        long elapsedTime = currentTime - previousTime;
+        long elapsedTime = 0;
+        if (previousTime != 0)
+        {
+            elapsedTime = currentTime - previousTime;
+        }
         previousTime = currentTimeMillis();
         return elapsedTime;
     }

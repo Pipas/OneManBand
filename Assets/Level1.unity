@@ -16137,6 +16137,11 @@ Prefab:
       propertyPath: player
       value: 
       objectReference: {fileID: 1651802293}
+    - target: {fileID: 114922699603357622, guid: a0d928f22e4fd449a807a47cb84b8234,
+        type: 2}
+      propertyPath: melody
+      value: f500s500t
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0d928f22e4fd449a807a47cb84b8234, type: 2}
   m_IsPrefabAsset: 0
@@ -18690,6 +18695,8 @@ MonoBehaviour:
   KeyDownAlpha: 0.5
   Player: {fileID: 1651802293}
   Radius: 6
+  SkillPressMargin: 100
+  MaxPauseDuration: 2000
 --- !u!1 &1789684685
 GameObject:
   m_ObjectHideFlags: 0
