@@ -8,6 +8,7 @@ TagManager:
   - Party
   - Sheet
   - Enemy
+  - Triggerable
   layers:
   - Default
   - TransparentFX

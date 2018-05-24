@@ -1,13 +1,14 @@
 fileFormatVersion: 2
 guid: bb796bede493d4230920e2b7fe2cc4ec
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 23
   fileIDToRecycleName:
     100000: mesh69953592
     100002: //RootNode
     400000: mesh69953592
     400002: //RootNode
     2100000: mat18
+    2100002: mesh69953592Mat
     2300000: mesh69953592
     3300000: mesh69953592
     4300000: mesh69953592
@@ -62,6 +63,8 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
