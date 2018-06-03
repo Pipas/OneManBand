@@ -10,6 +10,9 @@ public class Skill {
     // render of this skill
     private CanvasRenderer cRend;
 
+    // audio to play when skill is pressed
+    private AudioSource sound;
+
     // default alpha value
     private readonly float DEFAULT_ALPHA;
 
@@ -21,16 +24,24 @@ public class Skill {
         gameObj = parent.Find(name).gameObject;
         cRend = gameObj.GetComponent<CanvasRenderer>();
         DEFAULT_ALPHA = cRend.GetAlpha();
+        sound = gameObj.GetComponent<AudioSource>();
     }
 
+    // activates this skill
+    public void Activate(float alpha) {
+        cRend.SetAlpha(alpha);
+        PlaySound();
+    }
 
-    // resets alpha to default value
-    public void ResetAlpha() {
+    // deactivates this skill
+    public void Deactivate() {
         cRend.SetAlpha(DEFAULT_ALPHA);
     }
 
-    // setter
-    public void SetAlpha(float alpha) {
-        cRend.SetAlpha(alpha);
+    // plays sound
+    private void PlaySound() {
+        if (sound != null) {
+            sound.Play();
+        }        
     }
 }

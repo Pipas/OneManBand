@@ -606,11 +606,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 3cf55cd7113077c4a8bf6943b680d78e, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 1cfda7807d818344c85dba955e2eab26, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0
+  m_Volume: 0.3
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -744,7 +744,6 @@ MonoBehaviour:
   playerHealth: {fileID: 0}
   player: {fileID: 0}
   Radius: 13
-  MelodyFade: 1
 --- !u!114 &114677147632515590
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -770,7 +769,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd3f9b07330167c4fb601f3cc8fcb9f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  melody: f500s500t
+  rythem: f750f250f250f750f250f500f250f
+  fadeTime: 1
+  timeWindow: 5000
 --- !u!137 &137030047351529492
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

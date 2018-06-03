@@ -57,7 +57,7 @@ public class Skillbar : MonoBehaviour {
     // skill #3
     private Skill s3;
 
-    // previous logled time
+    // previous logged time
     private long previousTime;
 
     // list of pressed skills
@@ -89,34 +89,34 @@ public class Skillbar : MonoBehaviour {
         // skill #1
         if (Input.GetKeyDown(KC_SKILL1))
         {
-            s1.SetAlpha(KeyDownAlpha);
+            s1.Activate(KeyDownAlpha);
             pressedSkill = "f";
         }
         else if (Input.GetKeyUp(KC_SKILL1))
         {
-            s1.ResetAlpha();
+            s1.Deactivate();
         }
 
         // skill #2
         if (Input.GetKeyDown(KC_SKILL2))
         {
-            s2.SetAlpha(KeyDownAlpha);
+            s2.Activate(KeyDownAlpha);
             pressedSkill = "s";
         }
         else if (Input.GetKeyUp(KC_SKILL2))
         {
-            s2.ResetAlpha();
+            s2.Deactivate();
         }
 
         // skill #3
         if (Input.GetKeyDown(KC_SKILL3))
         {
-            s3.SetAlpha(KeyDownAlpha);
+            s3.Activate(KeyDownAlpha);
             pressedSkill = "t";
         }
         else if (Input.GetKeyUp(KC_SKILL3))
         {
-            s3.ResetAlpha();
+            s3.Deactivate();
         }
 
         handleSkillPress(pressedSkill);
@@ -130,8 +130,9 @@ public class Skillbar : MonoBehaviour {
             return;
         }
 
-        long elapsedTime = getElapsedTime();
-        
+        long elapsedTime = MyTime.ElapsedTime(previousTime);
+        previousTime = MyTime.CurrentTimeMillis();
+
         if (elapsedTime > MaxPauseDuration)
         {
             Debug.Log("Memory cleared!");
@@ -147,7 +148,9 @@ public class Skillbar : MonoBehaviour {
             double dist = Vector3.Distance(Player.transform.position, obj.transform.position);
 
             if (dist <= Radius) {
-                if (checkMelody(obj.GetComponent<Melody>().melody))
+                Melody objMelody = obj.GetComponent<Melody>();
+                objMelody.Wait();
+                if (checkMelody(objMelody.rythem))
                 {
                     Debug.Log("Attack!");
                 }
@@ -200,25 +203,5 @@ public class Skillbar : MonoBehaviour {
         }
 
         return false;
-    }
-
-
-    // returns elapsed time and updates previous time
-    private long getElapsedTime()
-    {
-        long currentTime = currentTimeMillis();
-        long elapsedTime = 0;
-        if (previousTime != 0)
-        {
-            elapsedTime = currentTime - previousTime;
-        }
-        previousTime = currentTimeMillis();
-        return elapsedTime;
-    }
-    
-
-    private long currentTimeMillis()
-    {
-        return DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
     }
 }

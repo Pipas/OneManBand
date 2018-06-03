@@ -8,20 +8,19 @@ public class EnemyMovement : MonoBehaviour {
     public HealthSystem playerHealth;
     public GameObject player;
     public double Radius;
-    public float MelodyFade;
 
     private float speed = 1f;
     private float rotationSpeed = 2f;
     private int currentPoint = 0;
     private bool running;
-    private bool playing;
-    private AudioSource melody;
+    private Melody melody;
+    private long previousTime;
 
 	// Use this for initialization
 	void Start () {
         running = true;
-        playing = false;
-        melody = GetComponent<AudioSource>();
+        melody = GetComponent<Melody>();
+        previousTime = 0;
     }
 	
 	// Update is called once per frame
@@ -36,29 +35,10 @@ public class EnemyMovement : MonoBehaviour {
 
         if (dist <= Radius)
         {
-            if (!playing) {
-                playing = true;
-                melody.Play();
-            }
-
-            if (melody.volume < 1)
-            {
-                melody.volume = melody.volume + (Time.deltaTime / (MelodyFade + 0.1f));
-            }
+            melody.FadeIn();
         }
         else {
-            if (playing) {
-
-                if (melody.volume > 0)
-                {
-                    melody.volume = melody.volume - (Time.deltaTime / (MelodyFade + 0.1f));
-                }
-                else
-                {
-                    playing = false;
-                    melody.Stop();
-                }
-            }
+            melody.FadeOut();
         }
 	}
 
