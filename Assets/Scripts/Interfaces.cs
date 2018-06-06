@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface Triggerable {
-
-	void Trigger();
+public interface Triggerable
+{
+    void Trigger();
 }
