@@ -4,29 +4,38 @@ using UnityEngine;
 
 public class BackgroundMusic : MonoBehaviour {
 
-	public AudioClip zeroIntro;
-	public AudioClip oneWhile;
-	public AudioClip twoEnd;
+	/* --- Inspector */
 
-	private AudioSource audioSource;
-	private int currAudio;
-	private AudioClip[] audios;
+	/* Array of audio clips to cycle through. */
+	public AudioClip[] aClips;
+
+
+	/* --- Attributes --- */
+
+	/* Audio Source that plays the audio. */
+	private AudioSource aSrc;
+
+	/* Index of the currently playing audio. */
+	private int iAudio;
+	
+
+	/* --- Methods --- */
 
 	// Use this for initialization
 	void Start () {
-		audios = new[] {zeroIntro, oneWhile, twoEnd};
-		audioSource = GetComponent<AudioSource>();
-		audioSource.clip = zeroIntro;
-		audioSource.Play();
-		currAudio = 0;
+        iAudio = 0;
+        aSrc = GetComponent<AudioSource>();
+        aSrc.clip = aClips[iAudio];
+        aSrc.Play();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (!audioSource.isPlaying && currAudio < audios.Length - 1)
+		if (!aSrc.isPlaying && iAudio < aClips.Length - 1)
 		{
-			audioSource.clip = audios[++currAudio];
-			audioSource.Play();
+            Debug.Log("Swapped audio clip!");
+			aSrc.clip = aClips[++iAudio];
+            aSrc.Play();
 		}
 	}
 }

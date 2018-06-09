@@ -7,20 +7,15 @@ public class EnemyMovement : MonoBehaviour {
     public EnemyHitbox hitbox;
     public HealthSystem playerHealth;
     public GameObject player;
-    public double Radius;
 
     private float speed = 1f;
     private float rotationSpeed = 2f;
     private int currentPoint = 0;
     private bool running;
-    private Melody melody;
-    private long previousTime;
 
 	// Use this for initialization
 	void Start () {
         running = true;
-        melody = GetComponent<Melody>();
-        previousTime = 0;
     }
 	
 	// Update is called once per frame
@@ -29,16 +24,6 @@ public class EnemyMovement : MonoBehaviour {
         if ((!hitbox.isPlayerWithinRange() && !playerHealth.gameOver) || playerHealth.gameOver)
         {
             autoMovement();
-        }
-
-        double dist = Vector3.Distance(player.transform.position, transform.position);
-
-        if (dist <= Radius)
-        {
-            melody.FadeIn();
-        }
-        else {
-            melody.FadeOut();
         }
 	}
 

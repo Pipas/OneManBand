@@ -5,86 +5,128 @@ using UnityEngine;
 public class Melody : MonoBehaviour {
 
 	/* --- Inspector --- */
-
+	
+	/* Rythem player needs to tap to. */
 	public string rythem;
-	public float fadeTime;
-	public long timeWindow;
+
+	/* Radius in which melody starts playing. */
+    public float radius;
+
+	/* Radius in which the melody plays at max volume. */
+	public float maxVolRadius;
+
+	/* Minimum amount of time enemy will wait before restarting. */
+	public int minWaitingTime;
+
+	/* Player. */
+	public GameObject player;
 
 
-	/* --- Attrs --- */
+	/* --- Attributes --- */
 
-	private AudioSource sound;
+	public const int BLOCK_DURATION = 4;
+
+	/* Audio Source. */
+	private AudioSource aSrc;
+
+	/* True if audio is currently playing. */
 	private bool playing;
-	private bool waiting;
+
+	/* True if enemy already waited due to player pressing skill. */
+	private bool waitedAfterSkill;
+
+	/* Time of the previous block. */
+	private int previousBlockTime;
+
+	/* Time enemy started waiting. */
 	private long waitingStartTime;
-	private float DEFAULT_VOLUME;
+
+	/* Default max volume. */
+	private float defaultVolume;
 
 
-	/* --- Methods --- */
+    /* --- Methods --- */
 
+    /// <summary>
+    /// Initialization.
+    /// </summary>
     void Start() {
-    
-		sound = gameObject.GetComponent<AudioSource>();
-		DEFAULT_VOLUME = sound.volume;
+
+        aSrc = gameObject.GetComponent<AudioSource>();
 		playing = false;
-		waiting = false;
         waitingStartTime = 0;
+        previousBlockTime = 0;
+		defaultVolume = aSrc.volume;
+		waitedAfterSkill = false;
 	}
 
-    public void FadeIn()
-    {
-		if ((!playing && !waiting) || (waiting && MyTime.ElapsedTime(waitingStartTime) >= timeWindow))
-        {
-            Play();
-        }
 
-        if (!waiting && playing && sound.volume < 1)
-        {
-            sound.volume = sound.volume + (Time.deltaTime / (fadeTime + 0.1f));
-        }
-		
-		if (!waiting && !sound.isPlaying)
+    /// <summary>
+    /// Update once per frame.
+    /// </summary>
+    void Update()
+    {
+		if (!aSrc.isPlaying)
 		{
-            Wait();
+			playing = false;
 		}
-    }
+		
+		double dist = Vector3.Distance(player.transform.position, transform.position);
+        int currentTime = (int)Time.time;       
 
-    public void FadeOut()
-    {
-		if (sound.volume > DEFAULT_VOLUME)
+		if (dist <= radius)
 		{
-			sound.volume = sound.volume - (Time.deltaTime / (fadeTime + 0.1f));
+			aSrc.volume = defaultVolume - (float)((dist - maxVolRadius) * (defaultVolume) / (radius - maxVolRadius));
+
+            if (currentTime % BLOCK_DURATION == 0 && !playing && currentTime - previousBlockTime > BLOCK_DURATION)
+            {
+				Play();
+				previousBlockTime = currentTime;				
+			}
+		}
+		else if (playing)
+		{
+			Stop(false);
 		}
 		else
 		{
-			Stop();
-		}
+			aSrc.volume = 0;
+		}     
     }
 
-	public void Play()
+
+    /// <summary>
+    /// Starts playback of this melody.
+    /// </summary>
+    public void Play()
 	{
-		if (!playing && (int) Time.time % 4 == 0)
-		{
-			playing = true;
-            waiting = false;
-            sound.Play();
-		}		
+        playing = true;
+        waitedAfterSkill = false;
+        aSrc.Play();
 	}
 
-	public void Stop()
+
+    /// <summary>
+    /// Stops playback of this melody.
+    /// </summary>
+    /// <param name="playerSkill">True if called due to player skill.</param>
+    public void Stop(bool playerSkill)
 	{
-		if (playing)
+		playing = false;
+		aSrc.Stop();
+
+        int currentTime = (int)Time.time;
+        if (playerSkill && BLOCK_DURATION - (currentTime % BLOCK_DURATION) < minWaitingTime)
 		{
-			playing = false;
-			waiting = false;
-            sound.Stop();
+			if (!waitedAfterSkill)
+			{
+                previousBlockTime += BLOCK_DURATION;
+				waitedAfterSkill = true;
+			}		
 		}
-	}
-
-	public void Wait()
-	{
-		Stop();
-        waiting = true;
-        waitingStartTime = MyTime.CurrentTimeMillis();
+		else if (!playerSkill)
+		{
+			waitedAfterSkill = false;
+		}
 	}
 }
