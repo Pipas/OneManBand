@@ -16641,11 +16641,6 @@ Prefab:
       propertyPath: player
       value: 
       objectReference: {fileID: 1651802293}
-    - target: {fileID: 114188110680759312, guid: a0d928f22e4fd449a807a47cb84b8234,
-        type: 2}
-      propertyPath: minWaitingTime
-      value: 3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0d928f22e4fd449a807a47cb84b8234, type: 2}
   m_IsPrefabAsset: 0
