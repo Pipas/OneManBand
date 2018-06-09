@@ -135,7 +135,6 @@ public class Skillbar : MonoBehaviour {
 
         if (elapsedTime > MaxPauseDuration)
         {
-            Debug.Log("Memory cleared!");
             pressedSkills.Clear();
         }
 
@@ -149,7 +148,7 @@ public class Skillbar : MonoBehaviour {
 
             if (dist <= Radius) {
                 Melody objMelody = obj.GetComponent<Melody>();
-                objMelody.Wait();
+                objMelody.Stop(true);
                 if (checkMelody(objMelody.rythem))
                 {
                     Debug.Log("Attack!");

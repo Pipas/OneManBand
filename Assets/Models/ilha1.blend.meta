@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 85110ca8192826d46bb2dad1db7c8d38
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 23
   fileIDToRecycleName:
     100000: Circle_003
     100002: Circle_004
@@ -487,6 +487,7 @@ ModelImporter:
     4300180: Cube_147
     7400000: Default Take
     9500000: //RootNode
+    2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -538,6 +539,8 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
