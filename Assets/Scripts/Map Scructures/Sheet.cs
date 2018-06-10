@@ -26,7 +26,7 @@ public class Sheet : MonoBehaviour
 
     public void RemovePage ()
     {
-        sheetBar.catchSheet();
         Destroy(transform.parent.gameObject);
+        sheetBar.catchSheet();
     }
 }

@@ -3,6 +3,54 @@ guid: 28003ab113739834b9d1e3dbbbd33020
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
+    100000: Armature
+    100002: body
+    100004: brows
+    100006: //RootNode
+    100008: olho_left
+    100010: olho_right
+    100012: perna_BACK
+    100014: perna_L
+    100016: perna_R
+    100018: Plane
+    100020: upper_perna_BACK
+    100022: upper_perna_L
+    100024: upper_perna_R
+    400000: Armature
+    400002: body
+    400004: brows
+    400006: //RootNode
+    400008: olho_left
+    400010: olho_right
+    400012: perna_BACK
+    400014: perna_L
+    400016: perna_R
+    400018: Plane
+    400020: upper_perna_BACK
+    400022: upper_perna_L
+    400024: upper_perna_R
+    2100000: teclas
+    2100002: main
+    2100004: teclas_pretas__
+    2100006: olhos
+    2300000: brows
+    2300002: olho_left
+    2300004: olho_right
+    3300000: brows
+    3300002: olho_left
+    3300004: olho_right
+    4300000: brows
+    4300002: olho_right
+    4300004: olho_left
+    4300006: Plane
+    7400000: Default Take
+    7400002: playing
+    7400004: playing_aggressively
+    7400006: playing_aggressively_outro
+    7400008: walkin_piano_man_estropiado
+    7400010: walkin_piano_man_estropiado__AGRS_FINAL
+    9500000: //RootNode
+    13700000: Plane
     2186277476908879412: ImportLogs
   externalObjects: {}
   materials:

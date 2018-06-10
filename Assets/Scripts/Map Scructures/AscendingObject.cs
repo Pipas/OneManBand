@@ -116,6 +116,5 @@ public class AscendingObject : MonoBehaviour, Triggerable
                     
             }
         }
-        
     }
 }
