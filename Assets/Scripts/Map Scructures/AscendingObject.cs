@@ -13,6 +13,8 @@ public class AscendingObject : MonoBehaviour, Triggerable
     private bool hasPlayer = false;
     public Vector3 deltaMove;
     public float speed;
+    public int waitTime;
+    private int counter = -1, lastTime = 0;
     void Start () 
     {
         initPosition = transform.position;
@@ -51,6 +53,22 @@ public class AscendingObject : MonoBehaviour, Triggerable
                 aboveCollider.layer = 2;
                 state = State.retracted;
             }
+        }
+
+        if(waitTime != 0 && state == State.extended)
+        {
+            int currentTime = (int) Time.time;
+
+            if (currentTime != lastTime && currentTime % 1 == 0 && state == State.extended)
+                counter++;
+
+            if (counter >= waitTime)
+            {
+                Trigger();
+                counter = -1;
+            }
+
+            lastTime = currentTime;
         }
 
         if (Input.GetKeyDown("k"))
