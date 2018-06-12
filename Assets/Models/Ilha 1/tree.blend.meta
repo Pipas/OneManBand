@@ -3,8 +3,51 @@ guid: 04dd14011f5d36f49ae52bad1d523790
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
+    100000: //RootNode
+    400000: //RootNode
+    2100000: Material_013
+    2100002: Material_012
+    2100004: Material_005
+    2100006: Material_003
+    2100008: Material_034
+    2100010: Material_033
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Plane_034
+    7400000: Default Take
+    9500000: //RootNode
     2186277476908879412: ImportLogs
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material_003
+    second: {fileID: 2100000, guid: faa401850dc6ed84788aa8347ba5dd77, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material_005
+    second: {fileID: 2100000, guid: 0892ce5b9e1d4a74892d4033e712d386, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material_012
+    second: {fileID: 2100000, guid: 399ffb4053ec9cb48a88c47271f162ec, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material_013
+    second: {fileID: 2100000, guid: ed942dcda1b2e6447bb17314ed5bf4fa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material_033
+    second: {fileID: 2100000, guid: 0d4363feabeca2d48aaf616e19869d36, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material_034
+    second: {fileID: 2100000, guid: d11408732cc94e04e964320d14902ba8, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

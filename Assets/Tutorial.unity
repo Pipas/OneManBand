@@ -1824,6 +1824,7 @@ MonoBehaviour:
   state: 0
   deltaMove: {x: 0, y: -2, z: 0}
   speed: 1
+  waitTime: 4
 --- !u!1 &30330723
 GameObject:
   m_ObjectHideFlags: 0
@@ -17194,6 +17195,7 @@ MonoBehaviour:
   state: 0
   deltaMove: {x: 0, y: -1, z: 0}
   speed: 1
+  waitTime: 4
 --- !u!1 &387371202
 GameObject:
   m_ObjectHideFlags: 0
@@ -17574,7 +17576,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-1041782
+  m_Name: pb_Mesh25142
   serializedVersion: 8
   m_SubMeshes:
   - serializedVersion: 2
@@ -35069,7 +35071,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh-793126
+  m_Name: pb_Mesh19372
   serializedVersion: 8
   m_SubMeshes:
   - serializedVersion: 2

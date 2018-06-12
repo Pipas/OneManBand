@@ -57,7 +57,7 @@ public class CameraAnimation : MonoBehaviour
                         renderers.Add(rend);
                         blockingMaterials.Add(renderers.IndexOf(rend));
 
-                        SetMaterialTransparent(rend.material);
+                        SetMaterialTransparent(rend);
                         MakeTransparent(renderers[i], true);
                     }
                 }
@@ -72,56 +72,62 @@ public class CameraAnimation : MonoBehaviour
         for (int i = 0; i < renderers.Count; i++)
         {
             if(blockingMaterials.Contains(i))
-            {
                 MakeTransparent(renderers[i], false);
-            }
             else
-            {
                 if(RemoveTransparency(renderers[i]))
-                {
-                    SetMaterialOpaque(renderers[i].material);
-                    Color color = renderers[i].material.color;
-                    color.a = 1F;
-                    renderers[i].material.color = color;
                     renderers.RemoveAt(i);
-                }
-            }
         }
     }
 
     private void MakeTransparent(Renderer rend, bool set)
     {
-        if(!rend.material.HasProperty("_Color"))
-            return;
+        foreach (Material material in rend.materials)
+        {
+            if(!material.HasProperty("_Color"))
+                continue;
 
-        Color tempColor = rend.material.color;
-        
-        if(tempColor.a <= 0.5F)
-            return;
-        
-        if(set)
-            tempColor.a = 1F;
-        else
-            tempColor.a = tempColor.a - Time.deltaTime * fadeSpeed;
-        
-        rend.material.color = tempColor;
+            Color tempColor = material.color;
+            
+            if(tempColor.a <= 0.5F)
+                continue;
+            
+            if(set)
+                tempColor.a = 1F;
+            else
+                tempColor.a = tempColor.a - Time.deltaTime * fadeSpeed;
+            
+            material.color = tempColor;
+        }
     }
 
     private bool RemoveTransparency(Renderer rend)
     {
-        if(!rend.material.HasProperty("_Color"))
-            return false;
+        bool removedTransparency = false;
 
-        Color tempColor = rend.material.color;
-        float newTempColor = tempColor.a + Time.deltaTime * fadeSpeed;
+        foreach (Material material in rend.materials)
+        {
+            if(!material.HasProperty("_Color"))
+                continue;
 
-        if(newTempColor >= 1F)
-            return true;
-        
-        tempColor.a = newTempColor;
-        rend.material.color = tempColor;
+            Color tempColor = rend.material.color;
+            float newTempColor = tempColor.a + Time.deltaTime * fadeSpeed;
 
-        return false;
+            if(newTempColor >= 1F)
+            {
+                Color color = material.color;
+                color.a = 1F;
+                material.color = color;
+                removedTransparency = true;
+            }
+            
+            tempColor.a = newTempColor;
+            rend.material.color = tempColor;
+        }
+
+        if(removedTransparency)
+            SetMaterialOpaque(rend);
+
+        return removedTransparency;
     }
 
     public void MoveCamera(Vector3 deltaMove)
@@ -132,28 +138,31 @@ public class CameraAnimation : MonoBehaviour
         journeyLength = Vector3.Distance(initPosition, endPosition);
         isMoving = true;
     }
-
-    private void SetMaterialTransparent(Material m)
+    private void SetMaterialTransparent(Renderer rend)
     {
-        m.SetFloat("_Mode", 2);
-        m.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-        m.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-        m.SetInt("_ZWrite", 0);
-        m.DisableKeyword("_ALPHATEST_ON");
-        m.EnableKeyword("_ALPHABLEND_ON");
-        m.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-        m.renderQueue = 3000;
+        foreach (Material m in rend.GetComponent<Renderer>().materials)
+        {
+            m.SetFloat("_Mode", 2);
+            m.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+            m.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+            m.SetInt("_ZWrite", 0);
+            m.DisableKeyword("_ALPHATEST_ON");
+            m.EnableKeyword("_ALPHABLEND_ON");
+            m.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+            m.renderQueue = 3000;
+        }
     }
-
-
-    private void SetMaterialOpaque(Material m)
+    private void SetMaterialOpaque(Renderer rend)
     {
-        m.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
-        m.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
-        m.SetInt("_ZWrite", 1);
-        m.DisableKeyword("_ALPHATEST_ON");
-        m.DisableKeyword("_ALPHABLEND_ON");
-        m.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-        m.renderQueue = -1;
+        foreach (Material m in rend.GetComponent<Renderer>().materials)
+        {
+            m.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+            m.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
+            m.SetInt("_ZWrite", 1);
+            m.DisableKeyword("_ALPHATEST_ON");
+            m.DisableKeyword("_ALPHABLEND_ON");
+            m.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+            m.renderQueue = -1;
+        }
     }
 }
