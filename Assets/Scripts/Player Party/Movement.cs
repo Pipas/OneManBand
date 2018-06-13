@@ -107,7 +107,8 @@ public class Movement : MonoBehaviour
                 HandleLadder(obstacle, direction); // If there is a ladder
             else if(obstacle.tag == "Sheet")
             {
-                HandleSheet(obstacle, direction); // If there is a Sheet
+                HandleSheet(obstacle); // If there is a Sheet
+                HandleNoObstacle(direction);
             }
             else if(obstacle.tag == "Party")
             {
@@ -147,6 +148,9 @@ public class Movement : MonoBehaviour
             obstacle = hit.transform.gameObject;
             if(obstacle.tag != "Party")
             {
+                if(obstacle.tag == "Sheet")
+                    HandleSheet(obstacle);
+
                 if(hit.distance > 0.4f) // If there is a fall enqueues 2 animations move and fall
                 {
                     QueueAnimation(new AnimationItem(direction, baseSpeed, true, false));
@@ -175,12 +179,11 @@ public class Movement : MonoBehaviour
         }
     }
 
-    public void HandleSheet(GameObject sheet, Vector3 direction)
+    public void HandleSheet(GameObject sheet)
     {
         sheet.GetComponent<Sheet>().RemovePage();
         int Level1Pages = PlayerPrefs.GetInt("Level1Pages");
-        PlayerPrefs.SetInt("Level1Pages", Level1Pages + 1);
-        HandleNoObstacle(direction);
+        PlayerPrefs.SetInt("Level1Pages", Level1Pages + 1); 
     }
 
     private void SavePosition() // Saves self and next in party position to calculate the movement
