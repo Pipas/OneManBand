@@ -6,6 +6,8 @@ using System;
 public class PlayerMovement : Movement 
 {
     public HealthSystem playerHealth;
+    public bool running = false;
+    public bool autoMoving = false;
     void Start ()
     {
         savedPosition = transform.position;
@@ -14,12 +16,31 @@ public class PlayerMovement : Movement
     void Update ()
     {	
         if(!playerHealth.gameOver)
-        {
+        {           
             HandleInput(); // Handles the user input, duh
 
             HandleMovement(); // Updates movement everyframe
 
             HandlePartyMovement(); // Updates the rest of the party movement, this way it's sequential after the player
+        }
+    }
+
+    public void movePlayerAnimation()
+    {
+        if (running)
+        {
+            Debug.Log("why not run");
+            transform.Find("Player").GetComponent<Animator>().SetInteger("State", 1);
+            running = true;
+        }
+    }
+
+    public void stopPlayerAnimation()
+    {
+        if (!running)
+        {
+            transform.Find("Player").GetComponent<Animator>().SetInteger("State", 0);
+            running = false;
         }
     }
 
@@ -31,24 +52,54 @@ public class PlayerMovement : Movement
         {
             QueueInput(Vector3.forward);
             rotation = Quaternion.LookRotation(Vector3.forward);
+
+            if (!running)
+            {
+                running = true;
+                movePlayerAnimation();
+            }
         }
 
         if (Input.GetButtonDown("Down"))
         {
             QueueInput(Vector3.back);
             rotation = Quaternion.LookRotation(Vector3.back);
+
+            if (!running)
+            {
+                running = true;
+                movePlayerAnimation();
+            }
         }
 
         if (Input.GetButtonDown("Left"))
         {
             QueueInput(Vector3.left);
             rotation = Quaternion.LookRotation(Vector3.left);
+
+            if (!running)
+            {
+                running = true;
+                movePlayerAnimation();
+            }
         }
 
         if (Input.GetButtonDown("Right"))
         {
             QueueInput(Vector3.right);
             rotation = Quaternion.LookRotation(Vector3.right);
+
+            if (!running)
+            {
+                running = true;
+                movePlayerAnimation();
+            }
+        }
+
+        if (!Input.GetButton("Up") && !Input.GetButton("Down") && !Input.GetButton("Left") && !Input.GetButton("Right"))
+        {
+            running = false;
+            stopPlayerAnimation();
         }
 
         //transform.parent.rotation = rotation;
