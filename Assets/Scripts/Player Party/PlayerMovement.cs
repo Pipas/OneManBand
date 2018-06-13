@@ -16,8 +16,27 @@ public class PlayerMovement : Movement
     void Update ()
     {	
         if(!playerHealth.gameOver)
-        {           
-            HandleInput(); // Handles the user input, duh
+        {
+            if (autoMoving)
+            {
+                if (transform.hasChanged)
+                {
+                    transform.hasChanged = false;
+                    running = true;
+                    movePlayerAnimation();
+                }
+                else
+                {
+                    running = false;
+                    autoMoving = false;
+                    stopPlayerAnimation();
+                }
+            }
+
+            if (!autoMoving)
+            {
+                HandleInput(); // Handles the user input, duh
+            }
 
             HandleMovement(); // Updates movement everyframe
 
@@ -170,5 +189,15 @@ public class PlayerMovement : Movement
             QueueInput(Vector3.left);
         if(Input.GetButton("Right"))
             QueueInput(Vector3.right);
+    }
+
+    public bool isAutoMoving()
+    {
+        return autoMoving;
+    }
+
+    public void setAutoMoving(bool auto)
+    {
+        autoMoving = auto;
     }
 }

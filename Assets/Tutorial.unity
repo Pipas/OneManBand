@@ -19029,6 +19029,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camAnimation: {fileID: 860762580}
+  playerMov: {fileID: 1528944032}
 --- !u!1 &357289522
 GameObject:
   m_ObjectHideFlags: 0
@@ -26805,6 +26806,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camAnimation: {fileID: 860762580}
+  playerMov: {fileID: 1528944032}
 --- !u!64 &532347560
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -48808,6 +48810,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camAnimation: {fileID: 860762580}
+  playerMov: {fileID: 1528944032}
 --- !u!64 &1088111120
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -56954,6 +56957,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camAnimation: {fileID: 860762580}
+  playerMov: {fileID: 1528944032}
 --- !u!64 &1220725824
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -68563,6 +68567,8 @@ MonoBehaviour:
   baseSpeed: 6
   isMoving: 0
   playerHealth: {fileID: 1621732228}
+  running: 0
+  autoMoving: 0
 --- !u!1 &1530846952
 GameObject:
   m_ObjectHideFlags: 0
@@ -89036,6 +89042,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camAnimation: {fileID: 860762580}
+  playerMov: {fileID: 1528944032}
 --- !u!64 &1964835488
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -96741,6 +96748,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camAnimation: {fileID: 860762580}
+  playerMov: {fileID: 1528944032}
 --- !u!64 &2077633468
 MeshCollider:
   m_ObjectHideFlags: 0
