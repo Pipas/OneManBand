@@ -78,8 +78,10 @@ public class AscendingObject : MonoBehaviour, Triggerable
     {
         foreach (Collider collider in colliders)
         {
-            if(collider.GetComponent<Movement>().state != Movement.State.falling)
-                collider.transform.Translate(deltaTransform);
+            if (collider.name == "Player") {
+                if (GameObject.Find("PlayerPivot").GetComponent<Movement>().state != Movement.State.falling)
+                    collider.transform.Translate(deltaTransform);
+            }
         }
     }
 
@@ -126,7 +128,7 @@ public class AscendingObject : MonoBehaviour, Triggerable
                 if(!colliders.Contains(Movement.party[i].GetComponent<Collider>()))
                 {
                     if(i == 0)
-                        GameObject.Find("Player").GetComponent<PlayerMovement>().nextInParty = null;
+                        GameObject.Find("PlayerPivot").GetComponent<PlayerMovement>().nextInParty = null;
                     else
                         Movement.party[i - 1].GetComponent<PartyMovement>().nextInParty = null;
                     Movement.party.Remove(Movement.party[i]);

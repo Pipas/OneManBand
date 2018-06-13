@@ -1,8 +1,57 @@
 fileFormatVersion: 2
 guid: 06f9ff2423d6e2e4ea98aff918f56125
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 23
   fileIDToRecycleName:
+    100000: arm_L
+    100002: arm_R
+    100004: Armature
+    100006: arms
+    100008: arms_L
+    100010: arms_R
+    100012: //RootNode
+    100014: Circle_000
+    100016: head
+    100018: legs
+    100020: mouth
+    100022: torso
+    100024: torso_0
+    400000: arm_L
+    400002: arm_R
+    400004: Armature
+    400006: arms
+    400008: arms_L
+    400010: arms_R
+    400012: //RootNode
+    400014: Circle_000
+    400016: head
+    400018: legs
+    400020: mouth
+    400022: torso
+    400024: torso_0
+    2100000: Material_005
+    2100002: Material_000
+    2100004: Material_003
+    2100006: Material_038
+    2100008: Material_043
+    2100010: branco
+    2100012: Material_039
+    2100014: Material_004
+    2100016: Material_002
+    2100018: Material_001
+    2300000: Circle_000
+    3300000: Circle_000
+    4300000: arms
+    4300002: mouth
+    4300004: torso
+    4300006: Circle_000
+    7400000: Default Take
+    7400002: Action
+    7400004: walk_blocking
+    9500000: //RootNode
+    13700000: arms
+    13700002: mouth
+    13700004: torso
     2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
@@ -55,6 +104,8 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0

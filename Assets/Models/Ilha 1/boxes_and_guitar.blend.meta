@@ -1,8 +1,23 @@
 fileFormatVersion: 2
 guid: 0540113949c1dde48aaad4f57bc328b9
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 23
   fileIDToRecycleName:
+    100000: //RootNode
+    400000: //RootNode
+    2100000: Material_010
+    2100002: Material_020
+    2100004: unnamed
+    2100006: Material_002
+    2100008: Material_029
+    2100010: Material_025
+    2100012: Material_027
+    2100014: Material_007
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: grass01_005
+    7400000: Default Take
+    9500000: //RootNode
     2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
@@ -55,6 +70,8 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0

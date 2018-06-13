@@ -25,14 +25,33 @@ public class PlayerMovement : Movement
 
     private void HandleInput()
     {
-        if(Input.GetButtonDown("Up"))
+        Quaternion rotation = transform.rotation;
+
+        if (Input.GetButtonDown("Up"))
+        {
             QueueInput(Vector3.forward);
-        if(Input.GetButtonDown("Down"))
+            rotation = Quaternion.LookRotation(Vector3.forward);
+        }
+
+        if (Input.GetButtonDown("Down"))
+        {
             QueueInput(Vector3.back);
-        if(Input.GetButtonDown("Left"))
+            rotation = Quaternion.LookRotation(Vector3.back);
+        }
+
+        if (Input.GetButtonDown("Left"))
+        {
             QueueInput(Vector3.left);
-        if(Input.GetButtonDown("Right"))
+            rotation = Quaternion.LookRotation(Vector3.left);
+        }
+
+        if (Input.GetButtonDown("Right"))
+        {
             QueueInput(Vector3.right);
+            rotation = Quaternion.LookRotation(Vector3.right);
+        }
+
+        //transform.parent.rotation = rotation;
 
         if(Input.GetButtonDown("Interact"))
             checkSurroundings();

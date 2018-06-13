@@ -96,9 +96,13 @@ public class Movement : MonoBehaviour
         RaycastHit hit;
         GameObject obstacle = null;
 
-        if(Physics.Raycast(transform.position, direction, out hit, 1)) // Checks block where you want to move
+        var layerMask = (1 << 8);
+        layerMask = ~layerMask;
+
+        if (Physics.Raycast(transform.position, direction, out hit, 1, layerMask)) // Checks block where you want to move
         {
             obstacle = hit.transform.gameObject;
+
             if(obstacle.tag == "Ladder")
                 HandleLadder(obstacle, direction); // If there is a ladder
             else if(obstacle.tag == "Sheet")
@@ -125,7 +129,20 @@ public class Movement : MonoBehaviour
         RaycastHit hit;
         GameObject obstacle = null;
 
-        if(Physics.Raycast(transform.position + direction, Vector3.down, out hit, 10)) // Checks below the block is moving to
+        var layerMask = (1 << 8);
+        layerMask = ~layerMask;
+        var distAhead = transform.position + direction;
+
+        if (direction == Vector3.right)
+        {
+            distAhead += Vector3.right / 3;
+        }
+        else if (direction == Vector3.left)
+        {
+            distAhead += Vector3.left / 3;
+        }
+
+        if (Physics.Raycast(distAhead, Vector3.down, out hit, 10, layerMask)) // Checks below the block is moving to
         {
             obstacle = hit.transform.gameObject;
             if(obstacle.tag != "Party")
