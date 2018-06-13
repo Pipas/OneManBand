@@ -6,7 +6,10 @@ public class AscendingObjectCollider : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other) 
     {
-        transform.parent.GetComponent<AscendingObject>().AddObject(other);
+        Vector3 colliding_point = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
+
+        if (colliding_point.z > 1.99f)
+            transform.parent.GetComponent<AscendingObject>().AddObject(other);
     }
 
     private void OnTriggerExit(Collider other) 

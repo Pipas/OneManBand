@@ -47,24 +47,7 @@ public class Movement : MonoBehaviour
             }
         }
         if(movementPercentageElapsed < 1) // Handles the actual animation frame by frame
-        {
-            if (currentAnimation.GetVector() == Vector3.forward)
-            {
-                transform.eulerAngles = new Vector3(transform.eulerAngles.x, 0, transform.eulerAngles.z);
-            }
-            else if (currentAnimation.GetVector() == Vector3.back)
-            {
-                transform.eulerAngles = new Vector3(transform.eulerAngles.x, 180, transform.eulerAngles.z);
-            }
-            else if (currentAnimation.GetVector() == Vector3.right)
-            {
-                transform.eulerAngles = new Vector3(transform.eulerAngles.x, 90, transform.eulerAngles.z);
-            }
-            else if (currentAnimation.GetVector() == Vector3.left)
-            {
-                transform.eulerAngles = new Vector3(transform.eulerAngles.x, -90, transform.eulerAngles.z);
-            }
-            
+        {            
             float delta = Time.deltaTime * currentAnimation.GetSpeed();
             float deltaPercentage = delta / currentAnimation.GetVector().magnitude;
             if(movementPercentageElapsed + deltaPercentage > 1)
@@ -110,16 +93,37 @@ public class Movement : MonoBehaviour
     /* Validates the input and adds animation accordingly */
 	protected void ValidateInput(Vector3 direction)
     {
+        if (direction == Vector3.forward)
+        {
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, 0, transform.eulerAngles.z);
+        }
+        else if (direction == Vector3.back)
+        {
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, 180, transform.eulerAngles.z);
+        }
+        else if (direction == Vector3.right)
+        {
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, 90, transform.eulerAngles.z);
+        }
+        else if (direction == Vector3.left)
+        {
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, -90, transform.eulerAngles.z);
+        }
+        
         RaycastHit hit;
         GameObject obstacle = null;
 
         var layerMask = (1 << 8);
         layerMask = ~layerMask;
 
-        if (Physics.Raycast(transform.position, direction, out hit, 1, layerMask)) // Checks block where you want to move
+        var distance = 1f;
+
+
+        if (Physics.Raycast(transform.position, direction, out hit, distance, layerMask)) // Checks block where you want to move
         {
             obstacle = hit.transform.gameObject;
 
+            Debug.Log(obstacle.name);
             if(obstacle.tag == "Ladder")
                 HandleLadder(obstacle, direction); // If there is a ladder
             else if(obstacle.tag == "Sheet")
@@ -144,23 +148,13 @@ public class Movement : MonoBehaviour
 
     private void HandleNoObstacle(Vector3 direction)
     {
-        Debug.Log("aaaaa");
-        
         RaycastHit hit;
         GameObject obstacle = null;
 
         var layerMask = (1 << 8);
         layerMask = ~layerMask;
         var distAhead = transform.position + direction;
-
-        if (direction == Vector3.right)
-        {
-            distAhead += Vector3.right / 3;
-        }
-        else if (direction == Vector3.left)
-        {
-            distAhead += Vector3.left / 3;
-        }
+        //distAhead += direction / 2;
 
         if (Physics.Raycast(distAhead, Vector3.down, out hit, 10, layerMask)) // Checks below the block is moving to
         {

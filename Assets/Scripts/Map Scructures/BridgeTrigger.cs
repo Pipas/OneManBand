@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class BridgeTrigger : MonoBehaviour 
 {
+    public CameraAnimation camAnimation;
+    
     private int direction;
     private Island island;
-    // Use this for initialization
 
+    // Use this for initialization
     private void Start() 
     {
         island = transform.root.GetComponent<Island>();
@@ -15,7 +17,6 @@ public class BridgeTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) 
     {
-        Debug.Log(other.tag);
         if(other.tag == "Player")
         {
             PlayerMovement Player = GameObject.Find("PlayerPivot").GetComponent<PlayerMovement>();
@@ -26,7 +27,7 @@ public class BridgeTrigger : MonoBehaviour
             for (int i = 0; i < GetComponent<Renderer>().bounds.size.x; i++)
                 Player.QueueAnimation(new AnimationItem(Vector3.right * direction, Player.baseSpeed, true, true));
 
-            GameObject.Find("Main Camera").GetComponent<CameraAnimation>().MoveCamera(Vector3.right * direction * island.cameraShift);
+            camAnimation.MoveCamera(Vector3.right * direction * island.cameraShift);
         }
     }
 }
