@@ -48,11 +48,28 @@ public class Movement : MonoBehaviour
         }
         if(movementPercentageElapsed < 1) // Handles the actual animation frame by frame
         {
+            if (currentAnimation.GetVector() == Vector3.forward)
+            {
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x, 0, transform.eulerAngles.z);
+            }
+            else if (currentAnimation.GetVector() == Vector3.back)
+            {
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x, 180, transform.eulerAngles.z);
+            }
+            else if (currentAnimation.GetVector() == Vector3.right)
+            {
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x, 90, transform.eulerAngles.z);
+            }
+            else if (currentAnimation.GetVector() == Vector3.left)
+            {
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x, -90, transform.eulerAngles.z);
+            }
+            
             float delta = Time.deltaTime * currentAnimation.GetSpeed();
             float deltaPercentage = delta / currentAnimation.GetVector().magnitude;
             if(movementPercentageElapsed + deltaPercentage > 1)
                 deltaPercentage = (1 - movementPercentageElapsed);   
-            transform.Translate(currentAnimation.GetVector() * deltaPercentage);
+            transform.Translate(currentAnimation.GetVector() * deltaPercentage, Space.World);
             movementPercentageElapsed += deltaPercentage;
 
             if(movementPercentageElapsed == 1 && animationQueue.Count == 0 && userInputQueue.Count == 0) // if there is no more animations and it's the end toggles isMoving, saves a frame
@@ -127,6 +144,8 @@ public class Movement : MonoBehaviour
 
     private void HandleNoObstacle(Vector3 direction)
     {
+        Debug.Log("aaaaa");
+        
         RaycastHit hit;
         GameObject obstacle = null;
 

@@ -82,6 +82,11 @@ public class AscendingObject : MonoBehaviour, Triggerable
                 if (GameObject.Find("PlayerPivot").GetComponent<Movement>().state != Movement.State.falling)
                     collider.transform.Translate(deltaTransform);
             }
+            else
+            {
+                if (collider.GetComponent<Movement>().state != Movement.State.falling)
+                    collider.transform.Translate(deltaTransform);
+            }
         }
     }
 
