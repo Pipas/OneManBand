@@ -80,7 +80,7 @@ public class EnemyHitbox : MonoBehaviour {
         return playerWithinRange;
     }
 
-    public void OnColliderEnter(Collider other)
+    /*public void OnColliderEnter(Collider other)
     {
         Debug.Log(other.name);
 
@@ -106,7 +106,7 @@ public class EnemyHitbox : MonoBehaviour {
         {
             playerWithinRange = false;
         }
-    }
+    }*/
 
     public Vector3 getPlayerPosition()
     {
