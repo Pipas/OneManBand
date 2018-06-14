@@ -7,6 +7,7 @@ public class EnemyMovement : MonoBehaviour {
     public EnemyHitbox hitbox;
     public HealthSystem playerHealth;
     public GameObject player;
+    public GameObject enemy;
 
     private float speed = 1f;
     private float rotationSpeed = 2f;
@@ -15,15 +16,23 @@ public class EnemyMovement : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        running = true;
+        running = false;
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 
         if ((!hitbox.isPlayerWithinRange() && !playerHealth.gameOver) || playerHealth.gameOver)
         {
             autoMovement();
+        }
+
+        if (!playerHealth.gameOver) {
+            if (hitbox.isPlayerWithinRange())
+            {
+                Debug.Log(hitbox.getPlayerPosition());
+                transform.LookAt(hitbox.getPlayerPosition());
+            }
         }
 	}
 
@@ -66,7 +75,8 @@ public class EnemyMovement : MonoBehaviour {
                     float step = rotationSpeed * Time.deltaTime;
                     Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
 
-                    transform.rotation = Quaternion.LookRotation(newDir);
+                    Quaternion rotate = Quaternion.LookRotation(newDir);
+                    transform.rotation = rotate;
 
                     transform.position = Vector3.Lerp(this.transform.position, pointsMovement[currentPoint], Time.deltaTime * speed);
                 }
@@ -82,7 +92,7 @@ public class EnemyMovement : MonoBehaviour {
     {
         if (!running)
         {
-            GetComponent<Animator>().SetInteger("States", 1);
+            enemy.GetComponent<Animator>().SetBool("moveToggle", true);
             running = true;
         }
     }
@@ -90,12 +100,12 @@ public class EnemyMovement : MonoBehaviour {
     public void stopEnemyAnimation() {
         if (running)
         {
-            GetComponent<Animator>().SetInteger("States", 0);
+            enemy.GetComponent<Animator>().SetBool("moveToggle", false);
             running = false;
         }
     }
 
-    public bool isRunningAnimationPlaying()
+    /*public bool isRunningAnimationPlaying()
     {
         return GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Run");
     }
@@ -103,7 +113,7 @@ public class EnemyMovement : MonoBehaviour {
     public bool isIdleAnimationPlaying()
     {
         return GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Idle");
-    }
+    }*/
 
 
 }

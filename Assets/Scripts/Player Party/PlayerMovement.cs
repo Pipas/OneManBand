@@ -127,23 +127,25 @@ public class PlayerMovement : Movement
         Vector3[] directions = {Vector3.forward, Vector3.left, Vector3.back, Vector3.right};
         RaycastHit hit;
         GameObject obstacle = null;
-
+        //Vector3 raycastPosition = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
         foreach(Vector3 direction in directions)
         {
-            if (Physics.Raycast(transform.position, direction, out hit, 1))
+            if (Physics.Raycast(transform.position, direction, out hit, 2))
             {
+                Debug.DrawRay(transform.position, transform.TransformDirection(direction) * hit.distance, Color.red);
                 obstacle = hit.transform.gameObject;
+
                 if(obstacle.tag == "Party")
                 {
                     if(!party.Contains(obstacle))
                     {
+                        obstacle.GetComponent<BoxCollider>().enabled = false;
                         party.Add(obstacle);
                         if(party.Count == 1)
                         {
                             nextInParty = obstacle;
                         }
-                        else
-                            party[party.IndexOf(obstacle) - 1].GetComponent<PartyMovement>().nextInParty = obstacle;	
+                        else party[party.IndexOf(obstacle) - 1].GetComponent<PartyMovement>().nextInParty = obstacle;
                     }
                 }
             }

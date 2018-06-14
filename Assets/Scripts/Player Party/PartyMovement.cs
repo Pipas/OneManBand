@@ -68,6 +68,7 @@ public class PartyMovement : Movement
     {
         if(toBeDitched)
         {
+            GetComponent<BoxCollider>().enabled = true;
             if(party.IndexOf(gameObject) == 0)
             {
                 GameObject.Find("PlayerPivot").GetComponent<PlayerMovement>().nextInParty = null;
@@ -78,7 +79,6 @@ public class PartyMovement : Movement
                 party[party.IndexOf(gameObject) - 1].GetComponent<PartyMovement>().nextInParty = null;
                 party.RemoveAt(party.IndexOf(gameObject));
             }
-
             toBeDitched = false;
         }
     }

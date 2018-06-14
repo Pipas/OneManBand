@@ -41,7 +41,7 @@ public class CameraAnimation : MonoBehaviour
             for(int i = 0; i < hits.Length; i++)
             {
                 RaycastHit hit = hits[i];
-                if(hit.collider.tag == "Player" || hit.collider.tag == "Party")
+                if(hit.collider.tag == "Player" || hit.collider.tag == "Party" || hit.collider.tag == "PlayerHitbox")
                     break;
                 
                 Renderer rend = hit.transform.GetComponent<Renderer>();

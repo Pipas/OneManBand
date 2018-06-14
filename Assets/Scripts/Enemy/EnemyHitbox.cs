@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyHitbox : MonoBehaviour {
     private bool playerWithinRange = false;
     private float playerDistance;
+    private Vector3 playerPosition;
     private bool onCooldown = false;
     private const float ATTACK_COOL = 1f;
     private float attackCooldown = ATTACK_COOL;
@@ -31,42 +32,24 @@ public class EnemyHitbox : MonoBehaviour {
 	// Update is called once per frame
     void LateUpdate()
     {
-        if (!playerHealth.gameOver) {
-            int layerMask = 1 << 8;
-            Vector3 origin = transform.position;
-            Vector3 direction = transform.TransformDirection(Vector3.forward);
-            RaycastHit hit;
+        if (playerWithinRange)
+        {
+            Vector3 tmpPos = GameObject.Find("PlayerPivot").transform.position;
+            Vector3 playerPos = new Vector3(tmpPos.x, 1f, tmpPos.z);
+            playerPosition = playerPos;
+            float distance = Vector3.Distance(playerPosition, transform.position);
+            playerDistance = distance;
+        }
         
-            if (Physics.Raycast(origin, direction, out hit, 3, layerMask))
+        if (!playerHealth.gameOver) {
+            if (onCooldown)
             {
-                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.red);
-
-                if (hit.collider.name == "Player")
-                {
-                    enemyMovement.stopEnemyAnimation();
-                    playerDistance = hit.distance;
-                    playerWithinRange = true;
-                }
-                else
-                {
-                    playerWithinRange = false;
-                }
+                decreaseCooldown();
             }
             else
             {
-                playerWithinRange = false;
+                attackPlayer();
             }
-
-            //if (enemyMovement.isIdleAnimationPlaying()) {
-                if (onCooldown)
-                {
-                    decreaseCooldown();
-                }
-                else
-                {
-                    attackPlayer();
-                }
-            //}
         }
     }
 
@@ -95,5 +78,48 @@ public class EnemyHitbox : MonoBehaviour {
     public bool isPlayerWithinRange()
     {
         return playerWithinRange;
+    }
+
+    public void OnColliderEnter(Collider other)
+    {
+        Debug.Log(other.name);
+
+        if (other.name == "PlayerHitbox")
+        {
+            enemyMovement.stopEnemyAnimation();
+            playerWithinRange = true;
+        }
+
+        if (onCooldown)
+        {
+            decreaseCooldown();
+        }
+        else
+        {
+            attackPlayer();
+        }
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.name == "PlayerHitbox")
+        {
+            playerWithinRange = false;
+        }
+    }
+
+    public Vector3 getPlayerPosition()
+    {
+        return playerPosition;
+    }
+
+    public void setPlayerWithinRange(bool playerWithin)
+    {
+        playerWithinRange = playerWithin;
+    }
+
+    public bool isOnCooldown()
+    {
+        return onCooldown;
     }
 }
