@@ -8,7 +8,7 @@ public class AscendingObjectCollider : MonoBehaviour
     {
         Vector3 colliding_point = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
 
-        if (colliding_point.z > 1.99f)
+        if (colliding_point.z > 1.99f)                                          // check if object is on top of collider
             transform.parent.GetComponent<AscendingObject>().AddObject(other);
     }
 

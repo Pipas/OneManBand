@@ -152,7 +152,7 @@ public class Movement : MonoBehaviour
 
         var layerMask = (1 << 8);
         layerMask = ~layerMask;
-        var distAhead = transform.position + 1.5f*direction;
+        var distAhead = transform.position + 1.2f*direction;
 
         if (Physics.Raycast(distAhead, Vector3.down, out hit, 10, layerMask)) // Checks below the block is moving to
         {

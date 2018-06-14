@@ -8646,6 +8646,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4173f70c431b34c7991321afb11cd711, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camAnimation: {fileID: 0}
+  playerMov: {fileID: 0}
 --- !u!65 &654400957
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10100,6 +10102,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 750284245}
+  - component: {fileID: 750284246}
   m_Layer: 8
   m_Name: PlayerPivot
   m_TagString: Untagged
@@ -10114,13 +10117,32 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 750284244}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1651802297}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &750284246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 750284244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d622822beeafe4e4f91e17cfa7537e42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 2
+  nextInParty: {fileID: 0}
+  savedPosition: {x: 0, y: 0, z: 0}
+  baseSpeed: 6
+  isMoving: 0
+  playerHealth: {fileID: 1651802300}
+  running: 0
+  autoMoving: 0
 --- !u!1 &755922909
 GameObject:
   m_ObjectHideFlags: 0
@@ -14218,6 +14240,7 @@ MonoBehaviour:
   state: 0
   deltaMove: {x: 0, y: -2, z: 0}
   speed: 1
+  waitTime: 0
 --- !u!1 &1210165205
 GameObject:
   m_ObjectHideFlags: 0
@@ -15095,6 +15118,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4173f70c431b34c7991321afb11cd711, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camAnimation: {fileID: 0}
+  playerMov: {fileID: 0}
 --- !u!65 &1367656630
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16037,6 +16062,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4173f70c431b34c7991321afb11cd711, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camAnimation: {fileID: 0}
+  playerMov: {fileID: 0}
 --- !u!65 &1502086840
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18895,8 +18922,8 @@ GameObject:
   - component: {fileID: 1651802295}
   - component: {fileID: 1651802294}
   - component: {fileID: 1651802300}
-  - component: {fileID: 1651802298}
   - component: {fileID: 1651802299}
+  - component: {fileID: 1651802298}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -18965,29 +18992,30 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1651802293}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0.4, z: 0.5}
+  m_LocalPosition: {x: 0, y: 0.4, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_Children: []
   m_Father: {fileID: 750284245}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1651802298
-MonoBehaviour:
+--- !u!95 &1651802298
+Animator:
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1651802293}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d622822beeafe4e4f91e17cfa7537e42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  state: 2
-  nextInParty: {fileID: 0}
-  savedPosition: {x: 0, y: 0, z: 0}
-  baseSpeed: 6
-  isMoving: 0
-  playerHealth: {fileID: 1651802300}
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!54 &1651802299
 Rigidbody:
   m_ObjectHideFlags: 0

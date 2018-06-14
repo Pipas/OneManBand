@@ -28,7 +28,7 @@ public class BridgeTrigger : MonoBehaviour
 
             playerMov.setAutoMoving(true);
 
-            for (int i = 0; i < GetComponent<Renderer>().bounds.size.x; i++)
+            for (int i = 0; i < 3; i++)
                 Player.QueueAnimation(new AnimationItem(Vector3.right * direction, Player.baseSpeed, true, true));
 
             //playerMov.setAutoMoving(false);

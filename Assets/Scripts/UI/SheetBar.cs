@@ -16,5 +16,6 @@ public class SheetBar : MonoBehaviour {
         imageColor.a = 1;
 
         sheetImages[sheetIndex].color = imageColor;
+        sheetIndex++;
     }
 }

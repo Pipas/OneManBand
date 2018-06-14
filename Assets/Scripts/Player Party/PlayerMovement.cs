@@ -48,7 +48,6 @@ public class PlayerMovement : Movement
     {
         if (running)
         {
-            Debug.Log("why not run");
             transform.Find("Player").GetComponent<Animator>().SetInteger("State", 1);
             running = true;
         }
