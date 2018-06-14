@@ -29,19 +29,19 @@ public class BGM : MonoBehaviour {
 		public StartState(BGM inst) : base(inst)
 		{
 			iAudio = 0;
-            inst.aSrc.clip = inst.aStart[iAudio];
-			inst.aSrc.Play();
+            inst.bgmASrc.clip = inst.aStart[iAudio];
+			inst.bgmASrc.Play();
 		}
 
 		public override void update() {
-            if (!inst.aSrc.isPlaying)
+            if (!inst.bgmASrc.isPlaying)
             {
                 Debug.Log("Swapped audio clip!");
 
                 if (iAudio < inst.aStart.Length - 1)
                 {
-                    inst.aSrc.clip = inst.aStart[++iAudio];
-                    inst.aSrc.Play();
+                    inst.bgmASrc.clip = inst.aStart[++iAudio];
+                    inst.bgmASrc.Play();
                 }
 				else
 				{
@@ -65,7 +65,7 @@ public class BGM : MonoBehaviour {
 
         public override void update()
         {
-            if (!inst.aSrc.isPlaying)
+            if (!inst.bgmASrc.isPlaying)
             {
                 reps++;
 
@@ -83,8 +83,8 @@ public class BGM : MonoBehaviour {
                 Debug.Log("Swapped audio clip!");
 
                 iAudio = Random.Range(0, inst.aWhile[iTheme].aClips.Length);
-                inst.aSrc.clip = inst.aWhile[iTheme].aClips[iAudio];
-                inst.aSrc.Play();
+                inst.bgmASrc.clip = inst.aWhile[iTheme].aClips[iAudio];
+                inst.bgmASrc.Play();
             }
         }
     }
@@ -97,24 +97,68 @@ public class BGM : MonoBehaviour {
     /* Array of audio clips to cycle through. */
     public AudioList[] aWhile;
 
+	/* 0: guitar, 1: drums. */
+	public AudioClip[] aFoundInst;
+
 
 	/* --- Attributes --- */
 
-	/* Audio Source that plays the audio. */
-	private AudioSource aSrc;
+	/* Audio Source that plays the bgm. */
+	private AudioSource bgmASrc;
+
+	/* Audio Source that plays foundInst sound. */
+	private AudioSource foundASrc;
+
+	/* Self instance. */
+	private static BGM self;
 	
+	/* Current state. */
 	private State state;
 
 	/* --- Methods --- */
 
 	// Use this for initialization
 	void Start () {
-        aSrc = GetComponent<AudioSource>();
+		self = this;
+		AudioSource[] aSrcs = GetComponents<AudioSource>();
+        bgmASrc = aSrcs[0];
+		foundASrc = aSrcs[1];
         state = new StartState(this);
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		state.update();
+	}
+
+	// Play the instrument sound when found
+	public static void FoundInst(string name)
+	{
+		AudioClip clip = null;
+		switch (name)
+		{
+			case "PartyGuitar":
+				clip = self.aFoundInst[1];
+				break;
+
+			default:
+				break;
+		}
+
+		self.foundASrc.clip = clip;
+
+		// curent time (rounded to seconds)
+        int currentTime = (int)Time.time;
+
+		int mod = currentTime % 4;
+        if (mod == 0)
+		{
+            self.foundASrc.Play();
+		}
+		else
+		{
+			int diff = 4 - mod;
+			self.foundASrc.PlayDelayed((currentTime + diff) - Time.time);
+		}		
 	}
 }

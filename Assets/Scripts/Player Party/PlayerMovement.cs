@@ -144,6 +144,8 @@ public class PlayerMovement : Movement
                         }
                         else
                             party[party.IndexOf(obstacle) - 1].GetComponent<PartyMovement>().nextInParty = obstacle;	
+                        // play sound
+                        BGM.FoundInst(obstacle.name);
                     }
                 }
             }
