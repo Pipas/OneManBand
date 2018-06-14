@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2db192a35eb9cc648a099139c15f0c94
+guid: 8cdadd2c2df0d6f48bdd7262b145e16e
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -7,17 +7,17 @@ ModelImporter:
     100002: arm_L_001
     100004: arm_R
     100006: arm_R_001
-    100008: Armature
-    100010: arms_L
-    100012: arms_R
-    100014: Circle_006
+    100008: arms_L
+    100010: arms_R
+    100012: evil
+    100014: //RootNode
     100016: foot_L
     100018: foot_R
-    100020: //RootNode
-    100022: leg1_L
-    100024: leg1_R
-    100026: leg2_L
-    100028: leg2_R
+    100020: leg1_L
+    100022: leg1_R
+    100024: leg2_L
+    100026: leg2_R
+    100028: skeleto_evil_001
     100030: toes_L
     100032: toes_R
     100034: torso
@@ -25,37 +25,38 @@ ModelImporter:
     400002: arm_L_001
     400004: arm_R
     400006: arm_R_001
-    400008: Armature
-    400010: arms_L
-    400012: arms_R
-    400014: Circle_006
+    400008: arms_L
+    400010: arms_R
+    400012: evil
+    400014: //RootNode
     400016: foot_L
     400018: foot_R
-    400020: //RootNode
-    400022: leg1_L
-    400024: leg1_R
-    400026: leg2_L
-    400028: leg2_R
+    400020: leg1_L
+    400022: leg1_R
+    400024: leg2_L
+    400026: leg2_R
+    400028: skeleto_evil_001
     400030: toes_L
     400032: toes_R
     400034: torso
-    2100000: Material_038
-    2100002: Material_043
-    2100004: Material_042
-    2100006: Material_041
-    2100008: Material_040
-    2100010: Material_039
-    4300000: Circle_006
+    2100000: Material_014
+    2100002: Material_013
+    2100004: Material_012
+    2100006: Material_003
+    2100008: Material_002
+    4300000: evil
     7400000: Default Take
-    7400002: playing_idle
-    7400004: walk_cycle_final
-    7400006: walk_blocking_001
-    7400008: walk_blocking_002
-    7400010: yos
-    7400012: yos_001
+    7400002: idle_final
+    7400004: IDLE_MESMO_FINAL
+    7400006: walk_cycle_c_bracos_EVIL_final_001
+    7400008: walk_cycle_c_bracos_003
+    7400010: walk_cycle_c_bracos_004
+    7400012: WALK_CYCLE_MESMO_FINAL
+    7400014: WALK_CYCLE_MESMO_FINAL_001
+    7400016: walk_blocking_001
+    7400018: yos_001
     9500000: //RootNode
-    13700000: Circle_006
-    2186277476908879412: ImportLogs
+    13700000: evil
   externalObjects: {}
   materials:
     importMaterials: 1

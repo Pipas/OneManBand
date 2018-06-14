@@ -1,103 +1,62 @@
 fileFormatVersion: 2
-guid: fc2d97b974b4f614ab4f0c18f48cebaa
+guid: 982cc4df5686d2f42953bb0e73958233
 ModelImporter:
-  serializedVersion: 22
+  serializedVersion: 23
   fileIDToRecycleName:
     100000: arm_L
-    100002: arm_L_0
-    100004: arm_L_001
-    100006: arm_L_2
-    100008: arm_R
-    100010: arm_R_0
-    100012: arm_R_001
-    100014: arm_R_2
-    100016: arms_L
-    100018: arms_L_0
-    100020: arms_R
-    100022: arms_R_0
-    100024: evil
-    100026: //RootNode
-    100028: foot_L
-    100030: foot_L_0
-    100032: foot_R
-    100034: foot_R_0
-    100036: good_guitar
-    100038: good_guitarr
-    100040: leg1_L
-    100042: leg1_L_0
-    100044: leg1_R
-    100046: leg1_R_0
-    100048: leg2_L
-    100050: leg2_L_0
-    100052: leg2_R
-    100054: leg2_R_0
-    100056: skeleto_evil
-    100058: toes_L
-    100060: toes_L_0
-    100062: toes_R
-    100064: toes_R_0
-    100066: torso
-    100068: torso_0
+    100002: arm_L_001
+    100004: arm_R
+    100006: arm_R_001
+    100008: Armature_002
+    100010: arms_L
+    100012: arms_R
+    100014: Circle_006
+    100016: foot_L
+    100018: foot_R
+    100020: //RootNode
+    100022: leg1_L
+    100024: leg1_R
+    100026: leg2_L
+    100028: leg2_R
+    100030: toes_L
+    100032: toes_R
+    100034: torso
     400000: arm_L
-    400002: arm_L_0
-    400004: arm_L_001
-    400006: arm_L_2
-    400008: arm_R
-    400010: arm_R_0
-    400012: arm_R_001
-    400014: arm_R_2
-    400016: arms_L
-    400018: arms_L_0
-    400020: arms_R
-    400022: arms_R_0
-    400024: evil
-    400026: //RootNode
-    400028: foot_L
-    400030: foot_L_0
-    400032: foot_R
-    400034: foot_R_0
-    400036: good_guitar
-    400038: good_guitarr
-    400040: leg1_L
-    400042: leg1_L_0
-    400044: leg1_R
-    400046: leg1_R_0
-    400048: leg2_L
-    400050: leg2_L_0
-    400052: leg2_R
-    400054: leg2_R_0
-    400056: skeleto_evil
-    400058: toes_L
-    400060: toes_L_0
-    400062: toes_R
-    400064: toes_R_0
-    400066: torso
-    400068: torso_0
-    2100000: Material_004
-    2100002: Material_012
-    2100004: Material_005
-    2100006: Material_002
-    2100008: Material_003
-    2100010: Material_038
-    2100012: Material_043
-    2100014: Material_042
-    2100016: Material_041
-    2100018: Material_040
-    2100020: Material_039
-    4300000: evil
-    4300002: good_guitarr
+    400002: arm_L_001
+    400004: arm_R
+    400006: arm_R_001
+    400008: Armature_002
+    400010: arms_L
+    400012: arms_R
+    400014: Circle_006
+    400016: foot_L
+    400018: foot_R
+    400020: //RootNode
+    400022: leg1_L
+    400024: leg1_R
+    400026: leg2_L
+    400028: leg2_R
+    400030: toes_L
+    400032: toes_R
+    400034: torso
+    2100000: Material_000
+    2100002: Material_011
+    2100004: Material_010
+    2100006: Material_009
+    2100008: Material_006
+    2100010: Material_001
+    4300000: Circle_006
     7400000: Default Take
     7400002: idle_final
-    7400004: walk_cycle_c_bracos
-    7400006: walk_cycle_c_bracos_EVIL_final
-    7400008: walk_cycle_c_bracos_001
-    7400010: walk_blocking
-    7400012: walk_blocking_001
-    7400014: walk_blocking_002
-    7400016: yos
+    7400004: IDLE_FINALISSIMO
+    7400006: walk_cycle_c_bracos_001
+    7400008: WALK_CYCLE_FINALISSIMO
+    7400010: WALK_CYCLE_FINALISSIMO_001
+    7400012: walk_blocking_003
+    7400014: walk_blocking_004
+    7400016: yos_003
     9500000: //RootNode
-    13700000: evil
-    13700002: good_guitarr
+    13700000: Circle_006
     2186277476908879412: ImportLogs
   externalObjects: {}
   materials:
@@ -150,6 +109,8 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 1
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
