@@ -5,6 +5,8 @@ using UnityEngine;
 public class PartyMovement : Movement
 {
     public bool toBeDitched = false;
+    private Vector3 playerDirection;
+    private bool running = false;
 
     void Start ()
     {
@@ -12,9 +14,54 @@ public class PartyMovement : Movement
         state = State.still;
     }
     
-    void Update ()
+    void LateUpdate ()
     {
+        if (playerDirection == Vector3.forward)
+        {
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, 0, transform.eulerAngles.z);
+        }
+        else if (playerDirection == Vector3.back)
+        {
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, 180, transform.eulerAngles.z);
+        }
+        else if (playerDirection == Vector3.right)
+        {
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, 90, transform.eulerAngles.z);
+        }
+        else if (playerDirection == Vector3.left)
+        {
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, -90, transform.eulerAngles.z);
+        }
 
+        if (transform.hasChanged)
+        {
+            transform.hasChanged = false;
+            running = true;
+            movePartyAnimation();
+        }
+        else
+        {
+            running = false;
+            stopPartyAnimation();
+        }
+    }
+
+    public void movePartyAnimation()
+    {
+        if (running)
+        {
+            transform.GetComponent<Animator>().SetBool("moveToggle", true);
+            running = true;
+        }
+    }
+
+    public void stopPartyAnimation()
+    {
+        if (!running)
+        {
+            transform.GetComponent<Animator>().SetBool("moveToggle", false);
+            running = false;
+        }
     }
 
     public override void CheckIfDitched()
@@ -23,7 +70,7 @@ public class PartyMovement : Movement
         {
             if(party.IndexOf(gameObject) == 0)
             {
-                GameObject.Find("Player").GetComponent<PlayerMovement>().nextInParty = null;
+                GameObject.Find("PlayerPivot").GetComponent<PlayerMovement>().nextInParty = null;
                 party.RemoveAt(0);
             }
             else
@@ -35,4 +82,8 @@ public class PartyMovement : Movement
             toBeDitched = false;
         }
     }
+
+    public void setPlayerDirection(Vector3 direction) {
+        this.playerDirection = direction;
+    } 
 }

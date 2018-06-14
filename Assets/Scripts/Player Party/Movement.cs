@@ -93,6 +93,10 @@ public class Movement : MonoBehaviour
     /* Validates the input and adds animation accordingly */
 	protected void ValidateInput(Vector3 direction)
     {
+        foreach(GameObject member in party) {
+            member.GetComponent<PartyMovement>().setPlayerDirection(direction);
+        }
+
         if (direction == Vector3.forward)
         {
             transform.eulerAngles = new Vector3(transform.eulerAngles.x, 0, transform.eulerAngles.z);
@@ -122,7 +126,6 @@ public class Movement : MonoBehaviour
         {
             obstacle = hit.transform.gameObject;
 
-            Debug.Log(obstacle.name);
             if(obstacle.tag == "Ladder")
                 HandleLadder(obstacle, direction); // If there is a ladder
             else if(obstacle.tag == "Sheet")
@@ -202,7 +205,9 @@ public class Movement : MonoBehaviour
         if(nextInParty != null)
         {
             savedPosition = transform.position;
-            nextInParty.GetComponent<PartyMovement>().savedPosition = nextInParty.transform.position;
+
+            Vector3 savedPos = new Vector3(nextInParty.transform.position.x, nextInParty.transform.position.y + 0.4f, nextInParty.transform.position.z);
+            nextInParty.GetComponent<PartyMovement>().savedPosition = savedPos;
         }
     }
 
