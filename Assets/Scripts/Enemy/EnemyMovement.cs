@@ -30,7 +30,6 @@ public class EnemyMovement : MonoBehaviour {
         if (!playerHealth.gameOver) {
             if (hitbox.isPlayerWithinRange())
             {
-                Debug.Log(hitbox.getPlayerPosition());
                 transform.LookAt(hitbox.getPlayerPosition());
             }
         }

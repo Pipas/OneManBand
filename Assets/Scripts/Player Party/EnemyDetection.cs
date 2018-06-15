@@ -17,8 +17,6 @@ public class EnemyDetection : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.tag);
-
         if (other.tag == "Enemy")
         {
             enemyHitbox.enemyMovement.stopEnemyAnimation();

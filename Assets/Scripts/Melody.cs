@@ -24,7 +24,7 @@ public class Melody : MonoBehaviour {
 
 	/* --- Attributes --- */
 
-	public const int BLOCK_DURATION = 4;
+	public const int BLOCK_DURATION = 2;
 
 	/* Audio Source. */
 	private AudioSource aSrc;

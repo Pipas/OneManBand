@@ -12,6 +12,7 @@ public class EnemyHitbox : MonoBehaviour {
 
     public HealthSystem playerHealth;
     public EnemyMovement enemyMovement;
+    public KillEnemy killEnemy;
 
     public Transform projectileSpawn;
     Projectile projectile;
@@ -32,23 +33,25 @@ public class EnemyHitbox : MonoBehaviour {
 	// Update is called once per frame
     void LateUpdate()
     {
-        if (playerWithinRange)
-        {
-            Vector3 tmpPos = GameObject.Find("PlayerPivot").transform.position;
-            Vector3 playerPos = new Vector3(tmpPos.x, 1f, tmpPos.z);
-            playerPosition = playerPos;
-            float distance = Vector3.Distance(playerPosition, transform.position);
-            playerDistance = distance;
-        }
-        
-        if (!playerHealth.gameOver) {
-            if (onCooldown)
+        if (!killEnemy.isEnemyDead()) {
+            if (playerWithinRange)
             {
-                decreaseCooldown();
+                Vector3 tmpPos = GameObject.Find("PlayerPivot").transform.position;
+                Vector3 playerPos = new Vector3(tmpPos.x, 1f, tmpPos.z);
+                playerPosition = playerPos;
+                float distance = Vector3.Distance(playerPosition, transform.position);
+                playerDistance = distance;
             }
-            else
-            {
-                attackPlayer();
+        
+            if (!playerHealth.gameOver) {
+                if (onCooldown)
+                {
+                    decreaseCooldown();
+                }
+                else
+                {
+                    attackPlayer();
+                }
             }
         }
     }

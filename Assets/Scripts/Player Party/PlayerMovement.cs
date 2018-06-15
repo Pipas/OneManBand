@@ -8,6 +8,8 @@ public class PlayerMovement : Movement
     public HealthSystem playerHealth;
     public bool running = false;
     public bool autoMoving = false;
+    public bool foundParty = false;
+
     void Start ()
     {
         savedPosition = transform.position;
@@ -140,7 +142,9 @@ public class PlayerMovement : Movement
                     if(!party.Contains(obstacle))
                     {
                         obstacle.GetComponent<BoxCollider>().enabled = false;
+                        foundParty = true;
                         party.Add(obstacle);
+
                         if(party.Count == 1)
                         {
                             nextInParty = obstacle;
@@ -195,5 +199,15 @@ public class PlayerMovement : Movement
     public void setAutoMoving(bool auto)
     {
         autoMoving = auto;
+    }
+
+    public bool hasFoundParty()
+    {
+        return foundParty;
+    }
+
+    public void setFoundParty(bool found)
+    {
+        foundParty = found;
     }
 }

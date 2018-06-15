@@ -135,11 +135,15 @@ public class BGM : MonoBehaviour {
 	public static void FoundInst(string name)
 	{
 		AudioClip clip = null;
+
 		switch (name)
 		{
-			case "PartyGuitar":
-				clip = self.aFoundInst[1];
+			case "PartyTambor":
+				clip = self.aFoundInst[0];
 				break;
+            case "PartyGuitar":
+                clip = self.aFoundInst[1];
+                break;
 
 			default:
 				break;

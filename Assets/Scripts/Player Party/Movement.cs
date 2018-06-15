@@ -133,16 +133,16 @@ public class Movement : MonoBehaviour
                 HandleSheet(obstacle); // If there is a Sheet
                 HandleNoObstacle(direction);
             }
-            else if(obstacle.tag == "Party")
+            else if(obstacle.tag == "Bridge")
             {
                 QueueAnimation(new AnimationItem(direction/5f, baseSpeed/2, false, false)); // If can't move enqueues small animation to display that you can't move
                 QueueAnimation(new AnimationItem(-direction/5f, baseSpeed/2, false, false)); // Enqueues reverse animation
             }
-            else
+            /*else
             {
                 QueueAnimation(new AnimationItem(direction/10f, baseSpeed/2, false, false)); // If can't move enqueues small animation to display that you can't move
                 QueueAnimation(new AnimationItem(-direction/10f, baseSpeed/2, false, false)); // Enqueues reverse animation
-            }
+            }*/
         }
         else
             HandleNoObstacle(direction); // If there is no obstacle checks if there is a floor
@@ -176,8 +176,8 @@ public class Movement : MonoBehaviour
             }
         }
 
-        QueueAnimation(new AnimationItem(direction/3f, baseSpeed/1.5f, false, false)); // If can't move enqueues small animation to display that you can't move
-        QueueAnimation(new AnimationItem(-direction/3f, baseSpeed/1.5f, false, false)); // Enqueues reverse animation
+        /*QueueAnimation(new AnimationItem(direction/3f, baseSpeed/1.5f, false, false)); // If can't move enqueues small animation to display that you can't move
+        QueueAnimation(new AnimationItem(-direction/3f, baseSpeed/1.5f, false, false)); // Enqueues reverse animation*/
     }
 
     public void HandleLadder(GameObject ladder, Vector3 direction)

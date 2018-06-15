@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - Triggerable
   - PlayerHitbox
+  - Bridge
   layers:
   - Default
   - TransparentFX

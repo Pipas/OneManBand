@@ -6,6 +6,7 @@ public class Sheet : MonoBehaviour
 {
     public float rotationSpeed;
     public SheetBar sheetBar;
+    public bool caught = false;
 
 	// Use this for initialization
 	void Start () 
@@ -26,7 +27,12 @@ public class Sheet : MonoBehaviour
 
     public void RemovePage ()
     {
+        caught = true;
         Destroy(transform.parent.gameObject);
         sheetBar.catchSheet();
+    }
+
+    public bool isCaught() {
+        return caught;
     }
 }

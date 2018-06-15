@@ -21,6 +21,8 @@ public class Skillbar : MonoBehaviour {
 
     /* --- Inspector --- */
 
+    public KillEnemy killEnemy;
+
     // keycode for skill #1
     public KeyCode KC_SKILL1;
 
@@ -140,7 +142,7 @@ public class Skillbar : MonoBehaviour {
 
         pressedSkills.Add(new SkillPress(pressedSkill, elapsedTime));
 
-        GameObject[] triggerables = GameObject.FindGameObjectsWithTag("Triggerable");
+        GameObject[] triggerables = GameObject.FindGameObjectsWithTag("Enemy");
 
         foreach(GameObject obj in triggerables) {
             
@@ -151,7 +153,7 @@ public class Skillbar : MonoBehaviour {
                 objMelody.Stop(true);
                 if (checkMelody(objMelody.rythem))
                 {
-                    Debug.Log("Attack!");
+                    killEnemy.setEnemyDead(true);
                 }
             }
         }
