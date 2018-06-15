@@ -15,19 +15,11 @@ public class EnemyHitbox : MonoBehaviour {
     public KillEnemy killEnemy;
 
     public Transform projectileSpawn;
-    Projectile projectile;
+    Fireball projectile;
 
     void Start()
     {
-        projectile = Resources.Load<Projectile>("Projectile");
-    }
-
-    public void performAttack(float range)
-    {
-        Projectile projectileInstance = (Projectile)Instantiate(projectile, projectileSpawn.position, projectileSpawn.rotation);
-        projectileInstance.direction = projectileSpawn.forward;
-        projectileInstance.range = range;
-        projectileInstance.sendProjectile();
+        projectile = Resources.Load<Fireball>("Fireball");
     }
 	
 	// Update is called once per frame
@@ -56,6 +48,33 @@ public class EnemyHitbox : MonoBehaviour {
         }
     }
 
+    public void checkIfObstaclesAhead(Vector3 playerPosition) {
+        enemyMovement.stopEnemyAnimation();
+        playerWithinRange = true;
+
+        Vector3 origin = transform.position;
+        Vector3 direction = playerPosition - transform.position;
+        RaycastHit hit;
+        
+        if (Physics.Raycast(origin, direction, out hit, 3))
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.red);
+            Debug.Log(hit.collider.name);
+            if (hit.collider.tag != "Player" && hit.collider.tag != "Party" && hit.collider.tag != "PlayerHitbox")
+            {
+                playerWithinRange = false;
+            }
+        }
+    }
+
+    public void performAttack(float range)
+    {
+        Fireball projectileInstance = (Fireball)Instantiate(projectile, projectileSpawn.position, projectileSpawn.rotation);
+        projectileInstance.direction = playerPosition - transform.position;
+        projectileInstance.range = range-0.5f;
+        projectileInstance.sendProjectile();
+    }
+
     public void decreaseCooldown()
     {
         if (attackCooldown <= 0)
@@ -82,34 +101,6 @@ public class EnemyHitbox : MonoBehaviour {
     {
         return playerWithinRange;
     }
-
-    /*public void OnColliderEnter(Collider other)
-    {
-        Debug.Log(other.name);
-
-        if (other.name == "PlayerHitbox")
-        {
-            enemyMovement.stopEnemyAnimation();
-            playerWithinRange = true;
-        }
-
-        if (onCooldown)
-        {
-            decreaseCooldown();
-        }
-        else
-        {
-            attackPlayer();
-        }
-    }
-
-    public void OnTriggerExit(Collider other)
-    {
-        if (other.name == "PlayerHitbox")
-        {
-            playerWithinRange = false;
-        }
-    }*/
 
     public Vector3 getPlayerPosition()
     {
