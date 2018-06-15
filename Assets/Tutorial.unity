@@ -4099,7 +4099,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a313cfd0ec74c14baaa3e662d8a85d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyHitbox: {fileID: 508419244}
 --- !u!1 &63544288
 GameObject:
   m_ObjectHideFlags: 0
@@ -88860,12 +88859,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6c78c1e4a9409e48bb8d36bbfe4c7ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1621732224}
   KC_SKILL1: 49
   KC_SKILL2: 50
   KC_SKILL3: 51
   KeyDownAlpha: 0.5
-  Player: {fileID: 1528944031}
+  Player: {fileID: 1621732224}
   Radius: 10
   SkillPressMargin: 300
   MaxPauseDuration: 5000

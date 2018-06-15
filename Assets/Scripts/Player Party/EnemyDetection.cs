@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyDetection : MonoBehaviour {
-    public EnemyHitbox enemyHitbox;
-
 	// Use this for initialization
 	void Start () {
 		
@@ -19,22 +17,28 @@ public class EnemyDetection : MonoBehaviour {
     {
         if (other.tag == "Enemy")
         {
-            enemyHitbox.enemyMovement.stopEnemyAnimation();
-            enemyHitbox.setPlayerWithinRange(true);
+            EnemyHitbox hitbox = other.transform.parent.gameObject.GetComponent<EnemyHitbox>();
 
-            if (enemyHitbox.isOnCooldown())
+            hitbox.enemyMovement.stopEnemyAnimation();
+            hitbox.setPlayerWithinRange(true);
+
+            if (hitbox.isOnCooldown())
             {
-                enemyHitbox.decreaseCooldown();
+                hitbox.decreaseCooldown();
             }
             else
             {
-                enemyHitbox.attackPlayer();
+                hitbox.attackPlayer();
             }
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        enemyHitbox.setPlayerWithinRange(false);
+        if (other.tag == "Enemy")
+        {
+            EnemyHitbox hitbox = other.transform.parent.gameObject.GetComponent<EnemyHitbox>();
+            hitbox.setPlayerWithinRange(false);
+        }
     }
 }

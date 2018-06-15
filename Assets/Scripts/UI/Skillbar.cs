@@ -21,7 +21,6 @@ public class Skillbar : MonoBehaviour {
 
     /* --- Inspector --- */
 
-    public GameObject player;
     private bool maestroPlaying = false;
 
     // keycode for skill #1
@@ -96,7 +95,7 @@ public class Skillbar : MonoBehaviour {
             pressedSkill = "f";
             
             maestroPlaying = true;
-            player.GetComponent<Animator>().SetBool("PlayToggle", true);
+            Player.GetComponent<Animator>().SetBool("PlayToggle", true);
         }
         else if (Input.GetKeyUp(KC_SKILL1))
         {
@@ -110,7 +109,7 @@ public class Skillbar : MonoBehaviour {
             pressedSkill = "s";
 
             maestroPlaying = true;
-            player.GetComponent<Animator>().SetBool("PlayToggle", true);
+            Player.GetComponent<Animator>().SetBool("PlayToggle", true);
         }
         else if (Input.GetKeyUp(KC_SKILL2))
         {
@@ -124,7 +123,7 @@ public class Skillbar : MonoBehaviour {
             pressedSkill = "t";
 
             maestroPlaying = true;
-            player.GetComponent<Animator>().SetBool("PlayToggle", true);
+            Player.GetComponent<Animator>().SetBool("PlayToggle", true);
         }
         else if (Input.GetKeyUp(KC_SKILL3))
         {
@@ -134,7 +133,7 @@ public class Skillbar : MonoBehaviour {
         if (!Input.GetKey(KC_SKILL1) && !Input.GetKey(KC_SKILL2) && !Input.GetKey(KC_SKILL3))
         {
             maestroPlaying = false;
-            player.GetComponent<Animator>().SetBool("PlayToggle", false);
+            Player.GetComponent<Animator>().SetBool("PlayToggle", false);
         }
 
         handleSkillPress(pressedSkill);
