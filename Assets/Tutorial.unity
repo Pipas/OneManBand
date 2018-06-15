@@ -4056,7 +4056,7 @@ GameObject:
   - component: {fileID: 63011297}
   - component: {fileID: 63011298}
   - component: {fileID: 63011299}
-  m_Layer: 8
+  m_Layer: 2
   m_Name: PlayerHitbox
   m_TagString: PlayerHitbox
   m_Icon: {fileID: 0}
@@ -4086,7 +4086,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.8
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &63011299
 MonoBehaviour:
@@ -17135,7 +17135,7 @@ Transform:
   m_GameObject: {fileID: 309932299}
   m_LocalRotation: {x: -0, y: -1, z: 0.0000000842937, w: 0}
   m_LocalPosition: {x: 3, y: 0.5, z: 2}
-  m_LocalScale: {x: 0.3, y: 2, z: 0.5}
+  m_LocalScale: {x: 0.334, y: 2, z: 0.5}
   m_Children: []
   m_Father: {fileID: 1480405427}
   m_RootOrder: 2
@@ -34853,7 +34853,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 729156792}
   m_LocalRotation: {x: -0.66530025, y: 0.23953216, z: 0.23953214, w: 0.66530025}
-  m_LocalPosition: {x: 1.8037491, y: 0.53960216, z: 0.39352334}
+  m_LocalPosition: {x: 0.803749, y: 0.53960216, z: -0.6064767}
   m_LocalScale: {x: 0.048474744, y: 0.048474744, z: 0.048474748}
   m_Children: []
   m_Father: {fileID: 395903337}
@@ -58029,7 +58029,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1229628036}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 1.318161, y: 0.5396023, z: 0.8221992}
+  m_LocalPosition: {x: 0.318161, y: 0.5396023, z: -0.1778008}
   m_LocalScale: {x: 0.037028287, y: 0.037028287, z: 0.037028287}
   m_Children: []
   m_Father: {fileID: 395903337}

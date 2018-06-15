@@ -28,9 +28,7 @@ public class EnemyHitbox : MonoBehaviour {
         if (!killEnemy.isEnemyDead()) {
             if (playerWithinRange)
             {
-                Vector3 tmpPos = GameObject.Find("PlayerPivot").transform.position;
-                Vector3 playerPos = new Vector3(tmpPos.x, 1f, tmpPos.z);
-                playerPosition = playerPos;
+                playerPosition = calculatePlayerPosition();
                 float distance = Vector3.Distance(playerPosition, transform.position);
                 playerDistance = distance;
             }
@@ -53,15 +51,19 @@ public class EnemyHitbox : MonoBehaviour {
         playerWithinRange = true;
 
         Vector3 origin = transform.position;
+        playerPosition = calculatePlayerPosition();
+
         Vector3 direction = playerPosition - transform.position;
         RaycastHit hit;
         
-        if (Physics.Raycast(origin, direction, out hit, 3))
+        if (Physics.Raycast(origin, direction, out hit, 2))
         {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.red);
+            Debug.DrawRay(transform.position, direction * hit.distance, Color.red);
             Debug.Log(hit.collider.name);
-            if (hit.collider.tag != "Player" && hit.collider.tag != "Party" && hit.collider.tag != "PlayerHitbox")
+
+            if (hit.collider.tag != "Player" && hit.collider.tag != "Party")
             {
+                Debug.Log("aye");
                 playerWithinRange = false;
             }
         }
@@ -95,6 +97,12 @@ public class EnemyHitbox : MonoBehaviour {
             performAttack(playerDistance);
             onCooldown = true;
         }
+    }
+
+    public Vector3 calculatePlayerPosition() {
+        Vector3 tmpPos = GameObject.Find("PlayerPivot").transform.position;
+        Vector3 playerPos = new Vector3(tmpPos.x, 1f, tmpPos.z);
+        return playerPos;
     }
 
     public bool isPlayerWithinRange()
