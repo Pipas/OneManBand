@@ -12,6 +12,7 @@ public class Spotlight : MonoBehaviour
     private float currentDelta;
     private Light directionalLight;
     public bool hasPlayer, retracting = false;
+    public GameObject movingBlock;
 
 	// Use this for initialization
 	void Start () 

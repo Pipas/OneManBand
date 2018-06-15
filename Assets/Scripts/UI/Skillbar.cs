@@ -142,7 +142,13 @@ public class Skillbar : MonoBehaviour {
 
         pressedSkills.Add(new SkillPress(pressedSkill, elapsedTime));
 
-        GameObject[] triggerables = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject[] spotlights = GameObject.FindGameObjectsWithTag("Spotlight");
+
+        GameObject[] triggerables = new GameObject[enemies.Length + spotlights.Length];
+        Array.Copy(enemies, triggerables, enemies.Length);
+        Array.Copy(spotlights, 0, triggerables, enemies.Length, spotlights.Length);
+
 
         foreach(GameObject obj in triggerables) {
             
@@ -154,6 +160,10 @@ public class Skillbar : MonoBehaviour {
                 if (checkMelody(objMelody.rythem))
                 {
                     killEnemy.setEnemyDead(true);
+                    if (obj.tag == "Spotlight") {
+                        GameObject movBlock = obj.GetComponent<Spotlight>().movingBlock;
+                        movBlock.GetComponent<AscendingObject>().Trigger();
+                    }
                 }
             }
         }

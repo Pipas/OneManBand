@@ -71,8 +71,8 @@ public class AscendingObject : MonoBehaviour, Triggerable
             lastTime = currentTime;
         }
 
-        if (Input.GetKeyDown("k"))
-            Trigger();
+        /*if (Input.GetKeyDown("k"))
+            Trigger();*/
     }
     private void TranslateObjectsAbove(Vector3 deltaTransform)
     {

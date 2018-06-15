@@ -11,6 +11,7 @@ TagManager:
   - Triggerable
   - PlayerHitbox
   - Bridge
+  - Spotlight
   layers:
   - Default
   - TransparentFX
