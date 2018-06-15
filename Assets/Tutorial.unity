@@ -41836,7 +41836,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 62fddddf600a7e34c945e7c29b39247c, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 1cfda7807d818344c85dba955e2eab26, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -41933,7 +41933,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd3f9b07330167c4fb601f3cc8fcb9f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rythem: f500f250f250f
+  rythem: f750f250f250f750f250f500f250f
   radius: 7
   maxVolRadius: 7
   minWaitingTime: 3
@@ -88862,10 +88862,11 @@ MonoBehaviour:
   KC_SKILL1: 49
   KC_SKILL2: 50
   KC_SKILL3: 51
+  KC_SKILL4: 52
   KeyDownAlpha: 0.5
   Player: {fileID: 1621732224}
   Radius: 10
-  SkillPressMargin: 300
+  SkillPressMargin: 150
   MaxPauseDuration: 5000
 --- !u!1 &1928149835
 GameObject:

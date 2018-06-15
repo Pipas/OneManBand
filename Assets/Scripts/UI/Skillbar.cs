@@ -32,6 +32,9 @@ public class Skillbar : MonoBehaviour {
     // keycode for skill #3
     public KeyCode KC_SKILL3;
 
+    // keycode for skill #4
+    public KeyCode KC_SKILL4;
+
     // alpha of skills during keydown
     public float KeyDownAlpha;
 
@@ -59,6 +62,9 @@ public class Skillbar : MonoBehaviour {
     // skill #3
     private Skill s3;
 
+    // skill #4
+    private Skill s4;
+
     // previous logged time
     private long previousTime;
 
@@ -73,6 +79,7 @@ public class Skillbar : MonoBehaviour {
         s1 = new Skill(transform, "1");
         s2 = new Skill(transform, "2");
         s3 = new Skill(transform, "3");
+        s4 = new Skill(transform, "4");
         previousTime = 0;
         pressedSkills = new List<SkillPress>();
     }
@@ -130,7 +137,21 @@ public class Skillbar : MonoBehaviour {
             s3.Deactivate();
         }
 
-        if (!Input.GetKey(KC_SKILL1) && !Input.GetKey(KC_SKILL2) && !Input.GetKey(KC_SKILL3))
+        // skill #4
+        if (Input.GetKeyDown(KC_SKILL4))
+        {
+            s4.Activate(KeyDownAlpha);
+            pressedSkill = "q";
+
+            maestroPlaying = true;
+            Player.GetComponent<Animator>().SetBool("PlayToggle", true);
+        }
+        else if (Input.GetKeyUp(KC_SKILL4))
+        {
+            s4.Deactivate();
+        }
+
+        if (!Input.GetKey(KC_SKILL1) && !Input.GetKey(KC_SKILL2) && !Input.GetKey(KC_SKILL3) && !Input.GetKey(KC_SKILL4))
         {
             maestroPlaying = false;
             Player.GetComponent<Animator>().SetBool("PlayToggle", false);
@@ -189,7 +210,7 @@ public class Skillbar : MonoBehaviour {
     // checks if the given melody matches the pressed skills
     private bool checkMelody(string strMelody) {
 
-        var m = Regex.Match(strMelody, @"^([fst])(\d+[fst])*$");
+        var m = Regex.Match(strMelody, @"^([fstq])(\d+[fstq])*$");
         if (m.Success)
         {
             // parse melody
