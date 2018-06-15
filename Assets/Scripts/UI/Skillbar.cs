@@ -21,7 +21,8 @@ public class Skillbar : MonoBehaviour {
 
     /* --- Inspector --- */
 
-    public KillEnemy killEnemy;
+    public GameObject player;
+    private bool maestroPlaying = false;
 
     // keycode for skill #1
     public KeyCode KC_SKILL1;
@@ -93,6 +94,9 @@ public class Skillbar : MonoBehaviour {
         {
             s1.Activate(KeyDownAlpha);
             pressedSkill = "f";
+            
+            maestroPlaying = true;
+            player.GetComponent<Animator>().SetBool("PlayToggle", true);
         }
         else if (Input.GetKeyUp(KC_SKILL1))
         {
@@ -104,6 +108,9 @@ public class Skillbar : MonoBehaviour {
         {
             s2.Activate(KeyDownAlpha);
             pressedSkill = "s";
+
+            maestroPlaying = true;
+            player.GetComponent<Animator>().SetBool("PlayToggle", true);
         }
         else if (Input.GetKeyUp(KC_SKILL2))
         {
@@ -115,10 +122,19 @@ public class Skillbar : MonoBehaviour {
         {
             s3.Activate(KeyDownAlpha);
             pressedSkill = "t";
+
+            maestroPlaying = true;
+            player.GetComponent<Animator>().SetBool("PlayToggle", true);
         }
         else if (Input.GetKeyUp(KC_SKILL3))
         {
             s3.Deactivate();
+        }
+
+        if (!Input.GetKey(KC_SKILL1) && !Input.GetKey(KC_SKILL2) && !Input.GetKey(KC_SKILL3))
+        {
+            maestroPlaying = false;
+            player.GetComponent<Animator>().SetBool("PlayToggle", false);
         }
 
         handleSkillPress(pressedSkill);
@@ -159,8 +175,10 @@ public class Skillbar : MonoBehaviour {
                 objMelody.Stop(true);
                 if (checkMelody(objMelody.rythem))
                 {
-                    killEnemy.setEnemyDead(true);
-                    if (obj.tag == "Spotlight") {
+                    if (obj.tag == "Enemy")
+                    {
+                        obj.transform.parent.gameObject.GetComponent<KillEnemy>().setEnemyDead(true);
+                    } else if (obj.tag == "Spotlight") {
                         GameObject movBlock = obj.GetComponent<Spotlight>().movingBlock;
                         movBlock.GetComponent<AscendingObject>().Trigger();
                     }

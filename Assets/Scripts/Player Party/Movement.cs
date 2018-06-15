@@ -137,11 +137,11 @@ public class Movement : MonoBehaviour
                 HandleSheet(obstacle); // If there is a Sheet
                 HandleNoObstacle(direction);
             }
-            else if(obstacle.tag == "Bridge")
+            /*else if(obstacle.tag == "Bridge")
             {
                 QueueAnimation(new AnimationItem(direction/5f, baseSpeed/2, false, false)); // If can't move enqueues small animation to display that you can't move
                 QueueAnimation(new AnimationItem(-direction/5f, baseSpeed/2, false, false)); // Enqueues reverse animation
-            }
+            }*/
             /*else
             {
                 QueueAnimation(new AnimationItem(direction/10f, baseSpeed/2, false, false)); // If can't move enqueues small animation to display that you can't move

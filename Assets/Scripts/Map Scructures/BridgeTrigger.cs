@@ -7,7 +7,7 @@ public class BridgeTrigger : MonoBehaviour
     public CameraAnimation camAnimation;
     public PlayerMovement playerMov;
 
-    private int playerMove = 3;
+    private int playerMove = 5;
     private int direction;
     private Island island;
 
@@ -19,8 +19,9 @@ public class BridgeTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) 
     {
-        if(other.tag == "Player")
+        if(other.name == "Player")
         {
+            Debug.Log("aaaa");
             PlayerMovement Player = GameObject.Find("PlayerPivot").GetComponent<PlayerMovement>();
             if(other.transform.position.x < transform.position.x)
                 direction = 1;
@@ -32,7 +33,7 @@ public class BridgeTrigger : MonoBehaviour
             for (int i = 0; i < playerMove; i++)
                 Player.QueueAnimation(new AnimationItem(Vector3.right * direction, Player.baseSpeed, true, true));
 
-            camAnimation.MoveCamera(Vector3.right * direction * island.cameraShift);
+            camAnimation.MoveCamera(direction,island.cameraShift);
         }
     }
 }

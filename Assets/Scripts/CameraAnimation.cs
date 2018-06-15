@@ -130,11 +130,16 @@ public class CameraAnimation : MonoBehaviour
         return removedTransparency;
     }
 
-    public void MoveCamera(Vector3 deltaMove)
+    public void MoveCamera(int direction, float islandShift)
     {
         startTime = Time.time;
         initPosition = transform.position;
-        endPosition = initPosition + deltaMove;
+        if (direction == 1)
+            endPosition = new Vector3(transform.position.x + islandShift, transform.position.y, transform.position.z);
+        else endPosition = new Vector3(transform.position.x - islandShift, transform.position.y, transform.position.z);
+
+        Debug.Log(endPosition);
+
         journeyLength = Vector3.Distance(initPosition, endPosition);
         isMoving = true;
     }
