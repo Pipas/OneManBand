@@ -46,10 +46,9 @@ public class EnemyHitbox : MonoBehaviour {
         }
     }
 
-    public void checkIfObstaclesAhead(Vector3 playerPosition) {
-        enemyMovement.stopEnemyAnimation();
-        playerWithinRange = true;
-
+    public bool checkIfObstaclesAhead(Vector3 playerPosition) {
+        bool tmpPlayerRange = true;
+        
         Vector3 origin = transform.position;
         playerPosition = calculatePlayerPosition();
 
@@ -64,9 +63,17 @@ public class EnemyHitbox : MonoBehaviour {
             if (hit.collider.tag != "Player" && hit.collider.tag != "Party")
             {
                 Debug.Log("aye");
-                playerWithinRange = false;
+                tmpPlayerRange = false;
             }
         }
+
+        if (tmpPlayerRange)
+        {
+            enemyMovement.stopEnemyAnimation();
+            playerWithinRange = true;
+        }
+
+        return tmpPlayerRange;
     }
 
     public void performAttack(float range)
@@ -92,10 +99,17 @@ public class EnemyHitbox : MonoBehaviour {
 
     public void attackPlayer()
     {
+        
         if (playerWithinRange)
         {
-            performAttack(playerDistance);
-            onCooldown = true;
+            bool tmpPlayerRange = checkIfObstaclesAhead(playerPosition);
+
+            if (tmpPlayerRange)
+            {
+                performAttack(playerDistance);
+                onCooldown = true;
+            }
+            else playerWithinRange = false;
         }
     }
 

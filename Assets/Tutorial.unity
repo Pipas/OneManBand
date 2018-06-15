@@ -26463,7 +26463,7 @@ Transform:
   - {fileID: 1184122677}
   - {fileID: 1519919786}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!114 &508419243
 MonoBehaviour:
@@ -41933,7 +41933,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd3f9b07330167c4fb601f3cc8fcb9f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rythem: f750f250f250f750f250f500f250f
+  rythem: f750f250f250f500f250f750f250f
   radius: 7
   maxVolRadius: 7
   minWaitingTime: 3
@@ -67299,7 +67299,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400054, guid: 392588aa11cd4124d9eb15797cc2c00b, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400054, guid: 392588aa11cd4124d9eb15797cc2c00b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -89020,7 +89020,7 @@ MonoBehaviour:
   KeyDownAlpha: 0.5
   Player: {fileID: 1621732224}
   Radius: 10
-  SkillPressMargin: 150
+  SkillPressMargin: 300
   MaxPauseDuration: 5000
 --- !u!1 &1928149835
 GameObject:
