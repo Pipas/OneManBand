@@ -165,7 +165,6 @@ public class Skillbar : MonoBehaviour {
         Array.Copy(enemies, triggerables, enemies.Length);
         Array.Copy(spotlights, 0, triggerables, enemies.Length, spotlights.Length);
 
-
         foreach(GameObject obj in triggerables) {
             
             double dist = Vector3.Distance(Player.transform.position, obj.transform.position);

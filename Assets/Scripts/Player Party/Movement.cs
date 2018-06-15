@@ -125,7 +125,6 @@ public class Movement : MonoBehaviour
         if (Physics.Raycast(transform.position, direction, out hit, distance, layerMask)) // Checks block where you want to move
         {
             obstacle = hit.transform.gameObject;
-            Debug.Log(obstacle.tag);
 
             if (obstacle.tag == "Spotlight")
             {

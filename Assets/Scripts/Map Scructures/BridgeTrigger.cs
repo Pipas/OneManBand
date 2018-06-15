@@ -21,7 +21,6 @@ public class BridgeTrigger : MonoBehaviour
     {
         if(other.name == "Player")
         {
-            Debug.Log("aaaa");
             PlayerMovement Player = GameObject.Find("PlayerPivot").GetComponent<PlayerMovement>();
             if(other.transform.position.x < transform.position.x)
                 direction = 1;

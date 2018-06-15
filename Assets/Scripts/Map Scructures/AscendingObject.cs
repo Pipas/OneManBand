@@ -70,15 +70,11 @@ public class AscendingObject : MonoBehaviour, Triggerable
 
             lastTime = currentTime;
         }
-
-        /*if (Input.GetKeyDown("k"))
-            Trigger();*/
     }
     private void TranslateObjectsAbove(Vector3 deltaTransform)
     {
         foreach (Collider collider in colliders)
         {
-            Debug.Log(collider.name);
             if (collider.name == "Player") {
                 if (GameObject.Find("PlayerPivot").GetComponent<Movement>().state != Movement.State.falling)
                     collider.transform.Translate(deltaTransform);

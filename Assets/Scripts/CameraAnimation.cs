@@ -134,11 +134,10 @@ public class CameraAnimation : MonoBehaviour
     {
         startTime = Time.time;
         initPosition = transform.position;
+
         if (direction == 1)
             endPosition = new Vector3(transform.position.x + islandShift, transform.position.y, transform.position.z);
         else endPosition = new Vector3(transform.position.x - islandShift, transform.position.y, transform.position.z);
-
-        Debug.Log(endPosition);
 
         journeyLength = Vector3.Distance(initPosition, endPosition);
         isMoving = true;
