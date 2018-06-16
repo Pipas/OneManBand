@@ -35864,7 +35864,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e36dc7e0b124863b6f1d79b71f569e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraShift: 12
+  cameraShift: {x: 10.5, y: 0, z: 0}
 --- !u!1 &725607180
 GameObject:
   m_ObjectHideFlags: 0
@@ -47844,7 +47844,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e36dc7e0b124863b6f1d79b71f569e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraShift: 12
+  cameraShift: {x: 10.5, y: 0, z: 0}
 --- !u!95 &1011826529
 Animator:
   serializedVersion: 3
@@ -59186,7 +59186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e36dc7e0b124863b6f1d79b71f569e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraShift: 12
+  cameraShift: {x: 10.5, y: 0, z: 0}
 --- !u!1 &1205047358
 GameObject:
   m_ObjectHideFlags: 0
@@ -62785,7 +62785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e36dc7e0b124863b6f1d79b71f569e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraShift: 12
+  cameraShift: {x: 10.5, y: 0, z: 0}
 --- !u!1 &1264083025
 GameObject:
   m_ObjectHideFlags: 0
@@ -68462,7 +68462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e36dc7e0b124863b6f1d79b71f569e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraShift: 12
+  cameraShift: {x: 10.5, y: 0, z: 0}
 --- !u!1 &1437880069
 GameObject:
   m_ObjectHideFlags: 0
@@ -88032,7 +88032,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e36dc7e0b124863b6f1d79b71f569e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraShift: 12
+  cameraShift: {x: 10.5, y: 0, z: 0}
 --- !u!1 &1835214968
 GameObject:
   m_ObjectHideFlags: 0
@@ -93588,7 +93588,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e36dc7e0b124863b6f1d79b71f569e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraShift: 12
+  cameraShift: {x: 10.5, y: 0, z: 0}
 --- !u!1 &1935022212
 GameObject:
   m_ObjectHideFlags: 0
@@ -98582,7 +98582,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
