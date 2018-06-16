@@ -5,14 +5,16 @@ using UnityEngine;
 public class Spotlight : MonoBehaviour 
 {
     private Light spotlight;
-    private float max_intensity = 0.6f;
-    private float min_intensity = 0.3f;
-    private float delta_intensity = 0.15f;
-    private float widen_speed = 25f;
+    private float max_intensity = 5f;
+    private float min_intensity = 2f;
+    private float delta_intensity = 1.5f;
+    private float widen_speed = 120f;
     private float currentDelta;
     private Light directionalLight;
-    public bool hasPlayer, retracting = false;
+    public bool hasPlayer;
+    private bool retracting = false;
     public GameObject movingBlock;
+    public Collider player;
 
 	// Use this for initialization
 	void Start () 
@@ -51,39 +53,37 @@ public class Spotlight : MonoBehaviour
             if(spotlight.spotAngle < 40f)
                 spotlight.spotAngle += Time.deltaTime * widen_speed;
 
-            if(directionalLight.intensity > 0.1f)
-                directionalLight.intensity -= Time.deltaTime * 15;
+            if(directionalLight.intensity > 0f)
+                directionalLight.intensity -= Time.deltaTime * 5;
         }
         else if(retracting)
         {
-            if(spotlight.spotAngle > 29f)
+            if(spotlight.spotAngle > 18f)
                 spotlight.spotAngle -= Time.deltaTime * widen_speed;
             else
                 retracting = false;
 
             if(directionalLight.intensity < 1f)
-                directionalLight.intensity += Time.deltaTime * 15;
+                directionalLight.intensity += Time.deltaTime * 5;
         }
     }
 
     private void OnTriggerEnter(Collider other) 
     {
-        if(other.tag == "Player")
+        if(other.tag == "Player" || other.tag == "Party")
         {
-            min_intensity = 0.6f;
-            max_intensity = 2f;
             hasPlayer = true;
+            player = other;
         }
     }
 
     private void OnTriggerExit(Collider other) 
     {
-        if(other.tag == "Player")
+        if(player == other)
         {
-            min_intensity = 0.3f;
-            max_intensity = 0.6f;
             hasPlayer = false;
             retracting = true;
+            player = null;
         }
     }
 }

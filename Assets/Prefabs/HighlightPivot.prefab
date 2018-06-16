@@ -24,9 +24,10 @@ GameObject:
   - component: {fileID: 65952310886067132}
   - component: {fileID: 82900707094448586}
   - component: {fileID: 114455689696325702}
+  - component: {fileID: 54845755717065890}
   m_Layer: 2
   m_Name: Spot Light
-  m_TagString: Triggerable
+  m_TagString: Spotlight
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,7 +54,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1366799925790914}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.5, y: 1, z: 0.5}
+  m_LocalPosition: {x: 0.5, y: 3, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4513386038915926}
@@ -65,14 +66,29 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1597170764042956}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: 2, z: -4}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalPosition: {x: 0, y: 1, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4039250875529534}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &54845755717065890
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1366799925790914}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!65 &65952310886067132
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -83,8 +99,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 2}
-  m_Center: {x: 0, y: 0, z: 1}
+  m_Size: {x: 0.5, y: 0.5, z: 2}
+  m_Center: {x: 0, y: 0, z: 2}
 --- !u!82 &82900707094448586
 AudioSource:
   m_ObjectHideFlags: 1
@@ -94,7 +110,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 1cfda7807d818344c85dba955e2eab26, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.5
   m_Pitch: 1
@@ -189,10 +205,10 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 0
-  m_Color: {r: 1, g: 0.9698184, b: 0.740566, a: 1}
-  m_Intensity: 0.65
+  m_Color: {r: 0.9056604, g: 0.54254186, b: 0.8698446, a: 1}
+  m_Intensity: 3
   m_Range: 10
-  m_SpotAngle: 29
+  m_SpotAngle: 18
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -228,9 +244,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd3f9b07330167c4fb601f3cc8fcb9f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rythem: 
-  radius: 0
-  maxVolRadius: 0
+  menu: {fileID: 0}
+  toResumeAudio: 0
+  rythem: f750f250f250f750f250f500f250f
+  radius: 1.5
+  maxVolRadius: 1
   minWaitingTime: 0
   player: {fileID: 0}
 --- !u!114 &114919177102814390
@@ -245,4 +263,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasPlayer: 0
-  retracting: 0
+  movingBlock: {fileID: 0}
+  player: {fileID: 0}
