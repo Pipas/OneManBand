@@ -11,7 +11,7 @@ public class StaticSettings : MonoBehaviour {
     public const string MEDIUM = "medium";
     public const string HARD = "hard";
     
-    public static string difficulty = "easy";       // easy, medium or hard
+    public static string difficulty = "medium";       // easy, medium or hard
     public static float volumeBGM = 1.0f;
     void Awake()
     {

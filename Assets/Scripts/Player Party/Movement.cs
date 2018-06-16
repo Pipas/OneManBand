@@ -209,7 +209,7 @@ public class Movement : MonoBehaviour
         {
             savedPosition = transform.position;
 
-            Vector3 savedPos = new Vector3(nextInParty.transform.position.x, nextInParty.transform.position.y + 0.4f, nextInParty.transform.position.z);
+            Vector3 savedPos = new Vector3(nextInParty.transform.position.x, transform.position.y, nextInParty.transform.position.z);
             nextInParty.GetComponent<PartyMovement>().savedPosition = savedPos;
         }
     }

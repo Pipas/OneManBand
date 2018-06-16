@@ -84,15 +84,9 @@ public class InGameMenu : MonoBehaviour {
         settings.SetActive(true);
     }
 
-    public void BackToMenu()
+    public void QuitGame()
     {
-        int tmpSkillVal = StaticSettings.setSkillMargin();
-        skillbar.updateSkillMargin(tmpSkillVal);
-
-        bgm.updateBGMVolume(StaticSettings.volumeBGM);
-
-        SceneManager.LoadScene("StartMenu");
-        Movement.party = new List<GameObject>();
+        Application.Quit();
     }
 
     public bool isGameStopped()
