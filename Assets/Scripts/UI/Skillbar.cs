@@ -70,7 +70,7 @@ public class Skillbar : MonoBehaviour {
 
     // list of pressed skills
     private List<SkillPress> pressedSkills;
-
+    
 
     /* --- Methods --- */
 
@@ -192,7 +192,7 @@ public class Skillbar : MonoBehaviour {
 
             if (dist <= Radius) {
                 Melody objMelody = obj.GetComponent<Melody>();
-                objMelody.Stop(true);
+                objMelody.Wait();
                 if (checkMelody(objMelody.rythem))
                 {
                     if (obj.tag == "Enemy")

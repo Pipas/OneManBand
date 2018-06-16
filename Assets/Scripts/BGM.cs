@@ -12,12 +12,13 @@ public class BGM : MonoBehaviour {
 	// start > while > end
 	private abstract class State {
         protected BGM inst;
-
         protected int iAudio;
+		protected bool already;
 
         public State(BGM inst)
         {
             this.inst = inst;
+			already = false;
         }
 
 		public abstract void update();
@@ -41,8 +42,6 @@ public class BGM : MonoBehaviour {
 		public override void update() {
             if (!inst.bgmASrc.isPlaying)
             {
-                Debug.Log("Swapped audio clip!");
-
                 if (iAudio < inst.aStart.Length - 1)
                 {
                     inst.bgmASrc.clip = inst.aStart[++iAudio];
@@ -53,6 +52,20 @@ public class BGM : MonoBehaviour {
 				{
 					inst.state = new WhileState(inst);
 				}
+            }
+
+            // randomly play theme of instruments in party
+            if ((int)Time.time % 8 == 0)
+            {
+                if (!already)
+                {
+                    inst.playInstTheme();
+                    already = true;
+                }
+            }
+            else
+            {
+                already = false;
             }
 		}
 	}
@@ -82,11 +95,8 @@ public class BGM : MonoBehaviour {
 					if (oldITheme != iTheme)
 					{
 						reps = 0;
-                        Debug.Log("Swapped audio theme!");
 					}					
 				}
-
-                Debug.Log("Swapped audio clip!");
 
                 iAudio = Random.Range(0, inst.aWhile[iTheme].aClips.Length);
                 inst.bgmASrc.clip = inst.aWhile[iTheme].aClips[iAudio];
@@ -94,6 +104,20 @@ public class BGM : MonoBehaviour {
                 inst.bgmASrc.volume = StaticSettings.volumeBGM;
                 inst.bgmASrc.Play();
             }
+
+			// randomly play theme of instruments in party
+			if ((int)Time.time % 8 == 0)
+			{
+				if (!already)
+				{
+					inst.playInstTheme();
+					already = true;
+				}				
+			}
+			else
+			{
+				already = false;
+			}
         }
     }
 
@@ -105,8 +129,11 @@ public class BGM : MonoBehaviour {
     /* Array of audio clips to cycle through. */
     public AudioList[] aWhile;
 
-	/* 0: guitar, 1: drums. */
+	/* 0: drums, 1: guitar. */
 	public AudioClip[] aFoundInst;
+
+	/* 0: drums, 1: guitar. */
+	public AudioList[] aInstTheme;
 
 
 	/* --- Attributes --- */
@@ -116,6 +143,12 @@ public class BGM : MonoBehaviour {
 
 	/* Audio Source that plays foundInst sound. */
 	private AudioSource foundASrc;
+
+    /* Audio Source that plays drums theme. */
+    private AudioSource drumsASrc;
+
+	/* Audio Source that plays guitar theme. */
+	private AudioSource guitarASrc;
 
 	/* Self instance. */
 	private static BGM self;
@@ -131,6 +164,8 @@ public class BGM : MonoBehaviour {
 		AudioSource[] aSrcs = GetComponents<AudioSource>();
         bgmASrc = aSrcs[0];
 		foundASrc = aSrcs[1];
+		drumsASrc = aSrcs[2];
+        guitarASrc = aSrcs[3];
         state = new StartState(this);
 	}
 	
@@ -143,6 +178,60 @@ public class BGM : MonoBehaviour {
     {
         state.updateVolume(volume);
     }
+
+	private void playInstTheme()
+	{
+		// make sure playing this wont interfere with gameplay
+		if (foundASrc.isPlaying)
+		{
+			return;
+		}
+		else
+		{
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            GameObject[] spotlights = GameObject.FindGameObjectsWithTag("Spotlight");
+
+            GameObject[] triggerables = new GameObject[enemies.Length + spotlights.Length];
+            System.Array.Copy(enemies, triggerables, enemies.Length);
+            System.Array.Copy(spotlights, 0, triggerables, enemies.Length, spotlights.Length);
+
+            foreach (GameObject obj in triggerables)
+            {
+				if (!obj.GetComponent<Melody>().IsStopped())
+				{
+					return;
+				}
+				
+			}
+		}
+
+		bool drums = false;
+		bool guitar = false;
+		
+		foreach (GameObject inst in Movement.party)
+		{
+			if (inst.name == "PartyTambor")
+			{
+				drums = true;
+			} else if (inst.name == "PartyGuitar")
+			{
+				guitar = true;
+			}
+		}
+
+		// 40% chance
+		if (!drumsASrc.isPlaying && drums && Random.Range(0, 100) >= 60)
+		{
+			drumsASrc.clip = aInstTheme[0].aClips[Random.Range(0, aInstTheme[0].aClips.Length)];
+			drumsASrc.Play();
+		}
+        
+		if (!guitarASrc.isPlaying && guitar && Random.Range(0, 100) >= 60)
+        {
+            guitarASrc.clip = aInstTheme[1].aClips[Random.Range(0, aInstTheme[1].aClips.Length)];
+			guitarASrc.Play();
+        }
+	}
 
 	// Play the instrument sound when found
 	public static void FoundInst(string name)
@@ -163,19 +252,6 @@ public class BGM : MonoBehaviour {
 		}
 
 		self.foundASrc.clip = clip;
-
-		// curent time (rounded to seconds)
-        int currentTime = (int)Time.time;
-
-		int mod = currentTime % 4;
-        if (mod == 0)
-		{
-            self.foundASrc.Play();
-		}
-		else
-		{
-			int diff = 4 - mod;
-			self.foundASrc.PlayDelayed((currentTime + diff) - Time.time);
-		}		
+		self.foundASrc.Play();
 	}
 }

@@ -99,7 +99,6 @@ public class EnemyHitbox : MonoBehaviour {
 
     public void attackPlayer()
     {
-        
         if (playerWithinRange)
         {
             bool tmpPlayerRange = checkIfObstaclesAhead(playerPosition);
@@ -109,7 +108,6 @@ public class EnemyHitbox : MonoBehaviour {
                 performAttack(playerDistance);
                 onCooldown = true;
             }
-            else playerWithinRange = false;
         }
     }
 

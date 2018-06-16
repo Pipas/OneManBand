@@ -22,7 +22,7 @@ public class EnemyMovement : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 
-        if ((!hitbox.isPlayerWithinRange() && !playerHealth.gameOver) || playerHealth.gameOver)
+        if (!hitbox.isPlayerWithinRange() && !playerHealth.gameOver)
         {
             autoMovement();
         }
@@ -58,7 +58,8 @@ public class EnemyMovement : MonoBehaviour {
                     float step = rotationSpeed * Time.deltaTime;
                     Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
 
-                    transform.rotation = Quaternion.LookRotation(newDir);
+                    if (!hitbox.isPlayerWithinRange())
+                        transform.rotation = Quaternion.LookRotation(newDir);
 
                     Vector3 dist_vec = (pointsMovement[tmpIndex] - transform.position).normalized;
                     float dotProd = Vector3.Dot(dist_vec, transform.forward);
@@ -75,7 +76,9 @@ public class EnemyMovement : MonoBehaviour {
                     Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
 
                     Quaternion rotate = Quaternion.LookRotation(newDir);
-                    transform.rotation = rotate;
+                    
+                    if (!hitbox.isPlayerWithinRange())
+                        transform.rotation = rotate;
 
                     transform.position = Vector3.Lerp(this.transform.position, pointsMovement[currentPoint], Time.deltaTime * speed);
                 }

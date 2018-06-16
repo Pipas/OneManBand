@@ -3,10 +3,122 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Melody : MonoBehaviour {
-    public InGameMenu menu;
-    public bool toResumeAudio = false;
 
-	/* --- Inspector --- */
+    private abstract class State
+    {
+        protected Melody inst;
+        protected double dist;
+        protected int currentTime;
+
+        public State(Melody inst)
+        {
+            this.inst = inst;
+            dist = Vector3.Distance(inst.player.transform.position, inst.transform.position);
+            currentTime = (int)Time.time;
+        }
+
+        public virtual void update()
+        {
+            dist = Vector3.Distance(inst.player.transform.position, inst.transform.position);
+            currentTime = (int)Time.time;
+        }
+    }
+
+    private class PlayingState : State
+    {
+
+        public PlayingState(Melody inst) : base(inst)
+        {
+            inst.aSrc.Play();
+        }
+
+        public override void update()
+        {
+            base.update();
+
+            // if player in range
+            if (dist <= inst.radius)
+            {
+                // update volume according to range
+                inst.aSrc.volume = inst.defaultVolume - (float)((dist - inst.maxVolRadius) * (inst.defaultVolume) / (inst.radius - inst.maxVolRadius));
+
+                // if melody is over
+                if (!inst.aSrc.isPlaying)
+                {
+                    // wait for player window
+                    inst.state = new WaitingState(inst);
+                }
+            }
+            else
+            {
+                // stop playing
+                inst.state = new StopState(inst);
+            }
+        }
+    }
+
+    private class StopState : State
+    {
+
+        public StopState(Melody inst) : base(inst)
+        {
+            inst.aSrc.Stop();
+            inst.aSrc.volume = 0;
+        }
+
+        public override void update()
+        {
+            base.update();
+
+            // if player in range
+            if (dist <= inst.radius)
+            {
+                // wait correct timing
+                if (currentTime % 4 == 0)
+                {
+                    // start playing
+                    inst.state = new PlayingState(inst);
+                }
+            }
+        }
+    }
+
+    private class WaitingState : State
+    {
+        private int startTime;
+
+        public WaitingState(Melody inst) : base(inst)
+        {
+            inst.aSrc.Stop();
+            startTime = currentTime;
+        }
+
+        public override void update()
+        {
+            base.update();
+
+            // if player in range
+            if (dist <= inst.radius)
+            {
+                // wait correct timing (min 2s waiting)
+                if (currentTime % 4 == 0 && currentTime - startTime > 2)
+                {
+                    // start playing
+                    inst.state = new PlayingState(inst);
+                }
+            }
+            else
+            {
+                // no need to wait if player not in range
+                inst.state = new StopState(inst);
+            }
+        }
+    }
+
+    /* --- Inspector --- */
+
+    /* Menu UI. */
+    public InGameMenu menu;
 	
 	/* Rythem player needs to tap to. */
 	public string rythem;
@@ -17,34 +129,23 @@ public class Melody : MonoBehaviour {
 	/* Radius in which the melody plays at max volume. */
 	public float maxVolRadius;
 
-	/* Minimum amount of time enemy will wait before restarting. */
-	public int minWaitingTime;
-
 	/* Player. */
 	public GameObject player;
 
 
 	/* --- Attributes --- */
 
-	public const int BLOCK_DURATION = 3;
-
 	/* Audio Source. */
 	private AudioSource aSrc;
 
-	/* True if audio is currently playing. */
-	private bool playing;
-
-	/* True if enemy already waited due to player pressing skill. */
-	private bool waitedAfterSkill;
-
-	/* Time of the previous block. */
-	private int previousBlockTime;
-
-	/* Time enemy started waiting. */
-	private long waitingStartTime;
-
 	/* Default max volume. */
 	private float defaultVolume;
+
+    /* Current state. */
+    private State state;
+
+    /* True if the game is paused, false otherwise. */
+    public bool paused;
 
 
     /* --- Methods --- */
@@ -52,14 +153,12 @@ public class Melody : MonoBehaviour {
     /// <summary>
     /// Initialization.
     /// </summary>
-    void Start() {
-
+    void Start()
+    {
         aSrc = gameObject.GetComponent<AudioSource>();
-		playing = false;
-        waitingStartTime = 0;
-        previousBlockTime = 0;
 		defaultVolume = aSrc.volume;
-		waitedAfterSkill = false;
+        paused = false;
+        state = new StopState(this);
 	}
 
 
@@ -68,83 +167,41 @@ public class Melody : MonoBehaviour {
     /// </summary>
     void Update()
     {
+        // if game is paused
         if (menu.isGameStopped())
         {
+            // pause audio playback
             if (aSrc.isPlaying)
             {
-                toResumeAudio = true;
+                paused = true;
                 aSrc.Pause();
             }
         }
         else
         {
-            if (toResumeAudio)
+            // resume audio playback
+            if (paused)
             {
+                paused = false;
                 aSrc.UnPause();
             }
-            
-            if (!aSrc.isPlaying)
-            {
-                playing = false;
-            }
 
-            double dist = Vector3.Distance(player.transform.position, transform.position);
-            int currentTime = (int)Time.time;
-
-            if (dist <= radius)
-            {
-                aSrc.volume = defaultVolume - (float)((dist - maxVolRadius) * (defaultVolume) / (radius - maxVolRadius));
-
-                if (currentTime % BLOCK_DURATION == 0 && !playing && currentTime - previousBlockTime > BLOCK_DURATION)
-                {
-                    Play();
-                    previousBlockTime = currentTime;
-                }
-            }
-            else if (playing)
-            {
-                Stop(false);
-            }
-            else
-            {
-                aSrc.volume = 0;
-            }
-        }
+            // update
+            state.update();
+        }        
     }
 
 
     /// <summary>
-    /// Starts playback of this melody.
+    /// Called when the player presses a skill and enemy should wait.
     /// </summary>
-    public void Play()
-	{
-        playing = true;
-        waitedAfterSkill = false;
-        aSrc.Play();
-	}
+    public void Wait()
+    {
+        state = new WaitingState(this);
+    }
 
-
-    /// <summary>
-    /// Stops playback of this melody.
-    /// </summary>
-    /// <param name="playerSkill">True if called due to player skill.</param>
-    public void Stop(bool playerSkill)
-	{
-		playing = false;
-		aSrc.Stop();
-
-        int currentTime = (int)Time.time;
-        if (playerSkill && BLOCK_DURATION - (currentTime % BLOCK_DURATION) < minWaitingTime)
-		{
-			if (!waitedAfterSkill)
-			{
-                previousBlockTime += BLOCK_DURATION;
-				waitedAfterSkill = true;
-			}		
-		}
-		else if (!playerSkill)
-		{
-			waitedAfterSkill = false;
-		}
-	}
+    public bool IsStopped()
+    {
+        return (state is StopState);
+    }
 }
