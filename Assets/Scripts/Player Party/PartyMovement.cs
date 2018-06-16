@@ -5,7 +5,6 @@ using UnityEngine;
 public class PartyMovement : Movement
 {
     public bool toBeDitched = false;
-    private Vector3 playerDirection;
     private bool running = false;
 
     void Start ()
@@ -16,23 +15,6 @@ public class PartyMovement : Movement
     
     void LateUpdate ()
     {
-        if (playerDirection == Vector3.forward)
-        {
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x, 0, transform.eulerAngles.z);
-        }
-        else if (playerDirection == Vector3.back)
-        {
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x, 180, transform.eulerAngles.z);
-        }
-        else if (playerDirection == Vector3.right)
-        {
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x, 90, transform.eulerAngles.z);
-        }
-        else if (playerDirection == Vector3.left)
-        {
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x, -90, transform.eulerAngles.z);
-        }
-
         if (transform.hasChanged)
         {
             transform.hasChanged = false;
@@ -68,7 +50,6 @@ public class PartyMovement : Movement
     {
         if(toBeDitched)
         {
-            GetComponent<BoxCollider>().enabled = true;
             if(party.IndexOf(gameObject) == 0)
             {
                 GameObject.Find("PlayerPivot").GetComponent<PlayerMovement>().nextInParty = null;
@@ -82,8 +63,4 @@ public class PartyMovement : Movement
             toBeDitched = false;
         }
     }
-
-    public void setPlayerDirection(Vector3 direction) {
-        this.playerDirection = direction;
-    } 
 }

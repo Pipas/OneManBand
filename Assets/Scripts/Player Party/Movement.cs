@@ -35,6 +35,7 @@ public class Movement : MonoBehaviour
                 currentAnimation = animationQueue.Dequeue();
 
                 changeState(currentAnimation);
+                updateDirection(currentAnimation.GetVector());
 
                 if(currentAnimation.SavePosition()) // if it's supposed to save its position, used for the next in party
                     SavePosition();
@@ -93,27 +94,8 @@ public class Movement : MonoBehaviour
     /* Validates the input and adds animation accordingly */
 	protected void ValidateInput(Vector3 direction)
     {
-        foreach(GameObject member in party) {
-            member.GetComponent<PartyMovement>().setPlayerDirection(direction);
-        }
+        updateDirection(direction);
 
-        if (direction == Vector3.forward)
-        {
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x, 0, transform.eulerAngles.z);
-        }
-        else if (direction == Vector3.back)
-        {
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x, 180, transform.eulerAngles.z);
-        }
-        else if (direction == Vector3.right)
-        {
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x, 90, transform.eulerAngles.z);
-        }
-        else if (direction == Vector3.left)
-        {
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x, -90, transform.eulerAngles.z);
-        }
-        
         RaycastHit hit;
         GameObject obstacle = null;
 
@@ -129,8 +111,7 @@ public class Movement : MonoBehaviour
             if (obstacle.tag == "Spotlight")
             {
                 HandleNoObstacle(direction);
-            } else if(obstacle.tag == "Ladder")
-                HandleLadder(obstacle, direction); // If there is a ladder
+            }
             else if(obstacle.tag == "Sheet")
             {
                 HandleSheet(obstacle); // If there is a Sheet
@@ -149,6 +130,26 @@ public class Movement : MonoBehaviour
         }
         else
             HandleNoObstacle(direction); // If there is no obstacle checks if there is a floor
+    }
+
+    private void updateDirection(Vector3 direction)
+    {
+        if (direction.z > 0.5)
+        {
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, 0, transform.eulerAngles.z);
+        }
+        else if (direction.z < -0.5)
+        {
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, 180, transform.eulerAngles.z);
+        }
+        else if (direction.x > 0.5)
+        {
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, 90, transform.eulerAngles.z);
+        }
+        else if (direction.x < -0.5)
+        {
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, -90, transform.eulerAngles.z);
+        }
     }
 
     private void HandleNoObstacle(Vector3 direction)
@@ -181,19 +182,6 @@ public class Movement : MonoBehaviour
 
         /*QueueAnimation(new AnimationItem(direction/3f, baseSpeed/1.5f, false, false)); // If can't move enqueues small animation to display that you can't move
         QueueAnimation(new AnimationItem(-direction/3f, baseSpeed/1.5f, false, false)); // Enqueues reverse animation*/
-    }
-
-    public void HandleLadder(GameObject ladder, Vector3 direction)
-    {
-        RaycastHit hit;
-
-        if (Physics.Raycast(transform.position + Vector3.up * ladder.GetComponent<Renderer>().bounds.size.y, direction, out hit, 1)) // If a block is above the ladder
-            return;
-        else // Enqueues the ladder climbing animations
-        {
-            QueueAnimation(new AnimationItem(Vector3.up * ladder.GetComponent<Renderer>().bounds.size.y, baseSpeed, true, false));
-            QueueAnimation(new AnimationItem(direction, baseSpeed, false, true));
-        }
     }
 
     public void HandleSheet(GameObject sheet)

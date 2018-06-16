@@ -142,7 +142,6 @@ public class PlayerMovement : Movement
                 {
                     if(!party.Contains(obstacle))
                     {
-                        obstacle.GetComponent<BoxCollider>().enabled = false;
                         foundParty = true;
                         party.Add(obstacle);
 
