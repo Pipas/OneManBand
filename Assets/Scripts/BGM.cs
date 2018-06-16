@@ -158,19 +158,6 @@ public class BGM : MonoBehaviour {
 		}
 
 		self.foundASrc.clip = clip;
-
-		// curent time (rounded to seconds)
-        int currentTime = (int)Time.time;
-
-		int mod = currentTime % 4;
-        if (mod == 0)
-		{
-            self.foundASrc.Play();
-		}
-		else
-		{
-			int diff = 4 - mod;
-			self.foundASrc.PlayDelayed((currentTime + diff) - Time.time);
-		}		
+		self.foundASrc.Play();
 	}
 }
