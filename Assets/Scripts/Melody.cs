@@ -199,4 +199,9 @@ public class Melody : MonoBehaviour {
     {
         state = new WaitingState(this);
     }
+
+    public bool IsStopped()
+    {
+        return (state is StopState);
+    }
 }
