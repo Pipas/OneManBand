@@ -12,6 +12,8 @@ public class InGameMenu : MonoBehaviour {
     public GameObject mainMenu;
     public GameObject settings;
     public GameObject settingsDefault;
+    public GameObject settingsSound;
+    public GameObject settingsDifficulty;
 
     private bool stopGame = false;
     private const float FULL_OPACITY = 255f;
@@ -26,12 +28,20 @@ public class InGameMenu : MonoBehaviour {
                 {
                     stopGame = true;
                     menuPanel.SetActive(true);
+                    mainMenu.SetActive(true);
                     Time.timeScale = 0;
                 }
                 else
                 {
                     stopGame = false;
                     menuPanel.SetActive(false);
+                    mainMenu.SetActive(false);
+
+                    settings.SetActive(false);
+                    settingsDefault.SetActive(false);
+                    settingsSound.SetActive(false);
+                    settingsDifficulty.SetActive(false);
+
                     Time.timeScale = 1;
 
                     int tmpSkillVal = StaticSettings.setSkillMargin();
@@ -82,6 +92,7 @@ public class InGameMenu : MonoBehaviour {
         bgm.updateBGMVolume(StaticSettings.volumeBGM);
 
         SceneManager.LoadScene("StartMenu");
+        Movement.party = new List<GameObject>();
     }
 
     public bool isGameStopped()
