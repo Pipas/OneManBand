@@ -41,8 +41,6 @@ public class BGM : MonoBehaviour {
 		public override void update() {
             if (!inst.bgmASrc.isPlaying)
             {
-                Debug.Log("Swapped audio clip!");
-
                 if (iAudio < inst.aStart.Length - 1)
                 {
                     inst.bgmASrc.clip = inst.aStart[++iAudio];
@@ -82,11 +80,8 @@ public class BGM : MonoBehaviour {
 					if (oldITheme != iTheme)
 					{
 						reps = 0;
-                        Debug.Log("Swapped audio theme!");
 					}					
 				}
-
-                Debug.Log("Swapped audio clip!");
 
                 iAudio = Random.Range(0, inst.aWhile[iTheme].aClips.Length);
                 inst.bgmASrc.clip = inst.aWhile[iTheme].aClips[iAudio];
