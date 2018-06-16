@@ -44104,7 +44104,7 @@ MonoBehaviour:
   menuPanel: {fileID: 1843038503}
   healthSystem: {fileID: 1621732228}
   skillbar: {fileID: 1927091486}
-  bgm: {fileID: 2029890140}
+  bgm: {fileID: 0}
   mainMenu: {fileID: 88825795}
   settings: {fileID: 1750865378}
   settingsDefault: {fileID: 745473891}
@@ -56684,6 +56684,11 @@ Prefab:
       propertyPath: m_Name
       value: HighlightPivot
       objectReference: {fileID: 0}
+    - target: {fileID: 108997586483722566, guid: 7d17f7fe90bc1496f84be1d576265e73,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 114455689696325702, guid: 7d17f7fe90bc1496f84be1d576265e73,
         type: 2}
       propertyPath: menu
@@ -62551,6 +62556,11 @@ Prefab:
     - target: {fileID: 4822881124943390, guid: 74452b7d2197fd34489d928d05d618b7, type: 2}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 55
+      objectReference: {fileID: 0}
+    - target: {fileID: 20770305041650738, guid: 74452b7d2197fd34489d928d05d618b7,
+        type: 2}
+      propertyPath: m_HDR
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74452b7d2197fd34489d928d05d618b7, type: 2}
@@ -70678,6 +70688,11 @@ Prefab:
       propertyPath: movingBlock
       value: 
       objectReference: {fileID: 386342727}
+    - target: {fileID: 108997586483722566, guid: 7d17f7fe90bc1496f84be1d576265e73,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 114455689696325702, guid: 7d17f7fe90bc1496f84be1d576265e73,
         type: 2}
       propertyPath: menu
@@ -97137,12 +97152,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2029890140 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114287897740570884, guid: 74452b7d2197fd34489d928d05d618b7,
-    type: 2}
-  m_PrefabInternal: {fileID: 1283262644}
-  m_Script: {fileID: 11500000, guid: f23d627957d956f44a1c8a7a9655fbcb, type: 3}
 --- !u!1 &2032818060
 GameObject:
   m_ObjectHideFlags: 0
