@@ -44,12 +44,11 @@ public class Skillbar : MonoBehaviour {
     // radius in which the player can attack
     public double Radius;
 
-    // margin (ms) skill press needs to match melody
-    public int SkillPressMargin;
-
     // the max duration a pause can have in the melody
     public int MaxPauseDuration;
-    
+
+    // margin (ms) skill press needs to match melody
+    private int SkillPressMargin = StaticSettings.setSkillMargin();
 
     /* --- Attrs --- */
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BGM : MonoBehaviour {
-
     [System.Serializable]
     public class AudioList
     {
@@ -30,6 +29,7 @@ public class BGM : MonoBehaviour {
 		{
 			iAudio = 0;
             inst.bgmASrc.clip = inst.aStart[iAudio];
+            inst.bgmASrc.volume = StaticSettings.volumeBGM;
 			inst.bgmASrc.Play();
 		}
 
@@ -41,6 +41,7 @@ public class BGM : MonoBehaviour {
                 if (iAudio < inst.aStart.Length - 1)
                 {
                     inst.bgmASrc.clip = inst.aStart[++iAudio];
+                    inst.bgmASrc.volume = StaticSettings.volumeBGM;
                     inst.bgmASrc.Play();
                 }
 				else
@@ -84,6 +85,8 @@ public class BGM : MonoBehaviour {
 
                 iAudio = Random.Range(0, inst.aWhile[iTheme].aClips.Length);
                 inst.bgmASrc.clip = inst.aWhile[iTheme].aClips[iAudio];
+
+                inst.bgmASrc.volume = StaticSettings.volumeBGM;
                 inst.bgmASrc.Play();
             }
         }
