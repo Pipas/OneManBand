@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Melody : MonoBehaviour {
+    public InGameMenu menu;
+    public bool toResumeAudio = false;
 
 	/* --- Inspector --- */
 	
@@ -66,32 +68,48 @@ public class Melody : MonoBehaviour {
     /// </summary>
     void Update()
     {
-		if (!aSrc.isPlaying)
-		{
-			playing = false;
-		}
-		
-		double dist = Vector3.Distance(player.transform.position, transform.position);
-        int currentTime = (int)Time.time;       
-
-		if (dist <= radius)
-		{
-			aSrc.volume = defaultVolume - (float)((dist - maxVolRadius) * (defaultVolume) / (radius - maxVolRadius));
-
-            if (currentTime % BLOCK_DURATION == 0 && !playing && currentTime - previousBlockTime > BLOCK_DURATION)
+        if (menu.isGameStopped())
+        {
+            if (aSrc.isPlaying)
             {
-				Play();
-				previousBlockTime = currentTime;				
-			}
-		}
-		else if (playing)
-		{
-			Stop(false);
-		}
-		else
-		{
-			aSrc.volume = 0;
-		}     
+                toResumeAudio = true;
+                aSrc.Pause();
+            }
+        }
+        else
+        {
+            if (toResumeAudio)
+            {
+                aSrc.UnPause();
+            }
+            
+            if (!aSrc.isPlaying)
+            {
+                playing = false;
+            }
+
+            double dist = Vector3.Distance(player.transform.position, transform.position);
+            int currentTime = (int)Time.time;
+
+            if (dist <= radius)
+            {
+                aSrc.volume = defaultVolume - (float)((dist - maxVolRadius) * (defaultVolume) / (radius - maxVolRadius));
+
+                if (currentTime % BLOCK_DURATION == 0 && !playing && currentTime - previousBlockTime > BLOCK_DURATION)
+                {
+                    Play();
+                    previousBlockTime = currentTime;
+                }
+            }
+            else if (playing)
+            {
+                Stop(false);
+            }
+            else
+            {
+                aSrc.volume = 0;
+            }
+        }
     }
 
 

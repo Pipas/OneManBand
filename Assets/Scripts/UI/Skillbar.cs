@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 
 public class Skillbar : MonoBehaviour {
+    public InGameMenu menu;
 
     private struct SkillPress {
 
@@ -85,7 +86,8 @@ public class Skillbar : MonoBehaviour {
     
 
     void Update () {
-        processInput();
+        if (!menu.isGameStopped())
+            processInput();
     }
 
 

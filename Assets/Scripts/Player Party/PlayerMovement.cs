@@ -5,6 +5,7 @@ using System;
 
 public class PlayerMovement : Movement 
 {
+    public InGameMenu menu;
     public HealthSystem playerHealth;
     public bool running = false;
     public bool autoMoving = false;
@@ -17,7 +18,7 @@ public class PlayerMovement : Movement
     }
     void Update ()
     {	
-        if(!playerHealth.gameOver)
+        if(!playerHealth.gameOver && !menu.isGameStopped())
         {
             if (autoMoving)
             {

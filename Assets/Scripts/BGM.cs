@@ -21,6 +21,11 @@ public class BGM : MonoBehaviour {
         }
 
 		public abstract void update();
+
+        public void updateVolume(float volume)
+        {
+            inst.bgmASrc.volume = volume;
+        }
 	}
 
 	private class StartState: State {
@@ -133,6 +138,11 @@ public class BGM : MonoBehaviour {
 	void Update () {
 		state.update();
 	}
+
+    public void updateBGMVolume(float volume)
+    {
+        state.updateVolume(volume);
+    }
 
 	// Play the instrument sound when found
 	public static void FoundInst(string name)

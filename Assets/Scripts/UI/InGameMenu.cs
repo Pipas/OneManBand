@@ -7,6 +7,7 @@ public class InGameMenu : MonoBehaviour {
     public GameObject menuPanel;
     public HealthSystem healthSystem;
     public Skillbar skillbar;
+    public BGM bgm;
 
     public GameObject mainMenu;
     public GameObject settings;
@@ -35,6 +36,8 @@ public class InGameMenu : MonoBehaviour {
 
                     int tmpSkillVal = StaticSettings.setSkillMargin();
                     skillbar.updateSkillMargin(tmpSkillVal);
+
+                    bgm.updateBGMVolume(StaticSettings.volumeBGM);
                 }
             }
         }
@@ -48,6 +51,8 @@ public class InGameMenu : MonoBehaviour {
 
         int tmpSkillVal = StaticSettings.setSkillMargin();
         skillbar.updateSkillMargin(tmpSkillVal);
+
+        bgm.updateBGMVolume(StaticSettings.volumeBGM);
     }
 
     public void RestartGame()
@@ -58,6 +63,8 @@ public class InGameMenu : MonoBehaviour {
 
         int tmpSkillVal = StaticSettings.setSkillMargin();
         skillbar.updateSkillMargin(tmpSkillVal);
+
+        bgm.updateBGMVolume(StaticSettings.volumeBGM);
     }
 
     public void Settings()
@@ -72,6 +79,13 @@ public class InGameMenu : MonoBehaviour {
         int tmpSkillVal = StaticSettings.setSkillMargin();
         skillbar.updateSkillMargin(tmpSkillVal);
 
+        bgm.updateBGMVolume(StaticSettings.volumeBGM);
+
         SceneManager.LoadScene("StartMenu");
+    }
+
+    public bool isGameStopped()
+    {
+        return stopGame;
     }
 }
