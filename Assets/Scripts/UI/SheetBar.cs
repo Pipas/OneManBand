@@ -4,18 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class SheetBar : MonoBehaviour {
-    public Image[] sheetImages;
-    public Sprite sheetSprite;
-
+    public GameObject[] sheets;
     public int sheetIndex = 0;
 
     public void catchSheet()
     {
-        sheetImages[sheetIndex].sprite = sheetSprite;
-        Color imageColor = sheetImages[sheetIndex].color;
-        imageColor.a = 1;
-
-        sheetImages[sheetIndex].color = imageColor;
-        sheetIndex++;
+        if (sheetIndex < sheets.Length)
+        {
+            sheets[sheetIndex].SetActive(false);
+            sheetIndex++;
+            sheets[sheetIndex].SetActive(true);
+        }
     }
 }
