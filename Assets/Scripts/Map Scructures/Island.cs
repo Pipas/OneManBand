@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Island : MonoBehaviour 
 {
-    public float cameraShift = 10.5f;
+    public Vector3 cameraShift = new Vector3(10.5f, 0f, 0f);
     // Use this for initialization
     void Start () {
         

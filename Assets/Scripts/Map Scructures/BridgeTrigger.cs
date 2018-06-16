@@ -32,7 +32,7 @@ public class BridgeTrigger : MonoBehaviour
             for (int i = 0; i < playerMove; i++)
                 Player.QueueAnimation(new AnimationItem(Vector3.right * direction, Player.baseSpeed, true, true));
 
-            camAnimation.MoveCamera(direction,island.cameraShift);
+            camAnimation.MoveCamera(direction, island.cameraShift);
         }
     }
 }
