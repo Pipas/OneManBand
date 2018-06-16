@@ -1,10 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class InGameMenu : MonoBehaviour {
     public GameObject menuPanel;
     public HealthSystem healthSystem;
+    public Skillbar skillbar;
+
+    public GameObject mainMenu;
+    public GameObject settings;
+    public GameObject settingsDefault;
 
     private bool stopGame = false;
     private const float FULL_OPACITY = 255f;
@@ -26,6 +32,9 @@ public class InGameMenu : MonoBehaviour {
                     stopGame = false;
                     menuPanel.SetActive(false);
                     Time.timeScale = 1;
+
+                    int tmpSkillVal = StaticSettings.setSkillMargin();
+                    skillbar.updateSkillMargin(tmpSkillVal);
                 }
             }
         }
@@ -36,7 +45,33 @@ public class InGameMenu : MonoBehaviour {
         stopGame = false;
         menuPanel.SetActive(false);
         Time.timeScale = 1;
+
+        int tmpSkillVal = StaticSettings.setSkillMargin();
+        skillbar.updateSkillMargin(tmpSkillVal);
     }
 
+    public void RestartGame()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Movement.party = new List<GameObject>();
 
+        int tmpSkillVal = StaticSettings.setSkillMargin();
+        skillbar.updateSkillMargin(tmpSkillVal);
+    }
+
+    public void Settings()
+    {
+        mainMenu.SetActive(false);
+        settingsDefault.SetActive(true);
+        settings.SetActive(true);
+    }
+
+    public void BackToMenu()
+    {
+        int tmpSkillVal = StaticSettings.setSkillMargin();
+        skillbar.updateSkillMargin(tmpSkillVal);
+
+        SceneManager.LoadScene("StartMenu");
+    }
 }

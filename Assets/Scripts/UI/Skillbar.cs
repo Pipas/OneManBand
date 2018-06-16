@@ -251,4 +251,9 @@ public class Skillbar : MonoBehaviour {
 
         return false;
     }
+
+    public void updateSkillMargin(int skillValue)
+    {
+        this.SkillPressMargin = skillValue;
+    }
 }
