@@ -27,7 +27,7 @@ public class Fireball : MonoBehaviour {
 
         GameObject player = GameObject.Find("PlayerPivot");
         Vector3 playerPosition = player.transform.position;
-        float dist = Vector3.Distance(transform.position, playerPosition);
+
         if (Vector3.Distance(transform.position, playerPosition) <= 1f)
         {
             playerHealth.TakeDamage(-1);

@@ -108,8 +108,9 @@ public class Movement : MonoBehaviour
         if (Physics.Raycast(transform.position, direction, out hit, distance, layerMask)) // Checks block where you want to move
         {
             obstacle = hit.transform.gameObject;
+            Debug.DrawRay(transform.position, direction * hit.distance, Color.red);
 
-            if (obstacle.tag == "Spotlight")
+            if (obstacle.tag == "Spotlight" || obstacle.tag == "Triggerable")
             {
                 HandleNoObstacle(direction);
             }
@@ -170,7 +171,7 @@ public class Movement : MonoBehaviour
                 if(obstacle.tag == "Sheet")
                     HandleSheet(obstacle);
 
-                if(hit.distance > 0.4f) // If there is a fall enqueues 2 animations move and fall
+                if(hit.distance > 0.45f) // If there is a fall enqueues 2 animations move and fall
                 {
                     QueueAnimation(new AnimationItem(direction, baseSpeed, true, false));
                     QueueAnimation(new AnimationItem(Vector3.down * (hit.distance - 0.4f), baseSpeed * 3, false, true));
