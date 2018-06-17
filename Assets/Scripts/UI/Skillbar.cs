@@ -190,7 +190,10 @@ public class Skillbar : MonoBehaviour {
         Array.Copy(spotlights, 0, triggerables, enemies.Length, spotlights.Length);
 
         foreach(GameObject obj in triggerables) {
-            double dist = Vector3.Distance(Player.transform.position, obj.transform.position);
+            Vector2 playerPosition = new Vector2(Player.transform.position.x, Player.transform.position.z);
+            Vector2 melodyPosition = new Vector2(obj.transform.position.x, obj.transform.position.z);
+
+            double dist = Vector2.Distance(playerPosition, melodyPosition);
 
             if (dist <= Radius)
             {

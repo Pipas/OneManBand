@@ -13,13 +13,21 @@ public class Melody : MonoBehaviour {
         public State(Melody inst)
         {
             this.inst = inst;
-            dist = Vector3.Distance(inst.player.transform.position, inst.transform.position);
+
+            Vector3 player = new Vector2(inst.player.transform.position.x, inst.player.transform.position.z);
+            Vector3 melodyPos = new Vector2(inst.transform.position.x, inst.transform.position.z);
+
+            dist = Vector2.Distance(player, melodyPos);
             currentTime = (int)Time.time;
         }
 
         public virtual void update()
         {
-            dist = Vector3.Distance(inst.player.transform.position, inst.transform.position);
+            Vector2 player = new Vector2(inst.player.transform.position.x, inst.player.transform.position.z);
+            Vector2 melodyPos = new Vector2(inst.transform.position.x, inst.transform.position.z);
+
+            dist = Vector2.Distance(player, melodyPos);
+
             currentTime = (int)Time.time;
         }
     }
