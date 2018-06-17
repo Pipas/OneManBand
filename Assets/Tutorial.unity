@@ -8415,6 +8415,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 855b9b5e3e41b4b40acd9f1b6364401b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bridgeHeight: 0.73
+  bridgeColliderHeight: 0
   bridge: {fileID: 1814218257}
   bridgeTrigger: {fileID: 1964835485}
   bridgeCollider: {fileID: 658069249}

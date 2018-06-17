@@ -88,7 +88,6 @@ public class AscendingObject : MonoBehaviour, Triggerable
                 else
                 {
                     Vector3 backToPosition = new Vector3(player.transform.position.x, DEFAULT_PLAYER_YPOSITION, player.transform.position.z);
-
                     player.transform.position = backToPosition;
                 }
             }
