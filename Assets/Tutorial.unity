@@ -1934,6 +1934,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0b14d3b62b042c59b3d2152587ece0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultPlayerHeight: 1.4
   state: 0
   deltaMove: {x: 0, y: -2, z: 0}
   speed: 1
@@ -21092,6 +21093,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0b14d3b62b042c59b3d2152587ece0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultPlayerHeight: 1.4
   state: 0
   deltaMove: {x: 0, y: -1, z: 0}
   speed: 1
@@ -63590,22 +63592,22 @@ Prefab:
         type: 2}
       propertyPath: aInstTheme.Array.data[0].aClips.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: 2ac3efb649735e34f85bbc77b5ed50e3, type: 3}
+      objectReference: {fileID: 8300000, guid: c154412e21a82eb44aa6809f0ea18c8d, type: 3}
     - target: {fileID: 114287897740570884, guid: 74452b7d2197fd34489d928d05d618b7,
         type: 2}
       propertyPath: aInstTheme.Array.data[0].aClips.Array.data[1]
       value: 
-      objectReference: {fileID: 8300000, guid: 26a187e10ef54394fb44fc1ba21e1c9d, type: 3}
+      objectReference: {fileID: 8300000, guid: abf58708fdd5ebd4885b4d4718cf76c2, type: 3}
     - target: {fileID: 114287897740570884, guid: 74452b7d2197fd34489d928d05d618b7,
         type: 2}
       propertyPath: aInstTheme.Array.data[0].aClips.Array.data[2]
       value: 
-      objectReference: {fileID: 8300000, guid: 6e0e9b81148329e47beeacff92ef2384, type: 3}
+      objectReference: {fileID: 8300000, guid: e5c7281047bfbbc43ab48a5dc49947b5, type: 3}
     - target: {fileID: 114287897740570884, guid: 74452b7d2197fd34489d928d05d618b7,
         type: 2}
       propertyPath: aInstTheme.Array.data[1].aClips.Array.data[0]
       value: 
-      objectReference: {fileID: 8300000, guid: 73f55e733fb154847bb30fac2742e389, type: 3}
+      objectReference: {fileID: 8300000, guid: 32d4a67c83e6db1458b645684546b4bd, type: 3}
     - target: {fileID: 4822881124943390, guid: 74452b7d2197fd34489d928d05d618b7, type: 2}
       propertyPath: m_LocalEulerAnglesHint.y
       value: -30
