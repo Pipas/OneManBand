@@ -43532,7 +43532,7 @@ MonoBehaviour:
   menu: {fileID: 962432289}
   rythem: f750f250f250f750f250f500f250f
   radius: 7
-  maxVolRadius: 7
+  maxVolRadius: 4
   player: {fileID: 1621732224}
   paused: 0
 --- !u!95 &941350909

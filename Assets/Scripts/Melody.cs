@@ -14,8 +14,8 @@ public class Melody : MonoBehaviour {
         {
             this.inst = inst;
 
-            Vector3 player = new Vector2(inst.player.transform.position.x, inst.player.transform.position.z);
-            Vector3 melodyPos = new Vector2(inst.transform.position.x, inst.transform.position.z);
+            Vector2 player = new Vector2(inst.player.transform.position.x, inst.player.transform.position.z);
+            Vector2 melodyPos = new Vector2(inst.transform.position.x, inst.transform.position.z);
 
             dist = Vector2.Distance(player, melodyPos);
             currentTime = (int)Time.time;
@@ -29,6 +29,9 @@ public class Melody : MonoBehaviour {
             dist = Vector2.Distance(player, melodyPos);
 
             currentTime = (int)Time.time;
+
+            // update volume according to range
+            inst.aSrc.volume = inst.defaultVolume - (float)((dist - inst.maxVolRadius) * (inst.defaultVolume) / (inst.radius - inst.maxVolRadius));
         }
     }
 
@@ -47,9 +50,6 @@ public class Melody : MonoBehaviour {
             // if player in range
             if (dist <= inst.radius)
             {
-                // update volume according to range
-                inst.aSrc.volume = inst.defaultVolume - (float)((dist - inst.maxVolRadius) * (inst.defaultVolume) / (inst.radius - inst.maxVolRadius));
-
                 // if melody is over
                 if (!inst.aSrc.isPlaying)
                 {
@@ -71,7 +71,6 @@ public class Melody : MonoBehaviour {
         public StopState(Melody inst) : base(inst)
         {
             inst.aSrc.Stop();
-            inst.aSrc.volume = 0;
         }
 
         public override void update()
