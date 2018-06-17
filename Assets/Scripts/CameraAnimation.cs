@@ -32,9 +32,9 @@ public class CameraAnimation : MonoBehaviour
         }
         else
         {
-            GameObject player = GameObject.Find("Player");
+            Vector3 playerPosition = GameObject.Find("PlayerPivot").transform.position + new Vector3(0, 0.5f, 0);
             RaycastHit[] hits;
-            hits = Physics.RaycastAll(transform.position, (player.transform.position - transform.position), Vector3.Distance(player.transform.position, transform.position));
+            hits = Physics.RaycastAll(transform.position, (playerPosition - transform.position), Vector3.Distance(playerPosition, transform.position));
 
             blockingMaterials.Clear();
 
