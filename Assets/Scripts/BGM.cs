@@ -247,6 +247,13 @@ public class BGM : MonoBehaviour {
         }
 	}
 
+	// stops currently playing themes
+	public static void StopInstThemes()
+	{
+		self.drumsASrc.Stop();
+		self.guitarASrc.Stop();
+	}
+
 	// Play the instrument sound when found
 	public static void FoundInst(string name)
 	{

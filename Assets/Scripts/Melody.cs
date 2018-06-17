@@ -44,6 +44,7 @@ public class Melody : MonoBehaviour {
         public PlayingState(Melody inst) : base(inst)
         {
             inst.aSrc.Play();
+            BGM.StopInstThemes();
         }
 
         public override void update()
