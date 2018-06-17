@@ -100,12 +100,9 @@ public class Movement : MonoBehaviour
         RaycastHit hit;
         GameObject obstacle = null;
 
-        var layerMask = (1 << 8);
-        layerMask = ~layerMask;
-
         var distance = 1f;
 
-        if (Physics.Raycast(transform.position, direction, out hit, distance, layerMask)) // Checks block where you want to move
+        if (Physics.Raycast(transform.position, direction, out hit, distance)) // Checks block where you want to move
         {
             obstacle = hit.transform.gameObject;
             Debug.DrawRay(transform.position, direction * hit.distance, Color.red);
@@ -159,11 +156,9 @@ public class Movement : MonoBehaviour
         RaycastHit hit;
         GameObject obstacle = null;
 
-        var layerMask = (1 << 8);
-        layerMask = ~layerMask;
         var distAhead = transform.position + 1.2f*direction;
 
-        if (Physics.Raycast(distAhead, Vector3.down, out hit, 10, layerMask)) // Checks below the block is moving to
+        if (Physics.Raycast(distAhead, Vector3.down, out hit, 10)) // Checks below the block is moving to
         {
             obstacle = hit.transform.gameObject;
             if(obstacle.tag != "Party")
@@ -171,19 +166,16 @@ public class Movement : MonoBehaviour
                 if(obstacle.tag == "Sheet")
                     HandleSheet(obstacle);
 
-                if(hit.distance > 0.45f) // If there is a fall enqueues 2 animations move and fall
+                if(hit.distance > 0.55f) // If there is a fall enqueues 2 animations move and fall
                 {
                     QueueAnimation(new AnimationItem(direction, baseSpeed, true, false));
-                    QueueAnimation(new AnimationItem(Vector3.down * (hit.distance - 0.4f), baseSpeed * 3, false, true));
+                    QueueAnimation(new AnimationItem(Vector3.down * (hit.distance - 0.5f), baseSpeed * 3, false, true));
                 }
                 else // If not just moves
                     QueueAnimation(new AnimationItem(direction, baseSpeed, true, true));
                 return;
             }
         }
-
-        /*QueueAnimation(new AnimationItem(direction/3f, baseSpeed/1.5f, false, false)); // If can't move enqueues small animation to display that you can't move
-        QueueAnimation(new AnimationItem(-direction/3f, baseSpeed/1.5f, false, false)); // Enqueues reverse animation*/
     }
 
     public void HandleSheet(GameObject sheet)

@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class AscendingObject : MonoBehaviour, Triggerable 
 {
-    public float defaultPlayerHeight = 1.4f;
-
     public enum State { retracted, extending, retracting, extended }
     public State state;
     private Vector3 initPosition, endPosition;
     private float travelLength, startTime;
     private GameObject aboveCollider;
-    private List<Collider> colliders;
+    public List<Collider> colliders;
     private bool hasPlayer = false;
     public Vector3 deltaMove;
     public float speed;
@@ -73,30 +71,19 @@ public class AscendingObject : MonoBehaviour, Triggerable
             lastTime = currentTime;
         }
     }
+
     private void TranslateObjectsAbove(Vector3 deltaTransform)
     {
         foreach (Collider collider in colliders)
         {
-            if (collider.name == "Player")
-            {
-                GameObject player = GameObject.Find("PlayerPivot");
-
-                if (player.transform.position.y >= defaultPlayerHeight)
-                {
-                    if (player.GetComponent<Movement>().state != Movement.State.falling)
-                        player.transform.Translate(deltaTransform);
-                }
-                else
-                {
-                    Vector3 backToPosition = new Vector3(player.transform.position.x, defaultPlayerHeight, player.transform.position.z);
-                    player.transform.position = backToPosition;
-                }
-            }
-            else if (collider.name != "Block" && collider.tag != "Spotlight")
-            {
-                if (collider.GetComponent<Movement>().state != Movement.State.falling)
-                    collider.transform.Translate(deltaTransform);
-            }
+            Movement colliderMovement = null;
+            if(collider.tag == "Player")
+                colliderMovement = collider.transform.parent.GetComponent<Movement>();
+            else if(collider.tag == "Party")
+                colliderMovement = collider.transform.GetComponent<Movement>();
+            
+            if(colliderMovement != null && colliderMovement.state != Movement.State.falling)
+                colliderMovement.transform.Translate(deltaTransform);
         }
     }
 
@@ -148,7 +135,35 @@ public class AscendingObject : MonoBehaviour, Triggerable
                         Movement.party[i - 1].GetComponent<PartyMovement>().nextInParty = null;
                     Movement.party.Remove(Movement.party[i]);
                 }
-                    
+            }
+        }
+        else
+        {
+            foreach (Collider collider in colliders)
+            {
+                if(collider.tag == "Party")
+                {
+                    for (int i = Movement.party.Count - 1; i >= 0; i--)
+                    {
+                        if(Movement.party[i].GetComponent<PartyMovement>().toBeDitched == false)
+                        {
+                            if(Movement.party[i] == collider.gameObject)
+                            {
+                                Movement.party[i].GetComponent<PartyMovement>().toBeDitched = true;
+                                if(!Movement.party[i].GetComponent<PartyMovement>().isMoving)
+                                    Movement.party[i].GetComponent<PartyMovement>().CheckIfDitched();
+
+                                break;
+                            }
+                            else
+                            {
+                                Movement.party[i].GetComponent<PartyMovement>().toBeDitched = true;
+                                if(!Movement.party[i].GetComponent<PartyMovement>().isMoving)
+                                    Movement.party[i].GetComponent<PartyMovement>().CheckIfDitched();
+                            }
+                        }
+                    }
+                }
             }
         }
     }
