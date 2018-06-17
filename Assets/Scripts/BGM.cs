@@ -162,6 +162,13 @@ public class BGM : MonoBehaviour {
 	/* Current state. */
 	private State state;
 
+	/* True if drums was already found previously, false otherwise. */
+	private bool alreadyFoundDrums;
+
+    /* True if guitar was already found previously, false otherwise. */
+    private bool alreadyFoundGuitar;
+
+
 	/* --- Methods --- */
 
 	// Use this for initialization
@@ -172,6 +179,8 @@ public class BGM : MonoBehaviour {
 		foundASrc = aSrcs[1];
 		drumsASrc = aSrcs[2];
         guitarASrc = aSrcs[3];
+        alreadyFoundDrums = false;
+        alreadyFoundGuitar = false;
         state = new StartState(this);
 	}
 	
@@ -246,10 +255,18 @@ public class BGM : MonoBehaviour {
 		switch (name)
 		{
 			case "PartyTambor":
-				clip = self.aFoundInst[0];
+				if (!self.alreadyFoundDrums)
+				{
+					clip = self.aFoundInst[0];
+					self.alreadyFoundDrums = true;
+				}
 				break;
             case "PartyGuitar":
-                clip = self.aFoundInst[1];
+				if (!self.alreadyFoundGuitar)
+				{
+					clip = self.aFoundInst[1];
+                    self.alreadyFoundGuitar = true;
+				}                
                 break;
 
 			default:
@@ -257,7 +274,10 @@ public class BGM : MonoBehaviour {
 		}
 
 		self.foundASrc.clip = clip;
-		self.foundASrc.Play();
+		if (clip != null)
+		{
+			self.foundASrc.Play();
+		}
 	}
 
     // Play the sheet sound when found
