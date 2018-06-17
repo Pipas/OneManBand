@@ -66,6 +66,10 @@ public class Skill {
         sound.volume = (float) (DEFAULT_VOLUME / 5.0);
     }
 
+    public bool IsSilenced() {
+        return sound.volume < DEFAULT_VOLUME;
+    }
+
     public void RestoreVolume() {
         sound.volume = DEFAULT_VOLUME;
     }

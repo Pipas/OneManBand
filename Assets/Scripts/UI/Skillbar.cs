@@ -125,7 +125,10 @@ public class Skillbar : MonoBehaviour {
         {
             if (s1.Activate(KeyDownAlpha))
             {
-                pressedSkill = "f";
+                if (!s1.IsSilenced())
+                {
+                    pressedSkill = "f";
+                }
                 s1KeyUp = true;
             }
             else
@@ -146,7 +149,10 @@ public class Skillbar : MonoBehaviour {
         {
             if (s2.Activate(KeyDownAlpha))
             {
-                pressedSkill = "s";
+                if (!s2.IsSilenced())
+                {
+                    pressedSkill = "s";
+                }
                 s2KeyUp = true;
             }
             else
@@ -167,7 +173,10 @@ public class Skillbar : MonoBehaviour {
         {
             if (s3.Activate(KeyDownAlpha))
             {
-                pressedSkill = "t";
+                if (!s3.IsSilenced())
+                {
+                    pressedSkill = "t";
+                }
                 s3KeyUp = true;
             }
             else
@@ -188,7 +197,10 @@ public class Skillbar : MonoBehaviour {
         {
             if (s4.Activate(KeyDownAlpha))
             {
-                pressedSkill = "q";
+                if (!s4.IsSilenced())
+                {
+                    pressedSkill = "q";
+                }
                 s4KeyUp = true;
             }
             else
