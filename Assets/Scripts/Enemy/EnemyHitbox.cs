@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class EnemyHitbox : MonoBehaviour {
     private bool playerWithinRange = false;
+    private bool noObstacles = true;
+
     private float playerDistance;
     private Vector3 playerPosition;
     private bool onCooldown = false;
-    private const float ATTACK_COOL = 1f;
+    private const float ATTACK_COOL = 2f;
     private float attackCooldown = ATTACK_COOL;
 
     public HealthSystem playerHealth;
@@ -46,8 +48,8 @@ public class EnemyHitbox : MonoBehaviour {
         }
     }
 
-    public bool checkIfObstaclesAhead(Vector3 playerPosition) {
-        bool tmpPlayerRange = true;
+    public void checkIfObstaclesAhead(Vector3 playerPosition) {
+        this.noObstacles = true;
         
         Vector3 origin = transform.position;
         playerPosition = calculatePlayerPosition();
@@ -61,23 +63,16 @@ public class EnemyHitbox : MonoBehaviour {
 
             if (hit.collider.tag != "Player" && hit.collider.tag != "Party")
             {
-                tmpPlayerRange = false;
+                noObstacles = false;
             }
         }
-
-        if (tmpPlayerRange)
-        {
-            playerWithinRange = true;
-        }
-
-        return tmpPlayerRange;
     }
 
     public void performAttack(float range)
     {
         Fireball projectileInstance = (Fireball)Instantiate(projectile, projectileSpawn.position, projectileSpawn.rotation);
         projectileInstance.direction = playerPosition - transform.position;
-        projectileInstance.range = range-0.5f;
+        projectileInstance.range = 5.0f;
         projectileInstance.sendProjectile();
     }
 
@@ -98,11 +93,12 @@ public class EnemyHitbox : MonoBehaviour {
     {
         if (playerWithinRange)
         {
-            bool tmpPlayerRange = checkIfObstaclesAhead(playerPosition);
+            checkIfObstaclesAhead(playerPosition);
 
-            if (tmpPlayerRange)
+            if (noObstacles)
             {
                 enemyMovement.stopEnemyAnimation();
+
                 performAttack(playerDistance);
                 onCooldown = true;
             }
@@ -122,6 +118,11 @@ public class EnemyHitbox : MonoBehaviour {
     public bool isPlayerWithinRange()
     {
         return playerWithinRange;
+    }
+
+    public bool hasNoObstacles()
+    {
+        return noObstacles;
     }
 
     public Vector3 getPlayerPosition()

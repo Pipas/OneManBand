@@ -8,7 +8,7 @@ public class Fireball : MonoBehaviour {
     public int damage;
     Vector3 spawnPosition;
     public HealthSystem playerHealth;
-    private float fireballSpeed = 10f;
+    private float fireballSpeed = 8f;
 
 	// Use this for initialization
 	void Start () {
@@ -23,13 +23,15 @@ public class Fireball : MonoBehaviour {
         if (Vector3.Distance(spawnPosition, transform.position) >= range)
         {
             Extinguish();
-            GameObject player = GameObject.Find("PlayerPivot");
-            Vector3 playerPosition = player.transform.position;
+        }
 
-            if (Vector3.Distance(transform.position, playerPosition) <= 1f)
-            {
-                playerHealth.TakeDamage(-1);
-            }
+        GameObject player = GameObject.Find("PlayerPivot");
+        Vector3 playerPosition = player.transform.position;
+        float dist = Vector3.Distance(transform.position, playerPosition);
+        if (Vector3.Distance(transform.position, playerPosition) <= 1f)
+        {
+            playerHealth.TakeDamage(-1);
+            Extinguish();
         }
 	}
 

@@ -11,7 +11,7 @@ public class Movement : MonoBehaviour
     private AnimationItem currentAnimation;
     public Vector3 savedPosition;
     private float movementPercentageElapsed = 1;
-    public float baseSpeed = 6;
+    public float baseSpeed;
     public bool isMoving = false;
     private Queue<AnimationItem> animationQueue = new Queue<AnimationItem>();
     private Queue<Vector3> userInputQueue = new Queue<Vector3>();
@@ -48,8 +48,9 @@ public class Movement : MonoBehaviour
             }
         }
         if(movementPercentageElapsed < 1) // Handles the actual animation frame by frame
-        {            
+        {        
             float delta = Time.deltaTime * currentAnimation.GetSpeed();
+
             float deltaPercentage = delta / currentAnimation.GetVector().magnitude;
             if(movementPercentageElapsed + deltaPercentage > 1)
                 deltaPercentage = (1 - movementPercentageElapsed);   

@@ -23,7 +23,7 @@ public class EnemyMovement : MonoBehaviour {
 	void FixedUpdate () {
         if (!playerHealth.gameOver)
         {
-            if (!hitbox.isPlayerWithinRange())
+            if (!hitbox.isPlayerWithinRange() || !hitbox.hasNoObstacles())
             {
                 autoMovement();
             } else

@@ -9,6 +9,7 @@ public class EnemyDetection : MonoBehaviour {
         if (other.tag == "Enemy")
         {
             EnemyHitbox hitbox = other.transform.parent.gameObject.GetComponent<EnemyHitbox>();
+            hitbox.setPlayerWithinRange(true);
             hitbox.checkIfObstaclesAhead(transform.position);
         }
     }

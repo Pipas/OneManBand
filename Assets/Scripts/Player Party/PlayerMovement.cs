@@ -25,12 +25,10 @@ public class PlayerMovement : Movement
                 if (transform.hasChanged)
                 {
                     transform.hasChanged = false;
-                    running = true;
                     movePlayerAnimation();
                 }
                 else
                 {
-                    running = false;
                     autoMoving = false;
                     stopPlayerAnimation();
                 }
@@ -54,19 +52,19 @@ public class PlayerMovement : Movement
 
     public void movePlayerAnimation()
     {
-        if (running)
+        if (!running)
         {
-            transform.Find("Player").GetComponent<Animator>().SetInteger("State", 1);
             running = true;
+            transform.Find("Player").GetComponent<Animator>().SetInteger("State", 1);
         }
     }
 
     public void stopPlayerAnimation()
     {
-        if (!running)
+        if (running)
         {
-            transform.Find("Player").GetComponent<Animator>().SetInteger("State", 0);
             running = false;
+            transform.Find("Player").GetComponent<Animator>().SetInteger("State", 0);
         }
     }
 
@@ -75,50 +73,29 @@ public class PlayerMovement : Movement
         if (Input.GetButtonDown("Up"))
         {
             QueueInput(Vector3.forward);
-
-            if (!running)
-            {
-                running = true;
-                movePlayerAnimation();
-            }
+            movePlayerAnimation();
         }
 
         if (Input.GetButtonDown("Down"))
         {
             QueueInput(Vector3.back);
-
-            if (!running)
-            {
-                running = true;
-                movePlayerAnimation();
-            }
+            movePlayerAnimation();
         }
 
         if (Input.GetButtonDown("Left"))
         {
             QueueInput(Vector3.left);
-
-            if (!running)
-            {
-                running = true;
-                movePlayerAnimation();
-            }
+            movePlayerAnimation();
         }
 
         if (Input.GetButtonDown("Right"))
         {
             QueueInput(Vector3.right);
-
-            if (!running)
-            {
-                running = true;
-                movePlayerAnimation();
-            }
+            movePlayerAnimation();
         }
 
         if (!Input.GetButton("Up") && !Input.GetButton("Down") && !Input.GetButton("Left") && !Input.GetButton("Right"))
         {
-            running = false;
             stopPlayerAnimation();
         }
 
