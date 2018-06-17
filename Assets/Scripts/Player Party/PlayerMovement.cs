@@ -45,6 +45,11 @@ public class PlayerMovement : Movement
 
             HandlePartyMovement(); // Updates the rest of the party movement, this way it's sequential after the player
         }
+
+        if (playerHealth.gameOver)
+        {
+            stopPlayerAnimation();
+        }
     }
 
     public void movePlayerAnimation()

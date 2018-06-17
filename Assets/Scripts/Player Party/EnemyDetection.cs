@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyDetection : MonoBehaviour {
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         if (other.tag == "Enemy")
         {
