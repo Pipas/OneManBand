@@ -3,11 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Movement : MonoBehaviour 
-{
-    public const string GUITAR_NAME = "PartyGuitar";
-    public const string PIANO_NAME = "PartyPiano";
-    public const string TAMBOR_NAME = "PartyTambor";
-    
+{    
     public enum State { falling, moving, still, climbing }
     public State state;
     public static List<GameObject> party = new List<GameObject>();
