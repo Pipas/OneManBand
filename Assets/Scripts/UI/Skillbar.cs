@@ -53,6 +53,9 @@ public class Skillbar : MonoBehaviour {
 
     /* --- Attrs --- */
 
+    /* Audio Source that plays the booping sound. */
+    private AudioSource boopASrc;
+
     // skill #1
     private Skill s1;
 
@@ -70,6 +73,13 @@ public class Skillbar : MonoBehaviour {
 
     // list of pressed skills
     private List<SkillPress> pressedSkills;
+
+    private static Skillbar inst;
+
+    private bool s1KeyUp;
+    private bool s2KeyUp;
+    private bool s3KeyUp;
+    private bool s4KeyUp;
     
 
     /* --- Methods --- */
@@ -79,17 +89,29 @@ public class Skillbar : MonoBehaviour {
         healthSystem = Player.GetComponent<HealthSystem>();
         
         s1 = new Skill(transform, "1");
+        s1.SetAlpha(KeyDownAlpha);
+        s1KeyUp = false;
         s2 = new Skill(transform, "2");
+        s2.SetAlpha(KeyDownAlpha);
+        s2KeyUp = false;
         s3 = new Skill(transform, "3");
+        s3.SetAlpha(KeyDownAlpha);
+        s3KeyUp = false;
         s4 = new Skill(transform, "4");
+        s4.SetAlpha(KeyDownAlpha);
+        s4KeyUp = false;
+        boopASrc = GetComponent<AudioSource>();
         previousTime = 0;
         pressedSkills = new List<SkillPress>();
+        inst = this;
     }
     
 
     void Update () {
         if (!menu.isGameStopped() && !healthSystem.gameOver)
+        {
             processInput();
+        }
     }
 
 
@@ -101,53 +123,85 @@ public class Skillbar : MonoBehaviour {
         // skill #1
         if (Input.GetKeyDown(KC_SKILL1))
         {
-            s1.Activate(KeyDownAlpha);
-            pressedSkill = "f";
-            
+            if (s1.Activate(KeyDownAlpha))
+            {
+                pressedSkill = "f";
+                s1KeyUp = true;
+            }
+            else
+            {
+                boopASrc.Play();
+            }
+
             Player.GetComponent<Animator>().SetBool("PlayToggle", true);
         }
-        else if (Input.GetKeyUp(KC_SKILL1))
+        else if (Input.GetKeyUp(KC_SKILL1) && s1KeyUp)
         {
             s1.Deactivate();
+            s1KeyUp = false;
         }
 
         // skill #2
         if (Input.GetKeyDown(KC_SKILL2))
         {
-            s2.Activate(KeyDownAlpha);
-            pressedSkill = "s";
+            if (s2.Activate(KeyDownAlpha))
+            {
+                pressedSkill = "s";
+                s2KeyUp = true;
+            }
+            else
+            {
+                boopASrc.Play();
+            }
 
             Player.GetComponent<Animator>().SetBool("PlayToggle", true);
         }
-        else if (Input.GetKeyUp(KC_SKILL2))
+        else if (Input.GetKeyUp(KC_SKILL2) && s2KeyUp)
         {
             s2.Deactivate();
+            s2KeyUp = false;
         }
 
         // skill #3
         if (Input.GetKeyDown(KC_SKILL3))
         {
-            s3.Activate(KeyDownAlpha);
-            pressedSkill = "t";
+            if (s3.Activate(KeyDownAlpha))
+            {
+                pressedSkill = "t";
+                s3KeyUp = true;
+            }
+            else
+            {
+                boopASrc.Play();
+            }
 
             Player.GetComponent<Animator>().SetBool("PlayToggle", true);
         }
-        else if (Input.GetKeyUp(KC_SKILL3))
+        else if (Input.GetKeyUp(KC_SKILL3) && s3KeyUp)
         {
             s3.Deactivate();
+            s3KeyUp = false;
         }
 
         // skill #4
         if (Input.GetKeyDown(KC_SKILL4))
         {
-            s4.Activate(KeyDownAlpha);
-            pressedSkill = "q";
+            if (s4.Activate(KeyDownAlpha))
+            {
+                pressedSkill = "q";
+                s4KeyUp = true;
+            }
+            else
+            {
+                boopASrc.Play();
+            }
 
             Player.GetComponent<Animator>().SetBool("PlayToggle", true);
         }
-        else if (Input.GetKeyUp(KC_SKILL4))
+        else if (Input.GetKeyUp(KC_SKILL4) && s4KeyUp)
         {
             s4.Deactivate();
+            s4KeyUp = false;
         }
 
         if (!Input.GetKey(KC_SKILL1) && !Input.GetKey(KC_SKILL2) && !Input.GetKey(KC_SKILL3) && !Input.GetKey(KC_SKILL4))
@@ -263,5 +317,36 @@ public class Skillbar : MonoBehaviour {
     public void updateSkillMargin(int skillValue)
     {
         this.SkillPressMargin = skillValue;
+    }
+
+    public static void ActivateSkill(string name)
+    {
+        if (name == "PartyTambor")
+        {
+            inst.s1.Deactivate();
+        }
+        else
+        {
+            inst.s2.Deactivate();
+            inst.s3.Deactivate();
+            inst.s4.Deactivate();
+        }
+    }
+
+    public static void DeactivateSkill(string name)
+    {
+        if (name == "PartyTambor")
+        {
+            inst.s1.SetAlpha(inst.KeyDownAlpha);
+        }
+        else
+        {
+            if (Movement.party.Count == 0 || (Movement.party.Count == 1 && Movement.party[0].name == "PartyTambor"))
+            {
+                inst.s2.SetAlpha(inst.KeyDownAlpha);
+                inst.s3.SetAlpha(inst.KeyDownAlpha);
+                inst.s4.SetAlpha(inst.KeyDownAlpha);
+            }
+        }
     }
 }

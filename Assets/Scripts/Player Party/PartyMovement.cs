@@ -61,6 +61,7 @@ public class PartyMovement : Movement
                 party.RemoveAt(party.IndexOf(gameObject));
             }
             toBeDitched = false;
+            Skillbar.DeactivateSkill(gameObject.name);
         }
     }
 }

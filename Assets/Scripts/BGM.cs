@@ -123,6 +123,9 @@ public class BGM : MonoBehaviour {
 
 	/* --- Inspector */
 
+	/* Chance of playing instruments theme. */
+	public int instThemeChance;
+
 	/* Array of audio clips to cycle through. */
 	public AudioClip[] aStart;
 
@@ -135,13 +138,16 @@ public class BGM : MonoBehaviour {
 	/* 0: drums, 1: guitar. */
 	public AudioList[] aInstTheme;
 
+	/* Clip for when finding sheets. */
+	public AudioClip aFoundSheet;
+
 
 	/* --- Attributes --- */
 
 	/* Audio Source that plays the bgm. */
 	private AudioSource bgmASrc;
 
-	/* Audio Source that plays foundInst sound. */
+	/* Audio Source that plays when something is found. */
 	private AudioSource foundASrc;
 
     /* Audio Source that plays drums theme. */
@@ -156,6 +162,13 @@ public class BGM : MonoBehaviour {
 	/* Current state. */
 	private State state;
 
+	/* True if drums was already found previously, false otherwise. */
+	private bool alreadyFoundDrums;
+
+    /* True if guitar was already found previously, false otherwise. */
+    private bool alreadyFoundGuitar;
+
+
 	/* --- Methods --- */
 
 	// Use this for initialization
@@ -166,6 +179,8 @@ public class BGM : MonoBehaviour {
 		foundASrc = aSrcs[1];
 		drumsASrc = aSrcs[2];
         guitarASrc = aSrcs[3];
+        alreadyFoundDrums = false;
+        alreadyFoundGuitar = false;
         state = new StartState(this);
 	}
 	
@@ -219,14 +234,13 @@ public class BGM : MonoBehaviour {
 			}
 		}
 
-		// 40% chance
-		if (!drumsASrc.isPlaying && drums && Random.Range(0, 100) >= 60)
+		if (!drumsASrc.isPlaying && drums && Random.Range(0, 100) >= (100 - instThemeChance))
 		{
 			drumsASrc.clip = aInstTheme[0].aClips[Random.Range(0, aInstTheme[0].aClips.Length)];
 			drumsASrc.Play();
 		}
         
-		if (!guitarASrc.isPlaying && guitar && Random.Range(0, 100) >= 60)
+		if (!guitarASrc.isPlaying && guitar && Random.Range(0, 100) >= (100 - instThemeChance))
         {
             guitarASrc.clip = aInstTheme[1].aClips[Random.Range(0, aInstTheme[1].aClips.Length)];
 			guitarASrc.Play();
@@ -241,10 +255,18 @@ public class BGM : MonoBehaviour {
 		switch (name)
 		{
 			case "PartyTambor":
-				clip = self.aFoundInst[0];
+				if (!self.alreadyFoundDrums)
+				{
+					clip = self.aFoundInst[0];
+					self.alreadyFoundDrums = true;
+				}
 				break;
             case "PartyGuitar":
-                clip = self.aFoundInst[1];
+				if (!self.alreadyFoundGuitar)
+				{
+					clip = self.aFoundInst[1];
+                    self.alreadyFoundGuitar = true;
+				}                
                 break;
 
 			default:
@@ -252,6 +274,16 @@ public class BGM : MonoBehaviour {
 		}
 
 		self.foundASrc.clip = clip;
-		self.foundASrc.Play();
+		if (clip != null)
+		{
+			self.foundASrc.Play();
+		}
 	}
+
+    // Play the sheet sound when found
+    public static void FoundSheet()
+    {
+        self.foundASrc.clip = self.aFoundSheet;
+        self.foundASrc.Play();
+    }
 }
