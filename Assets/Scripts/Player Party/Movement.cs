@@ -200,7 +200,9 @@ public class Movement : MonoBehaviour
             savedPosition = transform.position;
 
             float party_position_y = nextInParty.transform.position.y;
-            party_position_y += 0.4f;
+
+            if (this.gameObject.tag == "Player")
+                party_position_y += 0.4f;
 
             Vector3 savedPos = new Vector3(nextInParty.transform.position.x, party_position_y, nextInParty.transform.position.z);
             nextInParty.GetComponent<PartyMovement>().savedPosition = savedPos;
