@@ -15392,7 +15392,7 @@ Prefab:
     - target: {fileID: 114455689696325702, guid: 7d17f7fe90bc1496f84be1d576265e73,
         type: 2}
       propertyPath: rythem
-      value: s625s375q625q375t625t375q625q375s625s375q625q375t
+      value: s363s218q363q218t363t218q363q218s363s218q363q218t
       objectReference: {fileID: 0}
     - target: {fileID: 82900707094448586, guid: 7d17f7fe90bc1496f84be1d576265e73,
         type: 2}
@@ -89365,7 +89365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menu: {fileID: 1633784046}
-  rythem: s1500t1625q500t500q500t500s
+  rythem: s870t943q290t290q290t290s
   radius: 7
   maxVolRadius: 7
   player: {fileID: 1337000530}
