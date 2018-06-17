@@ -73,24 +73,25 @@ public class PlayerMovement : Movement
         if (Input.GetButtonDown("Up"))
         {
             QueueInput(Vector3.forward);
-            movePlayerAnimation();
         }
 
         if (Input.GetButtonDown("Down"))
         {
             QueueInput(Vector3.back);
-            movePlayerAnimation();
         }
 
         if (Input.GetButtonDown("Left"))
         {
             QueueInput(Vector3.left);
-            movePlayerAnimation();
         }
 
         if (Input.GetButtonDown("Right"))
         {
             QueueInput(Vector3.right);
+        }
+
+        if (Input.GetButton("Up") || Input.GetButton("Down") || Input.GetButton("Left") || Input.GetButton("Right"))
+        {
             movePlayerAnimation();
         }
 

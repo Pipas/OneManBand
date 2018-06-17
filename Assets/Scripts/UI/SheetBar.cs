@@ -16,4 +16,9 @@ public class SheetBar : MonoBehaviour {
             sheets[sheetIndex].SetActive(true);
         }
     }
+
+    public int getSheetIndex()
+    {
+        return sheetIndex;
+    }
 }

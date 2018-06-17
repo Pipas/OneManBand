@@ -97,7 +97,6 @@ public class Melody : MonoBehaviour {
         {
             base.update();
 
-            Debug.Log(dist);
             // if player in range
             if (dist <= inst.radius)
             {

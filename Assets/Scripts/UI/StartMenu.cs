@@ -10,7 +10,7 @@ public class StartMenu : MonoBehaviour {
 
     public void PlayGame()
     {
-        SceneManager.LoadScene("Tutorial");
+        SceneManager.LoadScene(1);
     }
 
     public void SetSettings()

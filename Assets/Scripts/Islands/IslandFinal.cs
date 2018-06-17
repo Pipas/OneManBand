@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class IslandSheet : MonoBehaviour {
+public class IslandFinal : MonoBehaviour {
+    public const int NO_SHEETS = 3;
+
     public GameObject bridge;
     public GameObject bridgeTrigger;
     public GameObject bridgeCollider;
 
-    public Sheet sheet;
+    public KillEnemy killEnemy;
+    public SheetBar sheetbar;
     public bool moving = false;
 	
 	// Update is called once per frame
-	void Update () {
-        if (sheet.isCaught())
+	void Update() {
+        if ((sheetbar.getSheetIndex() == NO_SHEETS) && killEnemy.isEnemyDead())
         {
             moving = true;
         }
