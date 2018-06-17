@@ -9095,7 +9095,7 @@ Prefab:
     - target: {fileID: 114455689696325702, guid: 7d17f7fe90bc1496f84be1d576265e73,
         type: 2}
       propertyPath: rythem
-      value: s750s375s625t375q625s375t625t375q
+      value: s435s218s363t218q363s218t363t218q
       objectReference: {fileID: 0}
     - target: {fileID: 82900707094448586, guid: 7d17f7fe90bc1496f84be1d576265e73,
         type: 2}
