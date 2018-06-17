@@ -243,24 +243,21 @@ public class Skillbar : MonoBehaviour {
 
             double dist = Vector2.Distance(playerPosition, melodyPosition);
 
-            if (dist <= Radius)
+            if ((dist <= Radius && obj.tag != "Spotlight") ||
+                (obj.tag == "Spotlight" && obj.GetComponent<Spotlight>().hasPlayer))
             {
                 Melody objMelody = obj.GetComponent<Melody>();
                 objMelody.Wait();
                 if (checkMelody(objMelody.rythem))
                 {
-                    if (dist < objMelody.radius)
+                    if (obj.tag == "Enemy")
                     {
-
-                        if (obj.tag == "Enemy")
-                        {
-                            obj.transform.parent.gameObject.GetComponent<KillEnemy>().setEnemyDead(true);
-                        }
-                        else if (obj.tag == "Spotlight")
-                        {
-                            GameObject movBlock = obj.GetComponent<Spotlight>().movingBlock;
-                            movBlock.GetComponent<AscendingObject>().Trigger();
-                        }
+                        obj.transform.parent.gameObject.GetComponent<KillEnemy>().setEnemyDead(true);
+                    }
+                    else if (obj.tag == "Spotlight")
+                    {
+                        GameObject movBlock = obj.GetComponent<Spotlight>().movingBlock;
+                        movBlock.GetComponent<AscendingObject>().Trigger();
                     }
                 }
             }
@@ -348,5 +345,35 @@ public class Skillbar : MonoBehaviour {
                 inst.s4.SetAlpha(inst.KeyDownAlpha);
             }
         }
+    }
+
+    public static void SilenceAllExcept(string name)
+    {
+        // reset
+        RestoreAllVolume();
+        
+        switch (name)
+        {
+            case "PartyTambor":
+                inst.s2.Silence();
+                inst.s3.Silence();
+                inst.s4.Silence();
+                break;
+            
+            case "Player":
+                RestoreAllVolume();
+                break;
+            default:
+                inst.s1.Silence();
+                break;
+        }
+    }
+
+    public static void RestoreAllVolume()
+    {
+        inst.s1.RestoreVolume();
+        inst.s2.RestoreVolume();
+        inst.s3.RestoreVolume();
+        inst.s4.RestoreVolume();
     }
 }

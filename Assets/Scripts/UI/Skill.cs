@@ -16,6 +16,9 @@ public class Skill {
     // default alpha value
     private readonly float DEFAULT_ALPHA;
 
+    // default volume value
+    private readonly float DEFAULT_VOLUME;
+
 
     /* --- Methods --- */
 
@@ -25,6 +28,7 @@ public class Skill {
         cRend = gameObj.GetComponent<CanvasRenderer>();
         DEFAULT_ALPHA = cRend.GetAlpha();
         sound = gameObj.GetComponent<AudioSource>();
+        DEFAULT_VOLUME = sound.volume;
     }
 
     // activates this skill
@@ -56,5 +60,13 @@ public class Skill {
         if (sound != null) {
             sound.Play();
         }        
+    }
+
+    public void Silence() {
+        sound.volume = (float) (DEFAULT_VOLUME / 5.0);
+    }
+
+    public void RestoreVolume() {
+        sound.volume = DEFAULT_VOLUME;
     }
 }
