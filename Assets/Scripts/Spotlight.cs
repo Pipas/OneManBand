@@ -74,6 +74,7 @@ public class Spotlight : MonoBehaviour
         {
             hasPlayer = true;
             player = other;
+            Skillbar.SilenceAllExcept(other.gameObject.name);
         }
     }
 
@@ -84,6 +85,7 @@ public class Spotlight : MonoBehaviour
             hasPlayer = false;
             retracting = true;
             player = null;
+            Skillbar.RestoreAllVolume();
         }
     }
 }

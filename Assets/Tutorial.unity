@@ -59371,7 +59371,7 @@ MonoBehaviour:
   menu: {fileID: 962432289}
   rythem: f750f250f250f750f250f500f250f
   radius: 7
-  maxVolRadius: 7
+  maxVolRadius: 4
   player: {fileID: 1621732224}
   paused: 0
 --- !u!82 &1206775501
@@ -63624,7 +63624,7 @@ Prefab:
     - target: {fileID: 114287897740570884, guid: 74452b7d2197fd34489d928d05d618b7,
         type: 2}
       propertyPath: instThemeChance
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74452b7d2197fd34489d928d05d618b7, type: 2}
@@ -71326,6 +71326,26 @@ Prefab:
     - target: {fileID: 114455689696325702, guid: 7d17f7fe90bc1496f84be1d576265e73,
         type: 2}
       propertyPath: radius
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 82900707094448586, guid: 7d17f7fe90bc1496f84be1d576265e73,
+        type: 2}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 3527db5032227f74c8289f3e7ff46759, type: 3}
+    - target: {fileID: 82900707094448586, guid: 7d17f7fe90bc1496f84be1d576265e73,
+        type: 2}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114455689696325702, guid: 7d17f7fe90bc1496f84be1d576265e73,
+        type: 2}
+      propertyPath: rythem
+      value: f250f250f750f750f250f250f
+      objectReference: {fileID: 0}
+    - target: {fileID: 114455689696325702, guid: 7d17f7fe90bc1496f84be1d576265e73,
+        type: 2}
+      propertyPath: maxVolRadius
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

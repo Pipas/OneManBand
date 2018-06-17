@@ -31,7 +31,10 @@ public class Melody : MonoBehaviour {
             currentTime = (int)Time.time;
 
             // update volume according to range
-            inst.aSrc.volume = inst.defaultVolume - (float)((dist - inst.maxVolRadius) * (inst.defaultVolume) / (inst.radius - inst.maxVolRadius));
+            if (inst.gameObject.tag != "Spotlight")
+            {
+                inst.aSrc.volume = inst.defaultVolume - (float)((dist - inst.maxVolRadius) * (inst.defaultVolume) / (inst.radius - inst.maxVolRadius));
+            }
         }
     }
 
@@ -48,7 +51,8 @@ public class Melody : MonoBehaviour {
             base.update();
 
             // if player in range
-            if (dist <= inst.radius)
+            if ((dist <= inst.radius && inst.gameObject.tag != "Spotlight") ||
+                (inst.gameObject.tag == "Spotlight" && inst.GetComponent<Spotlight>().hasPlayer))
             {
                 // if melody is over
                 if (!inst.aSrc.isPlaying)
@@ -78,7 +82,8 @@ public class Melody : MonoBehaviour {
             base.update();
 
             // if player in range
-            if (dist <= inst.radius)
+            if ((dist <= inst.radius && inst.gameObject.tag != "Spotlight") ||
+                (inst.gameObject.tag == "Spotlight" && inst.GetComponent<Spotlight>().hasPlayer))
             {
                 // wait correct timing
                 if (currentTime % 4 == 0)
@@ -105,7 +110,8 @@ public class Melody : MonoBehaviour {
             base.update();
 
             // if player in range
-            if (dist <= inst.radius)
+            if ((dist <= inst.radius && inst.gameObject.tag != "Spotlight") ||
+                (inst.gameObject.tag == "Spotlight" && inst.GetComponent<Spotlight>().hasPlayer))
             {
                 // wait correct timing (min 2s waiting)
                 if (currentTime % 4 == 0 && currentTime - startTime > 2)
