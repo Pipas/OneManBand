@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour 
 {
+    public const string GUITAR_NAME = "PartyGuitar";
+    public const string PIANO_NAME = "PartyPiano";
+    public const string TAMBOR_NAME = "PartyTambor";
+    
     public enum State { falling, moving, still, climbing }
     public State state;
     public static List<GameObject> party = new List<GameObject>();
@@ -199,7 +203,10 @@ public class Movement : MonoBehaviour
         {
             savedPosition = transform.position;
 
-            Vector3 savedPos = new Vector3(nextInParty.transform.position.x, transform.position.y, nextInParty.transform.position.z);
+            float party_position_y = nextInParty.transform.position.y;
+            party_position_y += 0.4f;
+
+            Vector3 savedPos = new Vector3(nextInParty.transform.position.x, party_position_y, nextInParty.transform.position.z);
             nextInParty.GetComponent<PartyMovement>().savedPosition = savedPos;
         }
     }
