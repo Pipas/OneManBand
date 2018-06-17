@@ -45,6 +45,7 @@ public class Melody : MonoBehaviour {
         {
             inst.aSrc.Play();
             BGM.StopInstThemes();
+            BGM.LowerVolume();
         }
 
         public override void update()
@@ -76,6 +77,10 @@ public class Melody : MonoBehaviour {
         public StopState(Melody inst) : base(inst)
         {
             inst.aSrc.Stop();
+            if (Time.timeSinceLevelLoad != 0)
+            {
+                BGM.DefaultVolume();
+            }            
         }
 
         public override void update()

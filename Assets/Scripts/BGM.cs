@@ -144,6 +144,8 @@ public class BGM : MonoBehaviour {
 
 	/* --- Inspector */
 
+	public float minBGMVolume;
+
 	/* Chance of playing instruments theme. */
 	public int instThemeChance;
 
@@ -182,6 +184,8 @@ public class BGM : MonoBehaviour {
 
 	/* Self instance. */
 	private static BGM self;
+
+	private float DEFAULT_VOLUME;
 	
 	/* Current state. */
 	private State state;
@@ -210,6 +214,7 @@ public class BGM : MonoBehaviour {
         alreadyFoundDrums = false;
         alreadyFoundGuitar = false;
 		alreadyFoundPiano = false;
+		DEFAULT_VOLUME = bgmASrc.volume;
         state = new StartState(this);
 	}
 	
@@ -347,5 +352,15 @@ public class BGM : MonoBehaviour {
     {
         self.foundASrc.clip = self.aFoundSheet;
         self.foundASrc.Play();
+    }
+
+	public static void LowerVolume()
+	{
+		self.bgmASrc.volume = self.minBGMVolume;
+	}
+
+    public static void DefaultVolume()
+    {
+		self.bgmASrc.volume = self.DEFAULT_VOLUME;
     }
 }

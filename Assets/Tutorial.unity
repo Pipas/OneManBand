@@ -63560,6 +63560,11 @@ Prefab:
       propertyPath: aGameOver
       value: 
       objectReference: {fileID: 8300000, guid: d3a98f58fbc21714f950139a3bb12af8, type: 3}
+    - target: {fileID: 114287897740570884, guid: 74452b7d2197fd34489d928d05d618b7,
+        type: 2}
+      propertyPath: minBGMVolume
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74452b7d2197fd34489d928d05d618b7, type: 2}
   m_IsPrefabAsset: 0
