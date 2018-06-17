@@ -76,7 +76,7 @@ public class BGM : MonoBehaviour {
             }
 
             // randomly play theme of instruments in party
-            if ((int)Time.time % 8 == 0)
+            if ((int)Time.timeSinceLevelLoad % 8 == 0)
             {
                 if (!already)
                 {
@@ -127,7 +127,7 @@ public class BGM : MonoBehaviour {
             }
 
 			// randomly play theme of instruments in party
-			if ((int)Time.time % 8 == 0)
+			if ((int)Time.timeSinceLevelLoad % 8 == 0)
 			{
 				if (!already)
 				{

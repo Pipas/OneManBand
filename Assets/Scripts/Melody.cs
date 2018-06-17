@@ -18,7 +18,7 @@ public class Melody : MonoBehaviour {
             Vector2 melodyPos = new Vector2(inst.transform.position.x, inst.transform.position.z);
 
             dist = Vector2.Distance(player, melodyPos);
-            currentTime = (int)Time.time;
+            currentTime = (int)Time.timeSinceLevelLoad;
         }
 
         public virtual void update()
@@ -28,7 +28,7 @@ public class Melody : MonoBehaviour {
 
             dist = Vector2.Distance(player, melodyPos);
 
-            currentTime = (int)Time.time;
+            currentTime = (int)Time.timeSinceLevelLoad;
 
             // update volume according to range
             if (inst.gameObject.tag != "Spotlight")

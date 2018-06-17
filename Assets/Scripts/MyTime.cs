@@ -20,6 +20,6 @@ public static class MyTime  {
 
     public static long CurrentTimeMillis()
     {
-        return (long) (Time.time * 1000);
+        return (long) (Time.timeSinceLevelLoad * 1000);
     }
 }
