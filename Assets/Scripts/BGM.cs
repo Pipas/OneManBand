@@ -153,11 +153,11 @@ public class BGM : MonoBehaviour {
     /* Array of audio clips to cycle through. */
     public AudioList[] aWhile;
 
-	/* 0: drums, 1: guitar. */
+	/* 0: drums, 1: guitar, 2: piano. */
 	public AudioClip[] aFoundInst;
 
-	/* 0: drums, 1: guitar. */
-	public AudioList[] aInstTheme;
+    /* 0: drums, 1: guitar, 2: piano. */
+    public AudioList[] aInstTheme;
 
 	/* Clip for when finding sheets. */
 	public AudioClip aFoundSheet;
@@ -177,6 +177,9 @@ public class BGM : MonoBehaviour {
 	/* Audio Source that plays guitar theme. */
 	private AudioSource guitarASrc;
 
+    /* Audio Source that plays guitar theme. */
+    private AudioSource pianoASrc;
+
 	/* Self instance. */
 	private static BGM self;
 	
@@ -189,6 +192,9 @@ public class BGM : MonoBehaviour {
     /* True if guitar was already found previously, false otherwise. */
     private bool alreadyFoundGuitar;
 
+    /* True if piano was already found previously, false otherwise. */
+    private bool alreadyFoundPiano;
+
 
 	/* --- Methods --- */
 
@@ -200,8 +206,10 @@ public class BGM : MonoBehaviour {
 		foundASrc = aSrcs[1];
 		drumsASrc = aSrcs[2];
         guitarASrc = aSrcs[3];
+        pianoASrc = aSrcs[4];
         alreadyFoundDrums = false;
         alreadyFoundGuitar = false;
+		alreadyFoundPiano = false;
         state = new StartState(this);
 	}
 	
@@ -243,6 +251,7 @@ public class BGM : MonoBehaviour {
 
 		bool drums = false;
 		bool guitar = false;
+        bool piano = false;
 		
 		foreach (GameObject inst in Movement.party)
 		{
@@ -252,7 +261,10 @@ public class BGM : MonoBehaviour {
 			} else if (inst.name == "PartyGuitar")
 			{
 				guitar = true;
-			}
+            } else if (inst.name == "PartyPiano")
+            {
+                piano = true;
+            }
 		}
 
 		if (!drumsASrc.isPlaying && drums && Random.Range(0, 100) >= (100 - instThemeChance))
@@ -266,6 +278,12 @@ public class BGM : MonoBehaviour {
             guitarASrc.clip = aInstTheme[1].aClips[Random.Range(0, aInstTheme[1].aClips.Length)];
 			guitarASrc.Play();
         }
+
+        if (!pianoASrc.isPlaying && piano && Random.Range(0, 100) >= (100 - instThemeChance))
+        {
+            pianoASrc.clip = aInstTheme[2].aClips[Random.Range(0, aInstTheme[2].aClips.Length)];
+            pianoASrc.Play();
+        }
 	}
 
 	// stops currently playing themes
@@ -273,6 +291,7 @@ public class BGM : MonoBehaviour {
 	{
 		self.drumsASrc.Stop();
 		self.guitarASrc.Stop();
+        self.pianoASrc.Stop();
 	}
 
 	// fade out the bgm and fade in gameover theme
@@ -295,12 +314,21 @@ public class BGM : MonoBehaviour {
 					self.alreadyFoundDrums = true;
 				}
 				break;
+
             case "PartyGuitar":
 				if (!self.alreadyFoundGuitar)
 				{
 					clip = self.aFoundInst[1];
                     self.alreadyFoundGuitar = true;
 				}                
+                break;
+
+			case "PartyPiano":
+                if (!self.alreadyFoundPiano)
+                {
+                    clip = self.aFoundInst[2];
+                    self.alreadyFoundPiano = true;
+                }
                 break;
 
 			default:

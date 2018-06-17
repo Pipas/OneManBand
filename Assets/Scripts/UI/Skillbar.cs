@@ -370,13 +370,30 @@ public class Skillbar : MonoBehaviour {
                 inst.s2.Silence();
                 inst.s3.Silence();
                 inst.s4.Silence();
+                inst.s2.SilenceSecond();
+                inst.s3.SilenceSecond();
+                inst.s4.SilenceSecond();
                 break;
             
             case "Player":
                 RestoreAllVolume();
                 break;
-            default:
+
+            case "PartyGuitar":
                 inst.s1.Silence();
+                inst.s2.SilenceSecond();
+                inst.s3.SilenceSecond();
+                inst.s4.SilenceSecond();
+                break;
+
+            case "PartyPiano":
+                inst.s1.Silence();
+                inst.s2.Silence();
+                inst.s3.Silence();
+                inst.s4.Silence();
+                break;
+                
+            default:
                 break;
         }
     }

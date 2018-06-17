@@ -13,6 +13,9 @@ public class Skill {
     // audio to play when skill is pressed
     private AudioSource sound;
 
+    // audio to play when skill is pressed
+    private AudioSource secondSound;
+
     // default alpha value
     private readonly float DEFAULT_ALPHA;
 
@@ -27,7 +30,16 @@ public class Skill {
         gameObj = parent.Find(name).gameObject;
         cRend = gameObj.GetComponent<CanvasRenderer>();
         DEFAULT_ALPHA = cRend.GetAlpha();
-        sound = gameObj.GetComponent<AudioSource>();
+        AudioSource[] srcs = gameObj.GetComponents<AudioSource>();
+        sound = srcs[0];
+        if (srcs.Length > 1)
+        {
+            secondSound = srcs[1];
+        }
+        else
+        {
+            secondSound = null;
+        }
         DEFAULT_VOLUME = sound.volume;
     }
 
@@ -37,7 +49,35 @@ public class Skill {
         if (cRend.GetAlpha() == DEFAULT_ALPHA)
         {
             cRend.SetAlpha(alpha);
-            PlaySound();
+
+            bool guitar = false;
+            bool piano = false;
+
+            foreach (GameObject obj in Movement.party)
+            {
+                if (obj.name == "PartyGuitar")
+                {
+                    guitar = true;
+                }
+                else if (obj.name == "PartyPiano")
+                {
+                    piano = true;
+                }
+            }
+
+            if (piano && guitar)
+            {
+                PlaySound();
+                PlaySecondSound();
+            }
+            else if (piano)
+            {
+                PlaySecondSound();
+            }
+            else {
+                PlaySound();
+            }
+
             return true;
         }
 
@@ -62,15 +102,36 @@ public class Skill {
         }        
     }
 
+    // plays sound
+    private void PlaySecondSound()
+    {
+        if (secondSound != null)
+        {
+            secondSound.Play();
+        }
+    }
+
     public void Silence() {
         sound.volume = (float) (DEFAULT_VOLUME / 5.0);
     }
 
+    public void SilenceSecond()
+    {
+        if (secondSound != null)
+        {
+            secondSound.volume = (float)(DEFAULT_VOLUME / 5.0);
+        }
+    }
+
     public bool IsSilenced() {
-        return sound.volume < DEFAULT_VOLUME;
+        return (sound.volume < DEFAULT_VOLUME && secondSound.volume < DEFAULT_VOLUME);
     }
 
     public void RestoreVolume() {
         sound.volume = DEFAULT_VOLUME;
+        if (secondSound != null)
+        {
+            secondSound.volume = DEFAULT_VOLUME;
+        }
     }
 }
