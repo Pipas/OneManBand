@@ -28,14 +28,27 @@ public class Skill {
     }
 
     // activates this skill
-    public void Activate(float alpha) {
-        cRend.SetAlpha(alpha);
-        PlaySound();
+    public bool Activate(float alpha) {
+
+        if (cRend.GetAlpha() == DEFAULT_ALPHA)
+        {
+            cRend.SetAlpha(alpha);
+            PlaySound();
+            return true;
+        }
+
+        return false;
     }
 
     // deactivates this skill
     public void Deactivate() {
         cRend.SetAlpha(DEFAULT_ALPHA);
+    }
+
+    // setAlpha
+    public void SetAlpha(float alpha)
+    {
+        cRend.SetAlpha(alpha);
     }
 
     // plays sound
