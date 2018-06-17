@@ -30,6 +30,7 @@ public class Sheet : MonoBehaviour
         caught = true;
         Destroy(transform.parent.gameObject);
         sheetBar.catchSheet();
+        BGM.FoundSheet();
     }
 
     public bool isCaught() {
