@@ -8,6 +8,7 @@ public class AnimationItem
     private float speed;
     private bool savePosition;
     private bool triggerParty;
+    private GameObject partySwap;
     
     public AnimationItem(Vector3 v, float s, bool sP, bool tP)
     {
@@ -15,6 +16,16 @@ public class AnimationItem
         speed = s;
         savePosition = sP;
         triggerParty = tP;
+        partySwap = null;
+    }
+
+    public AnimationItem(Vector3 v, float s, bool sP, bool tP, GameObject pS)
+    {
+        vector = v;
+        speed = s;
+        savePosition = sP;
+        triggerParty = tP;
+        partySwap = pS;
     }
 
     public Vector3 GetVector()
@@ -35,5 +46,10 @@ public class AnimationItem
     public bool TriggerParty()
     {
         return triggerParty;
+    }
+
+    public GameObject getPartySwap()
+    {
+        return partySwap;
     }
 }

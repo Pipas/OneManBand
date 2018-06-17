@@ -41,7 +41,7 @@ public class Movement : MonoBehaviour
                     SavePosition();
 
                 if(currentAnimation.TriggerParty()) // Triggers next in party to start animation with new saved animations
-                    TriggerNextInParty();
+                    TriggerNextInParty(currentAnimation.getPartySwap());
 
                 movementPercentageElapsed = 0;
                 isMoving = true;
@@ -107,20 +107,15 @@ public class Movement : MonoBehaviour
             obstacle = hit.transform.gameObject;
             Debug.DrawRay(transform.position, direction * hit.distance, Color.red);
 
-            if (obstacle.tag == "Spotlight" || obstacle.tag == "Triggerable")
-            {
-                HandleNoObstacle(direction);
-            }
-            else if(obstacle.tag == "Sheet")
+            if(obstacle.tag == "Sheet")
             {
                 HandleSheet(obstacle); // If there is a Sheet
                 HandleNoObstacle(direction);
             }
-            /*else if(obstacle.tag == "Bridge")
+            else if(obstacle.tag == "Party")
             {
-                QueueAnimation(new AnimationItem(direction/5f, baseSpeed/2, false, false)); // If can't move enqueues small animation to display that you can't move
-                QueueAnimation(new AnimationItem(-direction/5f, baseSpeed/2, false, false)); // Enqueues reverse animation
-            }*/
+                HandlePartyMember(direction, obstacle);
+            }
             /*else
             {
                 QueueAnimation(new AnimationItem(direction/10f, baseSpeed/2, false, false)); // If can't move enqueues small animation to display that you can't move
@@ -178,6 +173,14 @@ public class Movement : MonoBehaviour
         }
     }
 
+    private void HandlePartyMember(Vector3 direction, GameObject partyMember)
+    {
+        if(party.Contains(partyMember))
+        {
+            QueueAnimation(new AnimationItem(direction, baseSpeed, true, true, partyMember));
+        }
+    }
+
     public void HandleSheet(GameObject sheet)
     {
         sheet.GetComponent<Sheet>().RemovePage();
@@ -201,30 +204,59 @@ public class Movement : MonoBehaviour
         }
     }
 
-    private void TriggerNextInParty() // Triggers the next in party to move
+    private void TriggerNextInParty(GameObject partySwap) // Triggers the next in party to move
 	{
         if(nextInParty != null)
         {
+            if(partySwap != null)
+                if(party.IndexOf(partySwap) < party.IndexOf(nextInParty))
+                    return;
+
             PartyMovement nextMovement = nextInParty.GetComponent<PartyMovement>();
             Vector3 diffHPositions = new Vector3(savedPosition.x - nextMovement.savedPosition.x, 0, savedPosition.z - nextMovement.savedPosition.z); // Horizontal Vector Difference
             Vector3 diffVPositions = new Vector3(0, savedPosition.y - nextMovement.savedPosition.y, 0); // Vertical Vector Difference
 
             if(diffHPositions.magnitude < 1.1) // Only move if adjacent (prevents oblique movement), sometimes is 1.000001 so can't do == 0
             {
-                if(diffVPositions.y > 0) // If there was a vertical change
+                if(diffVPositions.y < 0) // If there was a vertical change
                 {
-                    nextMovement.QueueAnimation(new AnimationItem(diffVPositions, baseSpeed, true, false));
-                    nextMovement.QueueAnimation(new AnimationItem(diffHPositions, baseSpeed, false, true));
-                }	
-                else if(diffVPositions.y < 0) // If there was a vertical change
-                {
-                    nextMovement.QueueAnimation(new AnimationItem(diffHPositions, baseSpeed, true, false));
-                    nextMovement.QueueAnimation(new AnimationItem(diffVPositions, baseSpeed * 3, false, true));
+                    nextMovement.QueueAnimation(new AnimationItem(diffHPositions, baseSpeed, true, false, partySwap));
+                    nextMovement.QueueAnimation(new AnimationItem(diffVPositions, baseSpeed * 3, false, true, partySwap));
                 }
                 else
-                    nextMovement.QueueAnimation(new AnimationItem(diffHPositions, baseSpeed, true, true));
+                    nextMovement.QueueAnimation(new AnimationItem(diffHPositions, baseSpeed, true, true, partySwap));
             }
-        }	
+            else
+            {
+                if(diffVPositions.y < 0) // If there was a vertical change
+                {
+                    if(Mathf.Floor(this.gameObject.transform.position.x) == Mathf.Floor(GameObject.Find("PlayerPivot").transform.position.x))
+                    {
+                        nextMovement.QueueAnimation(new AnimationItem(new Vector3(diffHPositions.x, 0, 0), baseSpeed, true, false, partySwap));
+                        nextMovement.QueueAnimation(new AnimationItem(new Vector3(0, 0, diffHPositions.z), baseSpeed, false, false, partySwap));
+                    }
+                    else
+                    {
+                        nextMovement.QueueAnimation(new AnimationItem(new Vector3(0, 0, diffHPositions.z), baseSpeed, true, false, partySwap));
+                        nextMovement.QueueAnimation(new AnimationItem(new Vector3(diffHPositions.x, 0, 0), baseSpeed, false, false, partySwap));
+                    }
+                    nextMovement.QueueAnimation(new AnimationItem(diffVPositions, baseSpeed * 3, false, true, partySwap));
+                }
+                else
+                {
+                    if(Mathf.Floor(this.gameObject.transform.position.x) == Mathf.Floor(GameObject.Find("PlayerPivot").transform.position.x))
+                    {
+                        nextMovement.QueueAnimation(new AnimationItem(new Vector3(diffHPositions.x, 0, 0), baseSpeed, true, false, partySwap));
+                        nextMovement.QueueAnimation(new AnimationItem(new Vector3(0, 0, diffHPositions.z), baseSpeed, false, true, partySwap));
+                    }
+                    else
+                    {
+                        nextMovement.QueueAnimation(new AnimationItem(new Vector3(0, 0, diffHPositions.z), baseSpeed, true, false, partySwap));
+                        nextMovement.QueueAnimation(new AnimationItem(new Vector3(diffHPositions.x, 0, 0), baseSpeed, false, true, partySwap));
+                    }
+                }
+            }
+        }
 	}
 
     protected virtual void CheckHoldInput() {}
