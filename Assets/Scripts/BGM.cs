@@ -29,6 +29,27 @@ public class BGM : MonoBehaviour {
         }
 	}
 
+	private class GameOverState: State {
+		private float duration;
+        public GameOverState(BGM inst, float duration) : base(inst)
+        {
+			this.duration = duration;
+			inst.bgmASrc.loop = true;
+        }
+
+        public override void update()
+        {
+            if (inst.bgmASrc.volume > 0)
+			{
+                inst.bgmASrc.volume -= (Time.deltaTime / (duration + 0.1f));
+			}
+			else
+			{
+				inst.bgmASrc.Stop();
+			}
+		}
+	}
+
 	private class StartState: State {
 
 		public StartState(BGM inst) : base(inst)
@@ -252,6 +273,12 @@ public class BGM : MonoBehaviour {
 	{
 		self.drumsASrc.Stop();
 		self.guitarASrc.Stop();
+	}
+
+	// fade out the bgm and fade in gameover theme
+	public static void GameOver(float duration)
+	{
+		self.state = new GameOverState(self, duration);
 	}
 
 	// Play the instrument sound when found

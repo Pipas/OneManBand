@@ -85,6 +85,7 @@ public class HealthSystem : MonoBehaviour {
         {
             gameOver = true;
             gameOverScreen.SetActive(true);
+            BGM.GameOver(gameOverScreenTime);
         }
     }
 
