@@ -23,7 +23,7 @@ public class EnemyHitbox : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-    void LateUpdate()
+    void Update()
     {
         if (!killEnemy.isEnemyDead()) {
             if (playerWithinRange)
@@ -58,18 +58,15 @@ public class EnemyHitbox : MonoBehaviour {
         if (Physics.Raycast(origin, direction, out hit, 2))
         {
             Debug.DrawRay(transform.position, direction * hit.distance, Color.red);
-            Debug.Log(hit.collider.name);
 
             if (hit.collider.tag != "Player" && hit.collider.tag != "Party")
             {
-                Debug.Log("aye");
                 tmpPlayerRange = false;
             }
         }
 
         if (tmpPlayerRange)
         {
-            enemyMovement.stopEnemyAnimation();
             playerWithinRange = true;
         }
 
@@ -105,15 +102,20 @@ public class EnemyHitbox : MonoBehaviour {
 
             if (tmpPlayerRange)
             {
+                enemyMovement.stopEnemyAnimation();
                 performAttack(playerDistance);
                 onCooldown = true;
+            }
+            else
+            {
+                enemyMovement.moveEnemyAnimation();
             }
         }
     }
 
     public Vector3 calculatePlayerPosition() {
         Vector3 tmpPos = GameObject.Find("PlayerPivot").transform.position;
-        Vector3 playerPos = new Vector3(tmpPos.x, 1f, tmpPos.z);
+        Vector3 playerPos = new Vector3(tmpPos.x, transform.position.y, tmpPos.z);
         return playerPos;
     }
 

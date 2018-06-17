@@ -21,16 +21,15 @@ public class EnemyMovement : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-
-        if (!hitbox.isPlayerWithinRange() && !playerHealth.gameOver)
+        if (!playerHealth.gameOver)
         {
-            autoMovement();
-        }
-
-        if (!playerHealth.gameOver) {
-            if (hitbox.isPlayerWithinRange())
+            if (!hitbox.isPlayerWithinRange())
             {
-                transform.LookAt(hitbox.getPlayerPosition());
+                autoMovement();
+            } else
+            {
+                stopEnemyAnimation();
+                transform.LookAt(hitbox.getPlayerPosition());           // look towards player if he is within range
             }
         }
 	}
@@ -39,55 +38,47 @@ public class EnemyMovement : MonoBehaviour {
     {
         moveEnemyAnimation();
 
-        //if (isRunningAnimationPlaying())
-        //{
-        if (currentPoint < pointsMovement.Length) // this is to check if it's less than the length of the points
+        if (currentPoint < pointsMovement.Length)       // this is to check if it's less than the length of the points
+        {
+            float dist = Vector3.Distance(transform.position, pointsMovement[currentPoint]);        // distance from current position until next one
+
+            if (dist < 0.5f)                        // if enemy has arrived to next position
             {
-                float dist = Vector3.Distance(transform.position, pointsMovement[currentPoint]);
+                int tmpIndex = currentPoint + 1;
 
-                if (dist < 0.5f)
+                if (tmpIndex >= pointsMovement.Length)
                 {
-                    int tmpIndex = currentPoint + 1;
-
-                    if (tmpIndex >= pointsMovement.Length)
-                    {
-                        tmpIndex = 0;
-                    }
-
-                    Vector3 targetDir = pointsMovement[tmpIndex] - transform.position;
-                    float step = rotationSpeed * Time.deltaTime;
-                    Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
-
-                    if (!hitbox.isPlayerWithinRange())
-                        transform.rotation = Quaternion.LookRotation(newDir);
-
-                    Vector3 dist_vec = (pointsMovement[tmpIndex] - transform.position).normalized;
-                    float dotProd = Vector3.Dot(dist_vec, transform.forward);
-
-                    if (dotProd >= 0.9)
-                    {
-                        currentPoint++;
-                    }
+                    tmpIndex = 0;
                 }
-                else
-                {
-                    Vector3 targetDir = pointsMovement[currentPoint] - transform.position;
-                    float step = rotationSpeed * Time.deltaTime;
-                    Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
 
-                    Quaternion rotate = Quaternion.LookRotation(newDir);
+                Vector3 targetDir = pointsMovement[tmpIndex] - transform.position;                  // vector in direction of next point
+                float step = rotationSpeed * Time.deltaTime;
+                Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);   // new direction for enemy to look at
                     
-                    if (!hitbox.isPlayerWithinRange())
-                        transform.rotation = rotate;
+                transform.rotation = Quaternion.LookRotation(newDir);
 
-                    transform.position = Vector3.Lerp(this.transform.position, pointsMovement[currentPoint], Time.deltaTime * speed);
+                Vector3 dist_vec = (pointsMovement[tmpIndex] - transform.position).normalized;
+                float dotProd = Vector3.Dot(dist_vec, transform.forward);
+
+                if (dotProd >= 0.9)     // almost finished rotating towards point
+                {
+                    currentPoint++;
                 }
             }
             else
             {
-                currentPoint = 0; // this is to loop it back to zero again
+                Vector3 targetDir = pointsMovement[currentPoint] - transform.position;
+                float step = rotationSpeed * Time.deltaTime;
+                Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, step, 0.0f);
+
+                transform.rotation = Quaternion.LookRotation(newDir);                               // finished rotating towards current point
+                transform.position = Vector3.Lerp(this.transform.position, pointsMovement[currentPoint], Time.deltaTime * speed);   // walk to next position
             }
-        //}
+        }
+        else
+        {
+            currentPoint = 0; // this is to loop it back to zero again
+        }
     }
 
     public void moveEnemyAnimation()
@@ -106,16 +97,4 @@ public class EnemyMovement : MonoBehaviour {
             running = false;
         }
     }
-
-    /*public bool isRunningAnimationPlaying()
-    {
-        return GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Run");
-    }
-
-    public bool isIdleAnimationPlaying()
-    {
-        return GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Idle");
-    }*/
-
-
 }
