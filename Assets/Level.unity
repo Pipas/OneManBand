@@ -538,6 +538,11 @@ Prefab:
       propertyPath: radius
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114919177102814390, guid: 7d17f7fe90bc1496f84be1d576265e73,
+        type: 2}
+      propertyPath: movingBlock
+      value: 
+      objectReference: {fileID: 1701233825}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d17f7fe90bc1496f84be1d576265e73, type: 2}
   m_IsPrefabAsset: 0
@@ -1246,6 +1251,11 @@ Prefab:
       propertyPath: radius
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114919177102814390, guid: 7d17f7fe90bc1496f84be1d576265e73,
+        type: 2}
+      propertyPath: movingBlock
+      value: 
+      objectReference: {fileID: 1112738368}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d17f7fe90bc1496f84be1d576265e73, type: 2}
   m_IsPrefabAsset: 0
@@ -13219,7 +13229,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh42258
+  m_Name: pb_Mesh94906
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -15176,7 +15186,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh1933066
+  m_Name: pb_Mesh98572
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -21325,6 +21335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0b14d3b62b042c59b3d2152587ece0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultPlayerHeight: 1.4
   state: 0
   deltaMove: {x: 0, y: -1, z: 0}
   speed: 1
@@ -26239,7 +26250,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 512434188}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 64.5, y: 2.5, z: 0.5}
+  m_LocalPosition: {x: 0.5, y: 1.5, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1337000531}
@@ -27063,6 +27074,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0b14d3b62b042c59b3d2152587ece0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultPlayerHeight: 1.4
   state: 0
   deltaMove: {x: 0, y: -2, z: 0}
   speed: 1
@@ -32471,7 +32483,7 @@ GameObject:
   - component: {fileID: 628955766}
   - component: {fileID: 628955767}
   m_Layer: 0
-  m_Name: MovingBlock4
+  m_Name: 5MovingBlock4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32503,6 +32515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0b14d3b62b042c59b3d2152587ece0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultPlayerHeight: 2.5
   state: 0
   deltaMove: {x: 0, y: -1, z: 0}
   speed: 1
@@ -39173,7 +39186,7 @@ GameObject:
   - component: {fileID: 812934156}
   - component: {fileID: 812934157}
   m_Layer: 0
-  m_Name: MovingBlock1
+  m_Name: 5MovingBlock1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39205,6 +39218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0b14d3b62b042c59b3d2152587ece0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultPlayerHeight: 2.5
   state: 0
   deltaMove: {x: 0, y: -1, z: 0}
   speed: 1
@@ -50919,6 +50933,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0b14d3b62b042c59b3d2152587ece0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultPlayerHeight: 1.4
   state: 0
   deltaMove: {x: 0, y: 1, z: 0}
   speed: 1
@@ -51400,7 +51415,7 @@ GameObject:
   - component: {fileID: 1112738369}
   - component: {fileID: 1112738370}
   m_Layer: 0
-  m_Name: MovingBlock3
+  m_Name: 5MovingBlock3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51432,6 +51447,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0b14d3b62b042c59b3d2152587ece0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultPlayerHeight: 2.5
   state: 0
   deltaMove: {x: 0, y: -1, z: 0}
   speed: 1
@@ -59827,6 +59843,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0b14d3b62b042c59b3d2152587ece0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultPlayerHeight: 1.4
   state: 0
   deltaMove: {x: 0, y: -1, z: 0}
   speed: 1
@@ -66826,6 +66843,11 @@ Prefab:
       propertyPath: radius
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114919177102814390, guid: 7d17f7fe90bc1496f84be1d576265e73,
+        type: 2}
+      propertyPath: movingBlock
+      value: 
+      objectReference: {fileID: 812934155}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d17f7fe90bc1496f84be1d576265e73, type: 2}
   m_IsPrefabAsset: 0
@@ -67475,6 +67497,11 @@ Prefab:
       propertyPath: radius
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114919177102814390, guid: 7d17f7fe90bc1496f84be1d576265e73,
+        type: 2}
+      propertyPath: movingBlock
+      value: 
+      objectReference: {fileID: 628955765}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d17f7fe90bc1496f84be1d576265e73, type: 2}
   m_IsPrefabAsset: 0
@@ -76208,6 +76235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0b14d3b62b042c59b3d2152587ece0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultPlayerHeight: 1.4
   state: 0
   deltaMove: {x: 0, y: -1, z: 0}
   speed: 1
@@ -79746,7 +79774,7 @@ GameObject:
   - component: {fileID: 1701233826}
   - component: {fileID: 1701233827}
   m_Layer: 0
-  m_Name: MovingBlock2
+  m_Name: 5MovingBlock2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -79778,6 +79806,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0b14d3b62b042c59b3d2152587ece0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultPlayerHeight: 2.5
   state: 0
   deltaMove: {x: 0, y: -1, z: 0}
   speed: 1
@@ -82883,7 +82912,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh1928098
+  m_Name: pb_Mesh93584
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -84533,6 +84562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f0b14d3b62b042c59b3d2152587ece0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultPlayerHeight: 1.4
   state: 0
   deltaMove: {x: 0, y: -1, z: 0}
   speed: 1
@@ -93413,7 +93443,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh1928720
+  m_Name: pb_Mesh94206
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -94480,7 +94510,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh1931306
+  m_Name: pb_Mesh96810
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2

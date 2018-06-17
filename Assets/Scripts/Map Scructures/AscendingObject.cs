@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class AscendingObject : MonoBehaviour, Triggerable 
 {
-    public const float DEFAULT_PLAYER_YPOSITION = 1.4f;
+    public float defaultPlayerHeight = 1.4f;
+
     public enum State { retracted, extending, retracting, extended }
     public State state;
     private Vector3 initPosition, endPosition;
@@ -80,14 +81,14 @@ public class AscendingObject : MonoBehaviour, Triggerable
             {
                 GameObject player = GameObject.Find("PlayerPivot");
 
-                if (player.transform.position.y >= DEFAULT_PLAYER_YPOSITION)
+                if (player.transform.position.y >= defaultPlayerHeight)
                 {
                     if (player.GetComponent<Movement>().state != Movement.State.falling)
                         player.transform.Translate(deltaTransform);
                 }
                 else
                 {
-                    Vector3 backToPosition = new Vector3(player.transform.position.x, DEFAULT_PLAYER_YPOSITION, player.transform.position.z);
+                    Vector3 backToPosition = new Vector3(player.transform.position.x, defaultPlayerHeight, player.transform.position.z);
                     player.transform.position = backToPosition;
                 }
             }
