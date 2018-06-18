@@ -7,7 +7,7 @@ public class BossHealth : MonoBehaviour {
     public GameObject enemy;
     public KillEnemy killEnemy;
     
-    public int startHearts = 3;
+    public int startHearts;
     public int currHealth;
 
     private int healthPerHeart = 1;
