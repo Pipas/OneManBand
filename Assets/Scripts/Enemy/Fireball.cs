@@ -37,6 +37,19 @@ public class Fireball : MonoBehaviour {
 
     public void sendProjectile()
     {
+        if (StaticSettings.difficulty == StaticSettings.EASY)
+        {
+            fireballSpeed = 8f;
+        }
+        else if (StaticSettings.difficulty == StaticSettings.MEDIUM)
+        {
+            fireballSpeed = 12f;
+        }
+        else if (StaticSettings.difficulty == StaticSettings.HARD)
+        {
+            fireballSpeed = 16f;
+        }
+        
         GetComponent<Rigidbody>().AddForce(direction * fireballSpeed);
     }
 
