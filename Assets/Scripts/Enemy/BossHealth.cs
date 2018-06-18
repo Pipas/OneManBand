@@ -71,9 +71,12 @@ public class BossHealth : MonoBehaviour {
     }
     public void TakeDamage(int amount)
     {
-        currHealth += amount;
-        currHealth = Mathf.Clamp(currHealth, 0, startHearts * healthPerHeart);
-        UpdateHearts();
+        if (currHealth > 0)
+        {
+            currHealth += amount;
+            currHealth = Mathf.Clamp(currHealth, 0, startHearts * healthPerHeart);
+            UpdateHearts();
+        }
     }
 
 }
