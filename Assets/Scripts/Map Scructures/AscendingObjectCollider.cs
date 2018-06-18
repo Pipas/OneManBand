@@ -6,6 +6,7 @@ public class AscendingObjectCollider : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other) 
     {
+        Debug.Log(other);
         transform.parent.GetComponent<AscendingObject>().AddObject(other);
     }
 

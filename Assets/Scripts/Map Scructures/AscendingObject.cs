@@ -125,15 +125,14 @@ public class AscendingObject : MonoBehaviour, Triggerable
     {
         if(hasPlayer)
         {
+            
             for (int i = Movement.party.Count - 1; i >= 0; i--)
             {
                 if(!colliders.Contains(Movement.party[i].GetComponent<Collider>()))
                 {
-                    if(i == 0)
-                        GameObject.Find("PlayerPivot").GetComponent<PlayerMovement>().nextInParty = null;
-                    else
-                        Movement.party[i - 1].GetComponent<PartyMovement>().nextInParty = null;
-                    Movement.party.Remove(Movement.party[i]);
+                    Movement.party[i].GetComponent<PartyMovement>().toBeDitched = true;
+                    if(!Movement.party[i].GetComponent<PartyMovement>().isMoving)
+                        Movement.party[i].GetComponent<PartyMovement>().CheckIfDitched();
                 }
             }
         }
