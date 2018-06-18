@@ -117,15 +117,11 @@ public class Skillbar : MonoBehaviour {
 
     void processInput()
     {
-
         string pressedSkill = "";
 
         // skill #1
         if (Input.GetKeyDown(KC_SKILL1))
         {
-            //Debug.Log("play bgm!");
-            //BGM.PlayBossBGM();
-            
             if (s1.Activate(KeyDownAlpha))
             {
                 if (!s1.IsSilenced())
@@ -150,9 +146,6 @@ public class Skillbar : MonoBehaviour {
         // skill #2
         if (Input.GetKeyDown(KC_SKILL2))
         {
-            //Debug.Log("play next stage!");
-            //BGM.PlayBossNextBGM();
-
             if (s2.Activate(KeyDownAlpha))
             {
                 if (!s2.IsSilenced())

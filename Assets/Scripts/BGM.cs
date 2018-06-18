@@ -108,9 +108,14 @@ public class BGM : MonoBehaviour {
             }
 			
 			// next stage
-			if (!bossASrc.isPlaying && iAudio < inst.aBoss.Length - 1)
+			if (!bossASrc.isPlaying && iAudio <= inst.aBoss.Length - 1)
             {
-                iAudio++;
+                if (iAudio == 0)
+				{
+					BossMelody.Activate();
+					iAudio++;
+				}
+
                 bossASrc.clip = inst.aBoss[iAudio];
 
                 bossASrc.volume = StaticSettings.volumeBGM;
@@ -121,7 +126,16 @@ public class BGM : MonoBehaviour {
 
 		public static void NextClip()
 		{
+			if (self.iAudio <= 0)
+			{
+				return;
+			}
+			
 			self.bossASrc.loop = false;
+            if (self.iAudio < self.inst.aBoss.Length - 1)
+			{
+                self.iAudio++;
+			}
 		}
 	}
 
@@ -431,6 +445,11 @@ public class BGM : MonoBehaviour {
 	// Play the instrument sound when found
 	public static void FoundInst(string name)
 	{
+		if (self.state is BossState)
+		{
+			return;
+		}
+		
 		AudioClip clip = null;
 
 		switch (name)

@@ -27,6 +27,12 @@ public class BossMelody : Melody {
 	/* Current stage. */
 	private int stage;
 
+	/* True if the boss is active. */
+	private bool active;
+
+	/* Instance. */
+	private static BossMelody self;
+
 
 	/* --- Methods --- */
 
@@ -34,18 +40,33 @@ public class BossMelody : Melody {
 	new void Start () {
 		base.Start();
 		stage = -1;
+        active = false;
+		self = this;
 	}
 	
 	// Update is called once per frame
 	new void Update () {
-		base.Update();
+		if (active)
+		{
+			base.Update();
+		}
 	}
+
+	public static void Activate()
+	{
+		self.active = true;
+	}
+
+    public static void Deactivate()
+    {
+        self.active = false;
+    }
 
 	// move to next stage
 	public void NextStage()
 	{
-        if (stage >= otherRythems.Length - 1 &&
-			stage >= otherInstruments.Length - 1 &&
+        if (stage >= otherRythems.Length - 1 ||
+			stage >= otherInstruments.Length - 1 ||
 			stage >= otherClips.Length - 1)
 		{
 			return;

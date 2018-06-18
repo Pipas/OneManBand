@@ -53,12 +53,11 @@ public class BossHealth : MonoBehaviour {
 
         checkIfBossKilled();
 
-
-        // nao mexas aqui :p
-        /*if (currHealth != startHearts * healthPerHeart && currHealth % healthPerHeart == 0)
+        if (currHealth != startHearts * healthPerHeart && currHealth % healthPerHeart == 0)
         {
             transform.Find("EvilPiano").GetComponent<BossMelody>().NextStage();
-        }*/    
+            BGM.PlayBossNextBGM();
+        }
     }
 
     public void checkIfBossKilled()
