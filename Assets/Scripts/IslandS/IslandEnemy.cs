@@ -14,8 +14,9 @@ public class IslandEnemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        //if (killEnemy.isEnemyDead()) IMPPPPPPPP
-        if (true)
+        //if (true) // TESTING
+
+        if (killEnemy.isEnemyDead())
         {
             moving = true;
         }
