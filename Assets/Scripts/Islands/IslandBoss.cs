@@ -10,7 +10,8 @@ public class IslandBoss : MonoBehaviour
 
 	// Update is called once per frame
 	void Update () {
-        if (player.transform.position.x >= 80f) {
+        if (player.transform.position.x >= islandPosition)
+        {
             bossHealth.SetActive(true);
         } else {
             bossHealth.SetActive(false);
