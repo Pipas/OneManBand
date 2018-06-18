@@ -1,6 +1,6 @@
 Guitar - s435s218s363t218q
 Guitar and Piano - s580q580t1160q
 Piano - s363s218q363q218t
-Guitar2 - s500t500q500t500s
+Guitar2 - s250t250q250t250s
 Drums - f750f
 Piano2 - t250t500s250q750q250t

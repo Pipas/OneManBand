@@ -7,9 +7,11 @@ public class BridgeTrigger : MonoBehaviour
     public CameraAnimation camAnimation;
     public PlayerMovement playerMov;
     public int playerMove = 5;
+    public bool leadsToBoss = false;
 
     private int direction;
     private Island island;
+    private bool playingBossSong = false;
 
     // Use this for initialization
     private void Start() 
@@ -21,6 +23,16 @@ public class BridgeTrigger : MonoBehaviour
     {
         if(other.name == "Player")
         {
+            if (leadsToBoss)
+            {
+                if (!playingBossSong)
+                {
+                    // PLAY BOSS SONG
+                    playingBossSong = true;
+                    BGM.PlayBossBGM();
+                }
+            }
+
             PlayerMovement Player = GameObject.Find("PlayerPivot").GetComponent<PlayerMovement>();
             if(other.transform.position.x < transform.position.x)
                 direction = 1;
