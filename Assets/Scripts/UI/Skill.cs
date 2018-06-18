@@ -124,7 +124,14 @@ public class Skill {
     }
 
     public bool IsSilenced() {
-        return (sound.volume < DEFAULT_VOLUME && secondSound.volume < DEFAULT_VOLUME);
+        if (secondSound != null)
+        {
+            return (sound.volume < DEFAULT_VOLUME && secondSound.volume < DEFAULT_VOLUME);
+        }
+        else
+        {
+            return (sound.volume < DEFAULT_VOLUME);
+        }        
     }
 
     public void RestoreVolume() {
