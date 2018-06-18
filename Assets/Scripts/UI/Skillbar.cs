@@ -346,14 +346,18 @@ public class Skillbar : MonoBehaviour {
         if (name == "PartyTambor")
         {
             inst.s1.SetAlpha(inst.KeyDownAlpha);
+            inst.s1KeyUp = false;
         }
         else
         {
             if (Movement.party.Count == 0 || (Movement.party.Count == 1 && Movement.party[0].name == "PartyTambor"))
             {
                 inst.s2.SetAlpha(inst.KeyDownAlpha);
+                inst.s2KeyUp = false;
                 inst.s3.SetAlpha(inst.KeyDownAlpha);
+                inst.s3KeyUp = false;
                 inst.s4.SetAlpha(inst.KeyDownAlpha);
+                inst.s4KeyUp = false;
             }
         }
     }
