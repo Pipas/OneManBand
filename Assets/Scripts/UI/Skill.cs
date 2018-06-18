@@ -119,7 +119,7 @@ public class Skill {
     {
         if (secondSound != null)
         {
-            secondSound.volume = (float)(DEFAULT_VOLUME / 5.0);
+            secondSound.volume = (float)(DEFAULT_VOLUME / 10.0);
         }
     }
 

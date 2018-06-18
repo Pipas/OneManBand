@@ -53,11 +53,6 @@ public class BGM : MonoBehaviour {
                 }
 			}
 		}
-
-        public void updateVolume(float volume)
-        {
-            inst.bgmASrc.volume = volume;
-        }
 	}
 
 	private class BossState: State {
@@ -118,7 +113,6 @@ public class BGM : MonoBehaviour {
 
                 bossASrc.clip = inst.aBoss[iAudio];
 
-                bossASrc.volume = StaticSettings.volumeBGM;
                 bossASrc.Play();
 				bossASrc.loop = true;
             }
@@ -180,7 +174,6 @@ public class BGM : MonoBehaviour {
                 if (iAudio < inst.aStart.Length - 1)
                 {
                     inst.bgmASrc.clip = inst.aStart[++iAudio];
-                    inst.bgmASrc.volume = StaticSettings.volumeBGM;
                     inst.bgmASrc.Play();
                 }
 				else
@@ -244,7 +237,6 @@ public class BGM : MonoBehaviour {
                 iAudio = Random.Range(0, inst.aWhile[iTheme].aClips.Length);
                 inst.bgmASrc.clip = inst.aWhile[iTheme].aClips[iAudio];
 
-                inst.bgmASrc.volume = StaticSettings.volumeBGM;
                 inst.bgmASrc.Play();
             }
 
@@ -365,7 +357,15 @@ public class BGM : MonoBehaviour {
 
     public void updateBGMVolume(float volume)
     {
-        state.updateVolume(volume);
+		// prevent 0
+		volume += 0.01f;
+		bgmASrc.volume = volume;
+		if (state is BossState)
+		{
+			foundASrc.volume = volume;
+		}
+		minBGMVolume = minBGMVolume * (volume / DEFAULT_VOLUME);
+		DEFAULT_VOLUME = volume;
     }
 
 	private void playInstTheme()
