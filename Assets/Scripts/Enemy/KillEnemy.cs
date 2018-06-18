@@ -32,5 +32,6 @@ public class KillEnemy : MonoBehaviour {
     {
         enemyDead = dead;
         Destroy(enemy);
+        BGM.DefaultVolume();
     }
 }

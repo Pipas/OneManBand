@@ -23849,8 +23849,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 157.5, y: -30}
-  m_SizeDelta: {x: 45, y: 60}
+  m_AnchoredPosition: {x: 33.75, y: -22.5}
+  m_SizeDelta: {x: 22.5, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &444285299
 MonoBehaviour:
@@ -42441,7 +42441,7 @@ Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: pb_Mesh1121526
+  m_Name: pb_Mesh60684
   serializedVersion: 9
   m_SubMeshes:
   - serializedVersion: 2
@@ -56992,7 +56992,7 @@ Prefab:
     - target: {fileID: 114455689696325702, guid: 7d17f7fe90bc1496f84be1d576265e73,
         type: 2}
       propertyPath: rythem
-      value: f250t250q250f250t250q250s250t250s
+      value: f250t250q250f250t250q
       objectReference: {fileID: 0}
     - target: {fileID: 114455689696325702, guid: 7d17f7fe90bc1496f84be1d576265e73,
         type: 2}
@@ -57013,7 +57013,7 @@ Prefab:
         type: 2}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: d977832548417f74a990af9c62fd9b14, type: 3}
+      objectReference: {fileID: 8300000, guid: 83425b13f84ebdb4886b4815c722035f, type: 3}
     - target: {fileID: 114919177102814390, guid: 7d17f7fe90bc1496f84be1d576265e73,
         type: 2}
       propertyPath: movingBlock
@@ -59298,7 +59298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menu: {fileID: 962432289}
-  rythem: t250t250q250s250q500t250t250s250q250s
+  rythem: t250t250q250s250q500t
   radius: 7
   maxVolRadius: 4
   player: {fileID: 1621732224}
@@ -59312,7 +59312,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: c913fe4ce9c27ea42912527b7f2c2719, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 9c2dd2424f19417419e0f9a20e879502, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -63560,6 +63560,11 @@ Prefab:
       propertyPath: aGameOver
       value: 
       objectReference: {fileID: 8300000, guid: d3a98f58fbc21714f950139a3bb12af8, type: 3}
+    - target: {fileID: 114287897740570884, guid: 74452b7d2197fd34489d928d05d618b7,
+        type: 2}
+      propertyPath: minBGMVolume
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74452b7d2197fd34489d928d05d618b7, type: 2}
   m_IsPrefabAsset: 0
