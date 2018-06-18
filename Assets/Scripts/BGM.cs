@@ -60,6 +60,71 @@ public class BGM : MonoBehaviour {
         }
 	}
 
+	private class BossState: State {
+
+		private AudioSource bossASrc;
+		private static BossState self;
+
+		public BossState(BGM inst) : base(inst)
+		{
+			fadeout = true;
+			fadein = true;
+			bossASrc = inst.foundASrc;
+			iAudio = 0;
+			bossASrc.loop = false;
+            bossASrc.volume = 0;
+			bossASrc.clip = inst.aBoss[iAudio];
+			bossASrc.Play();
+			self = this;
+		}
+
+		public override void update()
+		{
+            // fade out normal bgm
+			if (fadeout)
+            {
+                if (inst.bgmASrc.volume > 0)
+                {
+                    inst.bgmASrc.volume -= (Time.deltaTime * inst.DEFAULT_VOLUME / (inst.bossBGMFadeDuration + 0.1f));
+                }
+				else
+				{
+					fadeout = false;
+					inst.bgmASrc.Stop();
+				}
+            }
+
+			// fade in boss bgm
+            if (fadein)
+            {
+                if (bossASrc.volume < inst.DEFAULT_VOLUME)
+                {
+                    bossASrc.volume += (Time.deltaTime * inst.DEFAULT_VOLUME / (inst.bossBGMFadeDuration + 0.1f));
+                }
+                else
+                {
+                    fadein = false;
+                }
+            }
+			
+			// next stage
+			if (!bossASrc.isPlaying && iAudio < inst.aBoss.Length - 1)
+            {
+                iAudio++;
+                bossASrc.clip = inst.aBoss[iAudio];
+
+                bossASrc.volume = StaticSettings.volumeBGM;
+                bossASrc.Play();
+				bossASrc.loop = true;
+            }
+		}
+
+		public static void NextClip()
+		{
+			self.bossASrc.loop = false;
+		}
+	}
+
 	private class GameOverState: State {
 		private float duration;
 		private float startVolume;
@@ -123,6 +188,12 @@ public class BGM : MonoBehaviour {
             {
                 already = false;
             }
+
+            // swap to boss theme
+            if (inst.playBossBGM && (int)Time.timeSinceLevelLoad % 4 == 0)
+            {
+                inst.state = new BossState(inst);
+            }
 		}
 	}
 
@@ -176,12 +247,22 @@ public class BGM : MonoBehaviour {
 			{
 				already = false;
 			}
+
+            // swap to boss theme
+            if (inst.playBossBGM && (int)Time.timeSinceLevelLoad % 4 == 0)
+			{
+				inst.state = new BossState(inst);
+			}
         }
     }
 
 	/* --- Inspector */
 
+	/* Volume of bgm while near triggerables. */
 	public float minBGMVolume;
+
+	/* Duration of fade in of boss bgm. */
+	public float bossBGMFadeDuration;
 
 	/* Chance of playing instruments theme. */
 	public int instThemeChance;
@@ -191,6 +272,9 @@ public class BGM : MonoBehaviour {
 
     /* Array of audio clips to cycle through. */
     public AudioList[] aWhile;
+
+	/* Array of audio clips to cycly through during boss fights. */
+	public AudioClip[] aBoss;
 
 	/* 0: drums, 1: guitar, 2: piano. */
 	public AudioClip[] aFoundInst;
@@ -222,6 +306,7 @@ public class BGM : MonoBehaviour {
 	/* Self instance. */
 	private static BGM self;
 
+	/* Default bgm volume. */
 	private float DEFAULT_VOLUME;
 	
 	/* Current state. */
@@ -235,6 +320,9 @@ public class BGM : MonoBehaviour {
 
     /* True if piano was already found previously, false otherwise. */
     private bool alreadyFoundPiano;
+
+	/* True if boss bgm should be played now. */
+	private bool playBossBGM;
 
 
 	/* --- Methods --- */
@@ -252,6 +340,7 @@ public class BGM : MonoBehaviour {
         alreadyFoundGuitar = false;
 		alreadyFoundPiano = false;
 		DEFAULT_VOLUME = bgmASrc.volume;
+		playBossBGM = false;
         state = new StartState(this);
 	}
 	
@@ -322,6 +411,21 @@ public class BGM : MonoBehaviour {
 	public static void GameOver(float duration)
 	{
 		self.state = new GameOverState(self, duration);
+	}
+
+	// plays the boss bgm
+	public static void PlayBossBGM()
+	{
+		self.playBossBGM = true;
+	}
+
+	// plays the bgm for the next boss stage
+	public static void PlayBossNextBGM()
+	{
+        if (self.state is BossState)
+		{
+			BossState.NextClip();
+		}
 	}
 
 	// Play the instrument sound when found
