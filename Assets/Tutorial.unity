@@ -20490,6 +20490,7 @@ MonoBehaviour:
   camAnimation: {fileID: 860762580}
   playerMov: {fileID: 1528944032}
   playerMove: 5
+  leadsToBoss: 0
 --- !u!1 &357289522
 GameObject:
   m_ObjectHideFlags: 0
@@ -22539,6 +22540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 404714652}
+  isBoss: 0
   bossHealth: {fileID: 0}
 --- !u!1 &407541270
 GameObject:
@@ -27770,6 +27772,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 508419241}
+  isBoss: 0
   bossHealth: {fileID: 0}
 --- !u!1 &510428813
 GameObject:
@@ -28408,6 +28411,7 @@ MonoBehaviour:
   camAnimation: {fileID: 860762580}
   playerMov: {fileID: 1528944032}
   playerMove: 5
+  leadsToBoss: 0
 --- !u!64 &532347560
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -39232,6 +39236,7 @@ MonoBehaviour:
   camAnimation: {fileID: 860762580}
   playerMov: {fileID: 1528944032}
   playerMove: 5
+  leadsToBoss: 0
 --- !u!64 &814246423
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -46872,6 +46877,7 @@ MonoBehaviour:
   camAnimation: {fileID: 860762580}
   playerMov: {fileID: 1528944032}
   playerMove: 5
+  leadsToBoss: 0
 --- !u!64 &977940287
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -53631,6 +53637,7 @@ MonoBehaviour:
   camAnimation: {fileID: 860762580}
   playerMov: {fileID: 1528944032}
   playerMove: 5
+  leadsToBoss: 0
 --- !u!64 &1088111120
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -57296,6 +57303,7 @@ MonoBehaviour:
   camAnimation: {fileID: 860762580}
   playerMov: {fileID: 1528944032}
   playerMove: 5
+  leadsToBoss: 0
 --- !u!64 &1143326634
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -62403,7 +62411,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menu: {fileID: 962432289}
-  rythem: t250t250q250s250q500t
+  rythem: t250t250q250s250q
   instruments:
   - {fileID: 1234809413}
   radius: 7
@@ -63160,6 +63168,7 @@ MonoBehaviour:
   camAnimation: {fileID: 860762580}
   playerMov: {fileID: 1528944032}
   playerMove: 5
+  leadsToBoss: 0
 --- !u!64 &1220725824
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -92379,6 +92388,7 @@ MonoBehaviour:
   camAnimation: {fileID: 860762580}
   playerMov: {fileID: 1528944032}
   playerMove: 5
+  leadsToBoss: 0
 --- !u!64 &1850573885
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -96855,6 +96865,7 @@ MonoBehaviour:
   camAnimation: {fileID: 860762580}
   playerMov: {fileID: 1528944032}
   playerMove: 5
+  leadsToBoss: 0
 --- !u!64 &1906376491
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -99481,6 +99492,7 @@ MonoBehaviour:
   camAnimation: {fileID: 860762580}
   playerMov: {fileID: 1528944032}
   playerMove: 5
+  leadsToBoss: 0
 --- !u!64 &1964835488
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -107489,6 +107501,7 @@ MonoBehaviour:
   camAnimation: {fileID: 860762580}
   playerMov: {fileID: 1528944032}
   playerMove: 5
+  leadsToBoss: 0
 --- !u!64 &2077633468
 MeshCollider:
   m_ObjectHideFlags: 0
