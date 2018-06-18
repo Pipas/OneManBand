@@ -385,7 +385,7 @@ public class BGM : MonoBehaviour {
 
         foreach (GameObject obj in triggerables)
         {
-            if (!obj.GetComponent<Melody>().IsStopped())
+            if (!obj.GetComponent<Melody>().IsStopped() || obj.tag == "Spotlight" && obj.GetComponent<Spotlight>().hasPlayer)
             {
                 return true;
             }
