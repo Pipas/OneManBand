@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class KillEnemy : MonoBehaviour {
     public GameObject enemy;
-    public const string BOSS_NAME = "EvilPianoPivot";
+    public bool isBoss = false;
 	public BossHealth bossHealth;
 
     private bool enemyDead = false;
@@ -16,7 +16,7 @@ public class KillEnemy : MonoBehaviour {
 
     public void setEnemyDead(bool dead)
     {
-        if (this.gameObject.name != BOSS_NAME)
+        if (!isBoss)
         {
 			enemyDead = dead;
             Destroy(enemy);
