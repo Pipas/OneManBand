@@ -110,7 +110,6 @@ public class Movement : MonoBehaviour
             if(obstacle.tag == "Sheet")
             {
                 HandleSheet(obstacle); // If there is a Sheet
-                HandleNoObstacle(direction);
             }
             else if(obstacle.tag == "Party")
             {
@@ -158,8 +157,6 @@ public class Movement : MonoBehaviour
             obstacle = hit.transform.gameObject;
             if(obstacle.tag != "Party")
             {
-                if(obstacle.tag == "Sheet")
-                    HandleSheet(obstacle);
 
                 if(hit.distance > 0.55f) // If there is a fall enqueues 2 animations move and fall
                 {

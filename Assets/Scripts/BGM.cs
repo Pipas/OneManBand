@@ -14,14 +14,45 @@ public class BGM : MonoBehaviour {
         protected BGM inst;
         protected int iAudio;
 		protected bool already;
+		protected bool fadeout;
+        protected bool fadein;
 
         public State(BGM inst)
         {
             this.inst = inst;
 			already = false;
+			fadeout = false;
+			fadein = false;
         }
 
-		public abstract void update();
+		public virtual void update()
+		{
+            if (inst.isAnyTriggerableOn())
+			{
+				fadeout = true;
+				fadein = false;
+			}
+			else
+			{
+                fadeout = false;
+				fadein = true;
+			}
+			
+			if (fadeout)
+			{
+                if (inst.bgmASrc.volume > inst.minBGMVolume)
+                {
+                    inst.bgmASrc.volume -= (Time.deltaTime * (inst.DEFAULT_VOLUME - inst.minBGMVolume) / 1.0f);
+                }
+			}
+			else if (fadein)
+			{
+                if (inst.bgmASrc.volume < inst.DEFAULT_VOLUME)
+                {
+                    inst.bgmASrc.volume += (Time.deltaTime * (inst.DEFAULT_VOLUME - inst.minBGMVolume) / 1.0f);
+                }
+			}
+		}
 
         public void updateVolume(float volume)
         {
@@ -31,17 +62,19 @@ public class BGM : MonoBehaviour {
 
 	private class GameOverState: State {
 		private float duration;
+		private float startVolume;
         public GameOverState(BGM inst, float duration) : base(inst)
         {
 			this.duration = duration;
 			inst.bgmASrc.loop = true;
+			startVolume = inst.bgmASrc.volume;
         }
 
         public override void update()
         {
             if (inst.bgmASrc.volume > 0)
 			{
-                inst.bgmASrc.volume -= (Time.deltaTime / (duration + 0.1f));
+                inst.bgmASrc.volume -= (Time.deltaTime * startVolume / (duration + 0.1f));
 			}
 			else
 			{
@@ -61,6 +94,8 @@ public class BGM : MonoBehaviour {
 		}
 
 		public override void update() {
+            base.update();
+
             if (!inst.bgmASrc.isPlaying)
             {
                 if (iAudio < inst.aStart.Length - 1)
@@ -105,7 +140,9 @@ public class BGM : MonoBehaviour {
 
         public override void update()
         {
-            if (!inst.bgmASrc.isPlaying)
+            base.update();
+
+			if (!inst.bgmASrc.isPlaying)
             {
                 reps++;
 
@@ -231,27 +268,9 @@ public class BGM : MonoBehaviour {
 	private void playInstTheme()
 	{
 		// make sure playing this wont interfere with gameplay
-		if (foundASrc.isPlaying)
+		if (foundASrc.isPlaying || isAnyTriggerableOn())
 		{
 			return;
-		}
-		else
-		{
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            GameObject[] spotlights = GameObject.FindGameObjectsWithTag("Spotlight");
-
-            GameObject[] triggerables = new GameObject[enemies.Length + spotlights.Length];
-            System.Array.Copy(enemies, triggerables, enemies.Length);
-            System.Array.Copy(spotlights, 0, triggerables, enemies.Length, spotlights.Length);
-
-            foreach (GameObject obj in triggerables)
-            {
-				if (!obj.GetComponent<Melody>().IsStopped())
-				{
-					return;
-				}
-				
-			}
 		}
 
 		bool drums = false;
@@ -354,13 +373,25 @@ public class BGM : MonoBehaviour {
         self.foundASrc.Play();
     }
 
-	public static void LowerVolume()
+	// true if there's at least one triggerable active at the moment
+	private bool isAnyTriggerableOn()
 	{
-		self.bgmASrc.volume = self.minBGMVolume;
-	}
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject[] spotlights = GameObject.FindGameObjectsWithTag("Spotlight");
 
-    public static void DefaultVolume()
-    {
-		self.bgmASrc.volume = self.DEFAULT_VOLUME;
-    }
+        GameObject[] triggerables = new GameObject[enemies.Length + spotlights.Length];
+        System.Array.Copy(enemies, triggerables, enemies.Length);
+        System.Array.Copy(spotlights, 0, triggerables, enemies.Length, spotlights.Length);
+
+        foreach (GameObject obj in triggerables)
+        {
+            if (!obj.GetComponent<Melody>().IsStopped())
+            {
+                return true;
+            }
+
+        }
+
+		return false;
+	}
 }
