@@ -109,7 +109,7 @@ public class CameraAnimation : MonoBehaviour
             if(!material.HasProperty("_Color"))
                 continue;
 
-            Color tempColor = rend.material.color;
+            Color tempColor = material.color;
             float newTempColor = tempColor.a + Time.deltaTime * fadeSpeed;
 
             if(newTempColor >= 1F)
@@ -121,7 +121,7 @@ public class CameraAnimation : MonoBehaviour
             }
             
             tempColor.a = newTempColor;
-            rend.material.color = tempColor;
+            material.color = tempColor;
         }
 
         if(removedTransparency)
