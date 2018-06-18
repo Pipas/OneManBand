@@ -4,24 +4,10 @@ using UnityEngine;
 
 public class KillEnemy : MonoBehaviour {
     public GameObject enemy;
+    public const string BOSS_NAME = "EvilPianoPivot";
+	public BossHealth bossHealth;
 
     private bool enemyDead = false;
-    /*private Color alphaColor;
-    private float timeToFade = 1.0f;*/
-
-	// Use this for initialization
-	void Start () {
-        /*alphaColor = enemy.GetComponent<MeshRenderer>().material.color;
-        alphaColor.a = 0;*/
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        /*if (enemyDead)
-        {
-            enemy.GetComponent<MeshRenderer>().material.color = Color.Lerp(enemy.GetComponent<MeshRenderer>().material.color, alphaColor, timeToFade * Time.deltaTime);
-        }*/
-	}
 
     public bool isEnemyDead()
     {
@@ -30,7 +16,12 @@ public class KillEnemy : MonoBehaviour {
 
     public void setEnemyDead(bool dead)
     {
-        enemyDead = dead;
-        Destroy(enemy);
+        if (this.gameObject.name != BOSS_NAME)
+        {
+			enemyDead = dead;
+            Destroy(enemy);
+		} else {
+			bossHealth.TakeDamage(-1);
+		}
     }
 }
