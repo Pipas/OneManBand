@@ -129,6 +129,15 @@ public class BGM : MonoBehaviour {
             if (self.iAudio < self.inst.aBoss.Length - 1)
 			{
                 self.iAudio++;
+
+				// instantly swap to victory clip if boss is defeated!
+				if (self.iAudio == self.inst.aBoss.Length - 1)
+				{
+                    self.bossASrc.clip = self.inst.aBoss[self.iAudio];
+
+                    self.bossASrc.Play();
+                    self.bossASrc.loop = true;
+				}
 			}
 		}
 	}
