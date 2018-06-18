@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class StartMenu : MonoBehaviour {
     public GameObject mainMenu;
+    public GameObject tutorial;
     public GameObject settings;
     public GameObject settingsDefault;
 
@@ -13,10 +14,21 @@ public class StartMenu : MonoBehaviour {
         SceneManager.LoadScene(1);
     }
 
+    public void seeTutorial()
+    {
+        mainMenu.SetActive(false);
+        tutorial.SetActive(true);
+    }
+
     public void SetSettings()
     {
         mainMenu.SetActive(false);
         settingsDefault.SetActive(true);
         settings.SetActive(true);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
