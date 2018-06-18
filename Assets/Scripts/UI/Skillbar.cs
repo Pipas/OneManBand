@@ -260,7 +260,7 @@ public class Skillbar : MonoBehaviour {
             {
                 Melody objMelody = obj.GetComponent<Melody>();
                 objMelody.Wait();
-                if (checkMelody(objMelody.rythem))
+                if (checkMelody(objMelody.rythem) && objMelody.IsValid())
                 {
                     if (obj.tag == "Enemy")
                     {

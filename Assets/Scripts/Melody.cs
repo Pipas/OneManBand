@@ -137,6 +137,9 @@ public class Melody : MonoBehaviour {
 	/* Rythem player needs to tap to. */
 	public string rythem;
 
+    /* Instruments this melody require to be played. */
+    public GameObject[] instruments;
+
 	/* Radius in which melody starts playing. */
     public float radius;
 
@@ -217,5 +220,86 @@ public class Melody : MonoBehaviour {
     public bool IsStopped()
     {
         return (state is StopState);
+    }
+
+    // checks if the combination of instruments the player owns atm is valid
+    // for this melody
+    public  bool IsValid()
+    {
+        if (instruments.Length < 1)
+        {
+            return true;
+        }
+
+        bool pDrums = false;
+        bool pGuitar = false;
+        bool pPiano = false;
+
+        foreach (GameObject obj in Movement.party)
+        {
+            if (obj.name == "PartyTambor")
+            {
+                pDrums = true;
+            }
+            else if (obj.name == "PartyGuitar")
+            {
+                pGuitar = true;
+            }
+            else if (obj.name == "PartyPiano")
+            {
+                pPiano = true;
+            }
+        }
+
+        bool mDrums = false;
+        bool mGuitar = false;
+        bool mPiano = false;
+
+        foreach (GameObject obj in instruments)
+        {
+            if (obj.name == "PartyTambor")
+            {
+                mDrums = true;
+            }
+            else if (obj.name == "PartyGuitar")
+            {
+                mGuitar = true;
+            }
+            else if (obj.name == "PartyPiano")
+            {
+                mPiano = true;
+            }
+        }
+
+        if (gameObject.tag == "Enemy" || gameObject.tag == "Spotlight" && gameObject.GetComponent<Spotlight>().player.gameObject.name == "Player")
+        {
+            // check if player owns require inst
+            if (mDrums && !pDrums ||
+                mGuitar && !pGuitar ||
+                mPiano && !pPiano ||
+                mGuitar && !mPiano && pGuitar && pPiano ||
+                !mGuitar && mPiano && pGuitar && pPiano)
+            {
+                return false;
+            }
+        }
+        else if (gameObject.tag == "Spotlight")
+        {
+            if (mGuitar && mPiano)
+            {
+                return false;
+            }
+            
+            string inFocus = gameObject.GetComponent<Spotlight>().player.gameObject.name;
+
+            if (mDrums && inFocus != "PartyTambor" ||
+                mGuitar && inFocus != "PartyGuitar" ||
+                mPiano && inFocus != "PartyPiano")
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
