@@ -29,6 +29,7 @@ public class BridgeTrigger : MonoBehaviour
                 {
                     // PLAY BOSS SONG
                     playingBossSong = true;
+                    BGM.PlayBossBGM();
                 }
             }
 
