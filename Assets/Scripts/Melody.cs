@@ -153,7 +153,7 @@ public class Melody : MonoBehaviour {
 	/* --- Attributes --- */
 
 	/* Audio Source. */
-	private AudioSource aSrc;
+	protected AudioSource aSrc;
 
 	/* Default max volume. */
 	private float defaultVolume;
@@ -170,7 +170,7 @@ public class Melody : MonoBehaviour {
     /// <summary>
     /// Initialization.
     /// </summary>
-    void Start()
+    protected void Start()
     {
         aSrc = gameObject.GetComponent<AudioSource>();
 		defaultVolume = aSrc.volume;
@@ -182,7 +182,7 @@ public class Melody : MonoBehaviour {
     /// <summary>
     /// Update once per frame.
     /// </summary>
-    void Update()
+    protected void Update()
     {
         // if game is paused
         if (menu.isGameStopped())
@@ -224,7 +224,7 @@ public class Melody : MonoBehaviour {
 
     // checks if the combination of instruments the player owns atm is valid
     // for this melody
-    public  bool IsValid()
+    public bool IsValid()
     {
         if (instruments.Length < 1)
         {
