@@ -26,7 +26,8 @@ public class IslandBoss : MonoBehaviour
             bossHealth.SetActive(false);
         }
 
-        if (sheetbar.getSheetIndex() == NO_SHEETS)
+        //if (sheetbar.getSheetIndex() == NO_SHEETS)    /// IMPPPPPPPP
+        if (true)
         {
             moving = true;
         }
