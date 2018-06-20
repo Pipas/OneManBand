@@ -122,7 +122,7 @@ public class Skillbar : MonoBehaviour {
         // skill #1
         if (Input.GetKeyDown(KC_SKILL1))
         {
-            if (s1.Activate(KeyDownAlpha))
+            if (s1.Activate(KeyDownAlpha, true))
             {
                 if (!s1.IsSilenced())
                 {
@@ -146,7 +146,7 @@ public class Skillbar : MonoBehaviour {
         // skill #2
         if (Input.GetKeyDown(KC_SKILL2))
         {
-            if (s2.Activate(KeyDownAlpha))
+            if (s2.Activate(KeyDownAlpha, false))
             {
                 if (!s2.IsSilenced())
                 {
@@ -170,7 +170,7 @@ public class Skillbar : MonoBehaviour {
         // skill #3
         if (Input.GetKeyDown(KC_SKILL3))
         {
-            if (s3.Activate(KeyDownAlpha))
+            if (s3.Activate(KeyDownAlpha, false))
             {
                 if (!s3.IsSilenced())
                 {
@@ -194,7 +194,7 @@ public class Skillbar : MonoBehaviour {
         // skill #4
         if (Input.GetKeyDown(KC_SKILL4))
         {
-            if (s4.Activate(KeyDownAlpha))
+            if (s4.Activate(KeyDownAlpha, false))
             {
                 if (!s4.IsSilenced())
                 {

@@ -44,14 +44,15 @@ public class Skill {
     }
 
     // activates this skill
-    public bool Activate(float alpha) {
-
+    public bool Activate(float alpha, bool pressedDrums) {
+        
         if (cRend.GetAlpha() == DEFAULT_ALPHA)
         {
             cRend.SetAlpha(alpha);
 
             bool guitar = false;
             bool piano = false;
+            bool drums = false;
 
             foreach (GameObject obj in Movement.party)
             {
@@ -62,6 +63,10 @@ public class Skill {
                 else if (obj.name == "PartyPiano")
                 {
                     piano = true;
+                }
+                else if (obj.name == "PartyTambor")
+                {
+                    drums = true;
                 }
             }
 
@@ -74,7 +79,13 @@ public class Skill {
             {
                 PlaySecondSound();
             }
-            else {
+            else if (guitar)
+            {
+                PlaySound();
+            }
+
+            if (drums && pressedDrums)
+            {
                 PlaySound();
             }
 
