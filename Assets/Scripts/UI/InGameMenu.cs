@@ -86,7 +86,8 @@ public class InGameMenu : MonoBehaviour {
 
     public void QuitGame()
     {
-        Application.Quit();
+        Time.timeScale = 1;
+        SceneManager.LoadScene(0);
     }
 
     public bool isGameStopped()

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class BossHealth : MonoBehaviour {
     public GameObject enemy;
     public KillEnemy killEnemy;
+    public GameObject theEnd;
     
     public int startHearts;
     public int currHealth;
@@ -66,6 +67,7 @@ public class BossHealth : MonoBehaviour {
         {
             killEnemy.setEnemyDead(true);
             Destroy(enemy);
+            theEnd.SetActive(true);
         }
     }
     public void TakeDamage(int amount)
