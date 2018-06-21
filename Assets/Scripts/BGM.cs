@@ -354,7 +354,7 @@ public class BGM : MonoBehaviour {
         alreadyFoundDrums = false;
         alreadyFoundGuitar = false;
 		alreadyFoundPiano = false;
-		DEFAULT_VOLUME = bgmASrc.volume;
+		DEFAULT_VOLUME = StaticSettings.volumeBGM;
 		playBossBGM = false;
         state = new StartState(this);
 	}

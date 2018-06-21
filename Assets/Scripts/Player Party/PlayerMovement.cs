@@ -116,7 +116,7 @@ public class PlayerMovement : Movement
         //Vector3 raycastPosition = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
         foreach(Vector3 direction in directions)
         {
-            if (Physics.Raycast(transform.position, direction, out hit, 2))
+            if (Physics.Raycast(transform.position, direction, out hit, 1))
             {
                 Debug.DrawRay(transform.position, transform.TransformDirection(direction) * hit.distance, Color.red);
                 obstacle = hit.transform.gameObject;

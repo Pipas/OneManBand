@@ -302,6 +302,9 @@ public class Skillbar : MonoBehaviour {
                 SkillPress melodySP = melody[melody.Count - i];
                 SkillPress inputSP = pressedSkills[pressedSkills.Count - i];
 
+                /*Debug.Log(melodySP.skill + " " + melodySP.time);
+                Debug.Log(inputSP.skill + " " + inputSP.time);*/
+
                 if (inputSP.skill == melodySP.skill)
                 {
                     if ((i != melody.Count && i != pressedSkills.Count) &&
