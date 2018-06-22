@@ -2,19 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BossHealth : MonoBehaviour {
     public GameObject enemy;
     public KillEnemy killEnemy;
     public GameObject theEnd;
+
+    public Image[] healthImages;
+    public Sprite[] healthSprites;
     
     public int startHearts;
     public int currHealth;
 
     private int healthPerHeart = 1;
-
-    public Image[] healthImages;
-    public Sprite[] healthSprites;
+    private bool gameEnd = false;
 
     void Start() {
         currHealth = startHearts * healthPerHeart;
@@ -23,32 +25,43 @@ public class BossHealth : MonoBehaviour {
 
     void UpdateHearts()
     {
-        bool empty = false;
-        int i = 0;
 
-        foreach (Image image in healthImages)
+        if (!gameEnd)
         {
-            if (empty)
+            bool empty = false;
+            int i = 0;
+
+            foreach (Image image in healthImages)
             {
-                image.sprite = healthSprites[0];
-            }
-            else
-            {
-                i++;
-                if (currHealth >= i * healthPerHeart)
+                if (empty)
                 {
-                    image.sprite = healthSprites[healthSprites.Length - 1];
+                    image.sprite = healthSprites[0];
                 }
                 else
                 {
-                    int currentHeartHealth = (int)(healthPerHeart - (healthPerHeart * i - currHealth));
-                    int healthPerImage = healthPerHeart / (healthSprites.Length - 1);
-                    int imageIndex = currentHeartHealth / healthPerImage;
+                    i++;
+                    if (currHealth >= i * healthPerHeart)
+                    {
+                        image.sprite = healthSprites[healthSprites.Length - 1];
+                    }
+                    else
+                    {
+                        int currentHeartHealth = (int)(healthPerHeart - (healthPerHeart * i - currHealth));
+                        int healthPerImage = healthPerHeart / (healthSprites.Length - 1);
+                        int imageIndex = currentHeartHealth / healthPerImage;
 
-                    image.sprite = healthSprites[imageIndex];
-                    image.GetComponent<Image>().color = new Color32(255, 90, 90, 100);
-                    empty = true;
+                        image.sprite = healthSprites[imageIndex];
+                        image.GetComponent<Image>().color = new Color32(255, 90, 90, 100);
+                        empty = true;
+                    }
                 }
+            }
+        }
+        else
+        {
+            if (Input.GetKeyUp(KeyCode.Return))             // return to start menu if user presses Enter after the game ends
+            {
+                SceneManager.LoadScene(0);
             }
         }
 
@@ -68,6 +81,7 @@ public class BossHealth : MonoBehaviour {
             killEnemy.setEnemyDead(true);
             Destroy(enemy);
             theEnd.SetActive(true);
+            this.gameEnd = true;
         }
     }
     public void TakeDamage(int amount)
