@@ -4,10 +4,6 @@ One Man Band is a single player music puzzle game. Set in a nightmarish world fu
 ## Demo
 ![One Man Band Demo](https://i.imgur.com/GdYgx7h.png)
 
-## Download
-* [Build for Windows](https://drive.google.com/open?id=1NcLhW_j4IXe3WozAPQg71-njT-E6Nvm7)
-* [Build for Mac](https://drive.google.com/open?id=1pcdYFDRcZxnK3-eC8yfDIHMx0UNVOtkx)
-
 ## Game Design Document
 A detailed game design document about the development, features and mechanics can be found [here](https://github.com/Pipas/OneManBand/blob/master/Deliverables/DJCO-FP-G8-OneManBand-GDD.pdf).
 
